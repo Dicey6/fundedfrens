@@ -1,0 +1,595 @@
+FUNDEDFRENS — HOMEPAGE DESIGN SPECIFICATION
+
+Before writing or changing any UI, understand what FundedFrens is.
+
+FundedFrens is not a traditional forex prop firm.
+
+It is a crypto prop trading platform built specifically for Solana meme coin traders.
+
+Users prove they can trade profitably during a Demo Challenge.
+
+Once they pass and are approved, they unlock a funded trading account.
+
+The platform combines:
+
+• Crypto
+
+• Solana
+
+• Telegram Trading
+
+• Prop Trading
+
+• Performance Analytics
+
+• Professional Risk Management
+
+The homepage must communicate this immediately.
+
+It should feel like a premium Web3 fintech product.
+
+Not a meme website.
+
+Not a gaming website.
+
+Not a corporate banking website.
+
+The feeling should be:
+
+Professional.
+
+Modern.
+
+Premium.
+
+Fast.
+
+Trustworthy.
+
+Minimal.
+
+Confident.
+
+⸻
+
+COLOR PALETTE
+
+Primary Background
+
+Deep matte black
+
+Secondary Background
+
+Very dark graphite
+
+Primary Accent
+
+Solana Purple
+
+Secondary Accent
+
+Solana Green
+
+Success
+
+Green
+
+Loss
+
+Red
+
+Information
+
+Blue
+
+Warning
+
+Amber
+
+Cards
+
+Dark translucent Liquid Glass
+
+Borders
+
+Very soft glass borders
+
+Never use bright white backgrounds.
+
+Never use loud neon colors.
+
+Everything should feel premium.
+
+⸻
+
+DESIGN LANGUAGE
+
+Use modern Liquid Glass styling.
+
+Soft blur.
+
+Depth.
+
+Glass cards.
+
+Elegant gradients.
+
+Rounded corners.
+
+Subtle shadows.
+
+Beautiful spacing.
+
+Everything should breathe.
+
+Never overcrowd sections.
+
+⸻
+
+NAVIGATION
+
+The navigation should remain minimal.
+
+Logo
+
+Features
+
+How It Works
+
+Pricing
+
+FAQ
+
+Login
+
+Get Started
+
+Desktop navigation should feel premium.
+
+Mobile navigation should be clean and intuitive.
+
+⸻
+
+HERO SECTION
+
+This is the most important section.
+
+It must immediately answer:
+
+What is FundedFrens?
+
+Who is it for?
+
+Why should someone use it?
+
+The hero should contain:
+
+Headline
+
+A strong value proposition.
+
+Subheadline
+
+Explain that traders complete a Demo Challenge to unlock funded capital.
+
+Primary CTA
+
+Start Challenge
+
+Secondary CTA
+
+Learn More
+
+Visual
+
+A premium dashboard mockup.
+
+Floating analytics.
+
+PnL cards.
+
+Trading metrics.
+
+Subtle animations.
+
+⸻
+
+TRUST BAR
+
+Immediately below the hero.
+
+Examples:
+
+Built for Solana
+
+Telegram Trading
+
+Instant Analytics
+
+Automatic Evaluation
+
+Secure Payments
+
+24/7 Trading
+
+Professional Risk Rules
+
+This should build trust within seconds.
+
+⸻
+
+HOW IT WORKS
+
+Break the process into clear steps.
+
+Step 1
+
+Create your account.
+
+Step 2
+
+Purchase a Demo Challenge.
+
+Step 3
+
+Complete the evaluation.
+
+Step 4
+
+Get approved.
+
+Step 5
+
+Unlock your funded account.
+
+Use clean cards with icons.
+
+⸻
+
+WHY FUNDEDFRENS
+
+Explain the advantages.
+
+Examples:
+
+Built specifically for Solana traders.
+
+Professional evaluation.
+
+Advanced analytics.
+
+Telegram-first trading.
+
+Real challenge tracking.
+
+Automatic payment verification.
+
+Performance insights.
+
+Clean dashboard.
+
+Risk management.
+
+Premium user experience.
+
+⸻
+
+CHALLENGE PLANS
+
+Display the three official plans.
+
+Starter
+
+Challenge Fee
+
+$15
+
+Approximate Funded Value
+
+$350
+
+Advanced
+
+Challenge Fee
+
+$25
+
+Approximate Funded Value
+
+$1,100
+
+Professional
+
+Challenge Fee
+
+$50
+
+Approximate Funded Value
+
+$3,500
+
+Display:
+
+“Funded values are approximate and adjust with the live SOL/USD market price.”
+
+The USD value is the source of truth.
+
+⸻
+
+DEMO CHALLENGE RULES
+
+Show the evaluation rules clearly.
+
+Evaluation Period
+
+21 Days
+
+Minimum Trading Days
+
+5
+
+Required Win Rate
+
+75%
+
+Maximum Position Size
+
+30%
+
+Maximum Open Positions
+
+3
+
+Maximum Drawdown
+
+50%
+
+These should be displayed in premium metric cards.
+
+⸻
+
+DASHBOARD PREVIEW
+
+Show a realistic preview of the platform.
+
+Include examples of:
+
+Challenge Progress
+
+Risk Management
+
+Trading Analytics
+
+Portfolio
+
+Performance
+
+PnL
+
+Notifications
+
+Referral Center
+
+Telegram Connection
+
+Profile
+
+Funded Account (Locked)
+
+This preview should excite users about the product.
+
+⸻
+
+ANALYTICS PREVIEW
+
+Show the types of analytics users receive.
+
+Examples:
+
+Total Trades
+
+Winning Trades
+
+Losing Trades
+
+Win Rate
+
+PnL
+
+Average Winner
+
+Average Loser
+
+Largest Win
+
+Largest Loss
+
+Average Hold Time
+
+Portfolio Value
+
+Risk Metrics
+
+Challenge Progress
+
+Drawdown
+
+Reliability Rating
+
+Open Positions
+
+Trading Days
+
+Evaluation Progress
+
+Do not show placeholder charts.
+
+Display professional cards.
+
+⸻
+
+TELEGRAM SECTION
+
+Explain that trading happens through the Telegram bot.
+
+The website manages:
+
+Dashboard
+
+Analytics
+
+Challenges
+
+Payments
+
+Referrals
+
+Notifications
+
+The Telegram bot manages:
+
+Buying
+
+Selling
+
+Portfolio
+
+Positions
+
+Trading Controls
+
+PnL Cards
+
+This separation should be clearly explained.
+
+⸻
+
+PAYMENT SECTION
+
+Explain the purchase flow.
+
+Choose a challenge.
+
+Receive payment instructions.
+
+Send SOL.
+
+Automatic blockchain verification.
+
+Challenge activates automatically.
+
+Referral rewards process automatically.
+
+Keep this visual and easy to understand.
+
+⸻
+
+REFERRAL SECTION
+
+Explain:
+
+Invite friends.
+
+Earn 10% of their first successful challenge purchase.
+
+Automatic tracking.
+
+Automatic rewards.
+
+No hidden conditions.
+
+⸻
+
+FAQ
+
+Include answers for:
+
+What is FundedFrens?
+
+What is a Demo Challenge?
+
+How do funded accounts work?
+
+How are payments verified?
+
+How long is the evaluation?
+
+What happens if I fail?
+
+Can I try again?
+
+How does the Telegram bot work?
+
+How do referrals work?
+
+⸻
+
+FINAL CALL TO ACTION
+
+Large premium section.
+
+Encourage users to begin.
+
+Headline
+
+Ready to prove your trading skills?
+
+Button
+
+Start Your Demo Challenge
+
+⸻
+
+FOOTER
+
+Include:
+
+About
+
+Features
+
+Pricing
+
+FAQ
+
+Terms
+
+Privacy
+
+Contact
+
+Social Links
+
+Discord (future)
+
+Telegram
+
+X
+
+GitHub (optional)
+
+⸻
+
+DESIGN GOAL
+
+The homepage should feel like a product that could compete with modern fintech platforms.
+
+It should immediately communicate professionalism, clarity, and trust.
+
+Every section should have a clear purpose.
+
+Avoid unnecessary text.
+
+Avoid clutter.
+
+Use generous spacing.
+
+Use premium typography.
+
+Use subtle motion.
+
+Maintain excellent responsiveness across desktop, tablet, and mobile.
+
+The homepage should leave visitors with one clear understanding:
+
+FundedFrens is the premier prop trading platform built for Solana meme coin traders.

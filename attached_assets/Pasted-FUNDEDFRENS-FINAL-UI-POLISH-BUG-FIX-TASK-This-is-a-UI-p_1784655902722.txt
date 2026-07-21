@@ -1,0 +1,363 @@
+FUNDEDFRENS — FINAL UI POLISH & BUG FIX TASK
+
+This is a UI polish and frontend bug-fix task only.
+
+Source Repository (Clone From)
+
+Clone the existing project from:
+
+https://github.com/Dicey6/frensfund
+
+This contains the latest working implementation.
+
+⸻
+
+Destination Repository (Push To)
+
+Do NOT push back to the old repository.
+
+When everything is completed and tested, push the finished project to this new repository only:
+
+https://github.com/Dicey6/fundedfrens
+
+⸻
+
+IMPORTANT
+
+Before making any changes:
+
+* Clone the source repository.
+* Inspect the project.
+* Understand the current frontend structure.
+* Preserve the current architecture.
+
+Do NOT start rewriting the application.
+
+This is NOT a rebuild.
+
+This is a polish pass.
+
+⸻
+
+STRICT RULES
+
+This is NOT a backend task.
+
+Do NOT modify:
+
+* Supabase schema
+* Database tables
+* Edge Functions
+* Authentication
+* Business logic
+* Payment verification logic
+* Referral logic
+* Challenge logic
+* API contracts
+* Environment variables
+* Existing backend architecture
+
+If a backend change appears necessary, stop and report it instead of implementing it.
+
+Everything that currently works must continue to work exactly the same.
+
+⸻
+
+TASK 1 — TERMS & CONDITIONS
+
+Replace the existing Terms & Conditions page with the new Terms & Conditions provided.
+
+Ensure:
+
+* Professional formatting
+* Responsive layout
+* Proper headings
+* Good typography
+* Readable spacing
+
+⸻
+
+TASK 2 — PRIVACY POLICY
+
+Replace the current Privacy Policy with the provided Privacy Policy.
+
+Maintain the same styling used for Terms & Conditions.
+
+⸻
+
+TASK 3 — REMOVE GITHUB REFERENCES
+
+Remove every GitHub reference from the website.
+
+Examples include:
+
+* GitHub links
+* GitHub buttons
+* GitHub icons
+* GitHub badges
+* “View Source”
+* “Star on GitHub”
+* Repository references
+
+The website should appear as a standalone commercial product.
+
+⸻
+
+TASK 4 — HOMEPAGE STATS
+
+Remove:
+
+* “400+ Active Traders”
+* “$1.2M+ Total Funded”
+* “68% Pass Rate”
+
+These statistics are inaccurate because the platform has not launched.
+
+Replace them with launch-focused metrics.
+
+Examples:
+
+* Built for Solana Traders
+* Secure Blockchain Payments
+* Telegram Trading
+* Live Analytics
+* Automated Evaluations
+* 24/7 Challenge Access
+* Professional Risk Rules
+* Real-Time Dashboard
+
+Do not invent fake numbers.
+
+⸻
+
+TASK 5 — REMOVE FOREX REFERENCES
+
+Search the entire project.
+
+Remove every mention of:
+
+Forex
+
+FX
+
+Foreign Exchange
+
+Replace all wording so the platform is clearly positioned as:
+
+A Solana meme coin proprietary trading platform.
+
+⸻
+
+TASK 6 — NOTIFICATIONS PAGE
+
+The Notifications page is currently incomplete.
+
+Complete it.
+
+Requirements:
+
+* Proper layout
+* Empty state when no notifications exist
+* Loading state
+* Notification cards
+* Read/Unread styling
+* Timestamp display
+* Responsive design
+
+Do not modify backend notification logic.
+
+Only complete the frontend experience.
+
+⸻
+
+TASK 7 — FOOTERS
+
+Add a proper footer throughout the application.
+
+Homepage Footer:
+
+* About
+* Features
+* Pricing
+* FAQ
+* Terms
+* Privacy
+* Contact
+
+Dashboard Footer:
+
+A clean minimal footer fixed to the dashboard layout containing:
+
+* FundedFrens
+* Version
+* Terms
+* Privacy
+
+Keep it subtle.
+
+⸻
+
+TASK 8 — LIGHT MODE DEFAULT
+
+The default theme should be:
+
+Light Mode.
+
+Implement:
+
+* Light Mode
+* Dark Mode
+
+Requirements:
+
+* Toggle available on homepage.
+* Toggle available inside dashboard.
+* Theme persists after refresh.
+* Theme remains consistent across all pages.
+
+Use the existing design system.
+
+Do not redesign components.
+
+⸻
+
+TASK 9 — WEBSITE FREEZING
+
+Investigate the frontend for freezing or hanging.
+
+Symptoms:
+
+* Pages occasionally stop responding.
+* User must manually refresh.
+
+Identify and fix the cause.
+
+Possible areas to inspect:
+
+* Infinite renders
+* React effects
+* Query refetch loops
+* State update loops
+* Memory leaks
+* Suspense/loading issues
+* Event listeners
+* Routing
+
+Do not guess.
+
+Identify the root cause before fixing.
+
+⸻
+
+TASK 10 — PAYMENT UX
+
+Do NOT modify payment verification.
+
+The backend already handles verification.
+
+Improve only the user experience.
+
+After payment instructions are shown:
+
+Display a button:
+
+“I’ve Made the Payment”
+
+When clicked:
+
+* Refresh payment status.
+* Re-fetch the order.
+* Check whether verification has completed.
+* Display loading feedback while checking.
+
+If payment is verified:
+
+Update the interface immediately.
+
+If not:
+
+Display a friendly message indicating that blockchain verification is still in progress.
+
+Do not change backend verification.
+
+Only improve the frontend interaction.
+
+⸻
+
+TASK 11 — GENERAL UI POLISH
+
+Review the entire interface.
+
+Fix:
+
+* Layout inconsistencies
+* Overflow
+* Alignment issues
+* Button spacing
+* Typography inconsistencies
+* Mobile responsiveness
+* Hover states
+* Animations
+* Card spacing
+* Loading skeletons
+* Empty states
+* Form validation visuals
+* Scroll behavior
+
+The platform should feel polished and production-ready.
+
+⸻
+
+TEST EVERYTHING
+
+Before finishing, verify:
+
+* Homepage loads correctly.
+* Dashboard loads correctly.
+* Theme switching works everywhere.
+* Theme persists after refresh.
+* Terms page renders correctly.
+* Privacy page renders correctly.
+* GitHub references are gone.
+* Homepage statistics have been replaced.
+* Forex references have been removed.
+* Notifications page works correctly.
+* Footer appears correctly.
+* Payment refresh button functions.
+* No freezing occurs.
+* No regressions introduced.
+* Existing backend functionality remains untouched.
+
+⸻
+
+GIT WORKFLOW
+
+1. Clone:
+
+https://github.com/Dicey6/frensfund
+
+2. Complete every task above.
+3. Test thoroughly.
+4. Commit all frontend/UI changes with clear commit messages.
+5. Push the finished project only to:
+
+https://github.com/Dicey6/fundedfrens
+
+Do not push to the original repository.
+
+⸻
+
+FINAL REPORT
+
+When complete, provide a report containing:
+
+* Files modified
+* UI improvements made
+* Bugs fixed
+* Theme improvements
+* Notification improvements
+* Footer implementation
+* Homepage content changes
+* Confirmation that GitHub references were removed
+* Confirmation that Forex references were removed
+* Confirmation that no backend, database, APIs, business logic, authentication, or payment verification logic were modified.

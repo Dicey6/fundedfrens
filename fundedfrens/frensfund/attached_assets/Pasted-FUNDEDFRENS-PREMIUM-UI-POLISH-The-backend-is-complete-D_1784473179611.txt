@@ -1,0 +1,303 @@
+FUNDEDFRENS — PREMIUM UI POLISH
+
+The backend is complete.
+
+Do NOT modify backend logic.
+
+Do NOT change database structure.
+
+Do NOT change authentication.
+
+Do NOT change business logic.
+
+Do NOT change challenge rules.
+
+Do NOT change payment flow.
+
+Do NOT change routing.
+
+This task is purely a premium UI/UX refinement.
+
+⸻
+
+OBJECTIVE
+
+Transform the current interface into a premium trading platform while keeping it clean, fast, professional, and easy to understand.
+
+The design should feel like a modern fintech application.
+
+Think:
+
+Professional
+
+Minimal
+
+Premium
+
+Trustworthy
+
+Fast
+
+Every important piece of information should have its own clearly defined section.
+
+Avoid clutter.
+
+Avoid oversized cards.
+
+Prioritize readability.
+
+⸻
+
+DESIGN LANGUAGE
+
+Use Apple’s Liquid Glass design principles as inspiration.
+
+This does NOT mean copying Apple’s UI.
+
+It means using:
+
+• Soft translucent glass panels
+• Layered depth
+• Smooth blur
+• Subtle borders
+• Elegant shadows
+• Gentle gradients
+• Premium spacing
+• Rounded corners
+• High readability
+• Smooth hover animations
+• Soft transitions
+
+Keep effects subtle.
+
+Never sacrifice readability.
+
+Performance should remain excellent.
+
+⸻
+
+COLOR SYSTEM
+
+Maintain a premium dark theme.
+
+Accent colors should communicate meaning:
+
+Green → Profit / Success
+
+Red → Loss / Warning
+
+Blue → Information
+
+Yellow → Pending / Attention
+
+Gray → Inactive
+
+Avoid overly saturated colors.
+
+⸻
+
+TYPOGRAPHY
+
+Clear visual hierarchy.
+
+Large section titles.
+
+Medium metric titles.
+
+Large important values.
+
+Small helper text.
+
+Consistent spacing.
+
+Never overcrowd text.
+
+⸻
+
+DASHBOARD STRUCTURE
+
+Break the dashboard into clear sections.
+
+Every section should have a heading and a purpose.
+
+Suggested layout:
+
+1. Welcome Header
+
+* Username
+* Challenge Status
+* Current Plan
+* Days Remaining
+* Quick Actions
+
+2. Account Overview
+
+* Demo Balance
+* Current Equity
+* Today’s PnL
+* Total PnL
+* Unrealized PnL
+* Total Return
+
+3. Challenge Progress
+
+* Progress Bar
+* Trading Days
+* Win Rate
+* Days Remaining
+* Current Status
+* Evaluation Progress
+
+4. Risk Management
+
+* Current Drawdown
+* Maximum Drawdown
+* Largest Position
+* Open Positions
+* Rule Compliance
+* Risk Warnings
+
+5. Performance Analytics
+
+* Total Trades
+* Winning Trades
+* Losing Trades
+* Average Winner
+* Average Loser
+* Largest Win
+* Largest Loss
+* Profit Factor
+* Average Hold Time
+
+6. Trading Analytics
+
+* Average Entry Market Cap
+* Average Exit Market Cap
+* Average Position Size
+* Average PnL %
+* Average PnL (SOL)
+* Peak Unrealized Profit
+* Maximum Adverse Excursion
+* Stop Loss Usage
+* Take Profit Usage
+* Manual Close Usage
+
+7. Portfolio
+
+* Portfolio Value
+* Holdings
+* Open Positions
+* Unrealized PnL
+
+8. Orders
+
+* Pending Orders
+* Confirmed Orders
+* Expired Orders
+
+9. Referral Center
+
+* Referral Code
+* Successful Referrals
+* Pending Rewards
+* Paid Rewards
+
+10. Telegram
+
+* Connection Status
+* Linked Username
+* Link Button (if not linked)
+
+11. Notifications
+
+* Recent Activity
+* Challenge Events
+* Payment Updates
+* Referral Updates
+
+12. Profile
+
+* Username
+* Email
+* Payout Wallet
+* Account Created
+
+13. Funded Account
+    Display this as a premium locked section.
+
+Show:
+
+“Complete and pass your Demo Challenge to unlock your funded trading account.”
+
+This section should feel aspirational without distracting from the current Demo Challenge.
+
+⸻
+
+INFORMATION ARCHITECTURE
+
+Every statistic should have its own dedicated space.
+
+Avoid placing too many metrics in a single card.
+
+Use smaller grouped cards where appropriate.
+
+Group related information together.
+
+The user should immediately understand where to find any piece of information.
+
+⸻
+
+USER EXPERIENCE
+
+Prioritize clarity.
+
+Reduce cognitive load.
+
+Important actions should always be visible.
+
+Status indicators should be easy to recognize.
+
+Navigation should require minimal effort.
+
+The interface should feel intuitive for both beginners and experienced traders.
+
+⸻
+
+RESPONSIVENESS
+
+The interface must scale cleanly across desktop, tablet, and mobile.
+
+Maintain spacing and readability on every screen size.
+
+⸻
+
+ANIMATIONS
+
+Use subtle animations only.
+
+Examples:
+
+• Card hover
+• Progress updates
+• Number transitions
+• Status changes
+• Loading states
+
+Avoid flashy or distracting effects.
+
+⸻
+
+FINAL REVIEW
+
+Before completion, review every page and ask:
+
+• Is this information easy to find?
+• Is every section clearly labeled?
+• Does the layout feel premium?
+• Is readability excellent?
+• Is there unnecessary clutter?
+• Does the UI inspire trust?
+
+Refine until the platform feels like a polished, production-ready fintech product suitable for a professional prop trading firm.
+
+Do not change backend functionality. Focus exclusively on elevating the user experience while preserving all existing logic.

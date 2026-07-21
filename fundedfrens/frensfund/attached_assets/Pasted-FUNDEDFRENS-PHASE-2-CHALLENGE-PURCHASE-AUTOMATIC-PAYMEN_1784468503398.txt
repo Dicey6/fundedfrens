@@ -1,0 +1,238 @@
+FUNDEDFRENS — PHASE 2: CHALLENGE PURCHASE & AUTOMATIC PAYMENT VERIFICATION
+
+Phase 1 is complete.
+
+Do not modify or refactor any Phase 1 functionality unless it is required to support this phase.
+
+The UI already exists.
+
+Do NOT redesign it.
+
+Only connect the backend functionality.
+
+⸻
+
+OBJECTIVE
+
+A user should be able to:
+
+* Select a challenge.
+* Create an order.
+* View the payment page.
+* Send SOL.
+* Have payment verified automatically.
+* Have their Demo Challenge activated.
+* Have their dashboard update automatically.
+
+No manual intervention.
+
+⸻
+
+CHALLENGE PLANS
+
+There are only three official plans.
+
+Do NOT store them in the database.
+
+Hardcode them as the platform’s canonical plans.
+
+Starter
+
+Purchase Price:
+$15 USD
+
+Funded Value:
+$350 USD
+
+⸻
+
+Advanced
+
+Purchase Price:
+$25 USD
+
+Funded Value:
+$1,100 USD
+
+⸻
+
+Professional
+
+Purchase Price:
+$50 USD
+
+Funded Value:
+$3,500 USD
+
+The USD value is always the source of truth.
+
+Never use fixed SOL amounts.
+
+When a user selects a plan:
+
+1. Fetch the current SOL/USD price.
+2. Calculate the exact SOL required.
+3. Display both:
+
+$350 (~X SOL)
+
+where X is calculated dynamically.
+
+⸻
+
+ORDER CREATION
+
+When a user selects a challenge:
+
+Create a pending order.
+
+Store:
+
+* User ID
+* Challenge Plan
+* Purchase Price (USD)
+* Current SOL Price
+* Required SOL
+* Treasury Wallet
+* Wallet Address the user will pay from
+* Order Status
+* Created Time
+* Expiry Time
+
+Status should initially be:
+
+Pending Payment
+
+⸻
+
+PAYMENT PAGE
+
+Display:
+
+* Challenge Name
+* Purchase Price (USD)
+* Live SOL Amount
+* Treasury Wallet
+* Wallet Address entered by the user
+* Countdown until expiry
+* Payment Status
+
+The wallet entered by the user becomes the wallet used for payment verification.
+
+After successful payment, this wallet automatically becomes the user’s default payout wallet.
+
+⸻
+
+AUTOMATIC PAYMENT VERIFICATION
+
+Implement automatic verification using a Supabase Edge Function.
+
+The Edge Function should periodically inspect pending orders and verify payments on-chain.
+
+Verification must confirm:
+
+* Payment sent from the wallet provided by the user.
+* Payment received by the configured treasury wallet.
+* Amount received matches the expected SOL amount (within a small tolerance).
+* Transaction falls within the order’s validity period.
+* Transaction has not already been used.
+
+If verification succeeds:
+
+* Mark the order as Confirmed.
+* Store the transaction signature.
+* Store the amount received.
+* Record the confirmation timestamp.
+
+No manual confirmation flow should exist.
+
+⸻
+
+DEMO CHALLENGE ACTIVATION
+
+Immediately after successful payment:
+
+Create the user’s Demo Challenge.
+
+Initialize:
+
+* Status = Active
+* Evaluation Period = 21 Days
+* Trading Days = 0
+* Win Rate = 0%
+* Drawdown = 0%
+* Open Positions = 0
+* Challenge Progress = 0%
+
+The dashboard should immediately reflect the active challenge.
+
+⸻
+
+REFERRALS
+
+Referral codes are generated during signup.
+
+When a user’s FIRST successful challenge purchase is confirmed:
+
+* Credit 10% of the purchase price to the referrer.
+* Ignore subsequent purchases.
+* Prevent self-referrals.
+* Prevent duplicate commissions.
+
+Referral processing must happen automatically after payment confirmation.
+
+⸻
+
+DASHBOARD UPDATES
+
+After payment confirmation, update the dashboard automatically:
+
+* Active Challenge
+* Challenge Status
+* Current Plan
+* Challenge Progress
+* Orders
+* Notifications
+* Referral Status (if applicable)
+
+The Funded Account section must remain locked.
+
+⸻
+
+TESTING
+
+Verify:
+
+* Challenge plans display correctly.
+* Live SOL pricing works.
+* Orders are created successfully.
+* Wallet address is stored.
+* Pending orders expire correctly.
+* Automatic payment verification succeeds.
+* Duplicate payments are rejected.
+* Demo Challenge activates automatically.
+* Referral rewards trigger correctly.
+* Dashboard updates immediately.
+* No console errors.
+* No TypeScript errors.
+* Production build succeeds.
+
+⸻
+
+GITHUB
+
+After Phase 2 is complete:
+
+Commit changes.
+
+Push to the GitHub repository.
+
+Provide:
+
+* Files modified.
+* Database changes.
+* New Edge Functions.
+* Required environment variables.
+* Confirmation that the complete purchase flow is operational and ready for Phase 3.
+
+Do not begin Phase 3 until every part of this payment flow has been fully tested and verified.

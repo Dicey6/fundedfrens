@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ],
+  "buildCommand": "pnpm --filter ./artifacts/fundedfrens run build",
+  "outputDirectory": "artifacts/fundedfrens/dist/public",
+  "framework": null,
+  "installCommand": "pnpm install"
+}
