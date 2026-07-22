@@ -365,10 +365,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           {/* Dashboard footer */}
           <footer className="relative z-10 border-t border-white/[0.05] px-4 sm:px-6 py-3">
             <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-              <span className="text-[10px] font-mono text-muted-foreground/40 uppercase tracking-widest">FundedFrens · v1.0</span>
+              <span className="text-[10px] font-mono text-muted-foreground/40 uppercase tracking-widest">© 2026 FundedFrens · v1.0</span>
               <div className="flex items-center gap-4">
                 <a href="/terms" className="text-[10px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors uppercase tracking-widest">Terms</a>
                 <a href="/privacy" className="text-[10px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors uppercase tracking-widest">Privacy</a>
+                <a href="https://t.me/FundedFrens" target="_blank" rel="noopener noreferrer" className="text-[10px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors uppercase tracking-widest">Support</a>
               </div>
             </div>
           </footer>

@@ -57,10 +57,10 @@ const whyFeatures = [
 const challengeRules = [
   { label: 'Evaluation Period', value: '21 Days' },
   { label: 'Min Trading Days', value: '5 Days' },
-  { label: 'Required Win Rate', value: '75%' },
+  { label: 'Required Win Rate', value: '70%' },
   { label: 'Max Position Size', value: '30%' },
   { label: 'Max Open Positions', value: '3' },
-  { label: 'Max Drawdown', value: '50%' },
+  { label: 'Max Drawdown', value: '30%' },
 ];
 
 const analyticsPreview = [
@@ -579,21 +579,39 @@ export default function HomePage() {
       </section>
 
       {/* ── FOOTER ── */}
-      <footer className="border-t border-white/[0.06] pt-12 pb-8 px-4 sm:px-6">
+      <footer className="border-t border-white/[0.06] pt-14 pb-8 px-4 sm:px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             {/* Brand */}
-            <div>
+            <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-3 mb-4">
                 <img src="/fundedfrens/logo.jpeg" alt="FundedFrens" className="w-8 h-8 rounded-lg object-cover" />
                 <span className="font-display font-semibold text-foreground">FundedFrens</span>
               </div>
-              <p className="text-xs text-muted-foreground leading-relaxed max-w-xs">
-                The premier Solana prop trading platform. Prove your edge, unlock real capital.
+              <p className="text-xs text-muted-foreground leading-relaxed max-w-[220px] mb-5">
+                The premier Solana prop trading platform. Prove your edge on-chain, unlock real meme coin capital.
               </p>
+              <div className="flex items-center gap-2.5">
+                <a href="https://t.me/FundedFrens" target="_blank" rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-lg glass flex items-center justify-center text-muted-foreground hover:text-[#2AABEE] transition-colors"
+                  aria-label="Telegram">
+                  {/* Telegram official icon */}
+                  <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+                    <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
+                  </svg>
+                </a>
+                <a href="https://x.com/FundedFrens" target="_blank" rel="noopener noreferrer"
+                  className="w-8 h-8 rounded-lg glass flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+                  aria-label="X (Twitter)">
+                  {/* X official icon */}
+                  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                  </svg>
+                </a>
+              </div>
             </div>
 
-            {/* Links */}
+            {/* Platform */}
             <div>
               <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/60 mb-4">Platform</div>
               <div className="space-y-2.5">
@@ -603,42 +621,36 @@ export default function HomePage() {
                   { label: 'How It Works', href: '#how-it-works' },
                   { label: 'Pricing', href: '#plans' },
                   { label: 'FAQ', href: '#faq' },
-                  { label: 'Sign In', href: '/login', isRoute: true },
-                  { label: 'Get Started', href: '/signup', isRoute: true },
-                ].map(({ label, href, isRoute }) => (
-                  isRoute ? (
-                    <Link key={label} href={href} className="block text-xs text-muted-foreground hover:text-foreground transition-colors">{label}</Link>
-                  ) : (
-                    <a key={label} href={href} className="block text-xs text-muted-foreground hover:text-foreground transition-colors">{label}</a>
-                  )
+                ].map(({ label, href }) => (
+                  <a key={label} href={href} className="block text-xs text-muted-foreground hover:text-foreground transition-colors">{label}</a>
                 ))}
               </div>
             </div>
 
-            {/* Legal + Social */}
+            {/* Account */}
             <div>
-              <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/60 mb-4">Legal &amp; Social</div>
-              <div className="space-y-2.5 mb-6">
+              <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/60 mb-4">Account</div>
+              <div className="space-y-2.5">
+                <Link href="/login" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Sign In</Link>
+                <Link href="/signup" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Get Started</Link>
+                <Link href="/dashboard" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Dashboard</Link>
+              </div>
+            </div>
+
+            {/* Legal */}
+            <div>
+              <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/60 mb-4">Legal &amp; Support</div>
+              <div className="space-y-2.5">
                 <Link href="/terms" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Terms of Service</Link>
                 <Link href="/privacy" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link>
-                <a href="https://t.me/FundedFrens" target="_blank" rel="noopener noreferrer" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Contact</a>
-              </div>
-              <div className="flex items-center gap-3">
-                <a href="https://t.me/FundedFrens" target="_blank" rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg glass flex items-center justify-center text-muted-foreground hover:text-primary transition-colors">
-                  <MessageCircle className="w-3.5 h-3.5" />
-                </a>
-                <a href="https://x.com/FundedFrens" target="_blank" rel="noopener noreferrer"
-                  className="w-8 h-8 rounded-lg glass flex items-center justify-center text-muted-foreground hover:text-primary transition-colors">
-                  <span className="font-mono text-xs font-bold">X</span>
-                </a>
+                <a href="https://t.me/FundedFrens" target="_blank" rel="noopener noreferrer" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Contact &amp; Support</a>
               </div>
             </div>
           </div>
 
           <div className="border-t border-white/[0.05] pt-6">
             <p className="text-xs text-muted-foreground/40 font-mono text-center">
-              © 2026 FundedFrens. All rights reserved. Not financial advice. Trading involves risk.
+              © 2026 FundedFrens. All rights reserved. Not financial advice. Trading involves significant risk.
             </p>
           </div>
         </div>

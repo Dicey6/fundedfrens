@@ -5,17 +5,18 @@ import { useAuth } from '@/contexts/AuthContext';
 import { useNotifications } from '@/hooks/use-notifications';
 import { useChallenge } from '@/hooks/use-challenge';
 import { useOrders } from '@/hooks/use-orders';
+import { useReferrals } from '@/hooks/use-referrals';
 import {
   Shield, Wallet, Trophy, Target, Award, Copy,
   TrendingUp, Activity, BarChart3, LineChart, CheckCircle2,
   AlertCircle, Lock, Unlock, Bell, BellRing,
   Clock, ArrowRight, Users, MessageCircle,
-  ChevronRight, ExternalLink, RefreshCw, Check
+  ChevronRight, ExternalLink, RefreshCw, Check, Send, Loader2
 } from 'lucide-react';
 import { format, differenceInDays } from 'date-fns';
 import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 16 },
@@ -293,10 +294,10 @@ function ChallengeSection() {
   const rules = [
     { label: 'Evaluation Period', value: '21 Days', icon: Clock },
     { label: 'Min Trading Days', value: '5 Days', icon: Activity },
-    { label: 'Required Win Rate', value: '75%', icon: Trophy },
+    { label: 'Required Win Rate', value: '70%', icon: Trophy },
     { label: 'Max Position Size', value: '30%', icon: Target },
     { label: 'Max Open Positions', value: '3', icon: BarChart3 },
-    { label: 'Max Drawdown', value: '50%', icon: AlertCircle },
+    { label: 'Max Drawdown', value: '30%', icon: AlertCircle },
   ];
 
   return (
@@ -349,8 +350,8 @@ function ChallengeSection() {
                 { label: 'Challenge Day', value: `Day ${21 - daysRemaining}`, sub: 'of 21' },
                 { label: 'Days Remaining', value: `${daysRemaining}`, sub: 'days left' },
                 { label: 'Trading Days', value: `${challenge.trading_days}`, sub: '/ 5 required' },
-                { label: 'Win Rate', value: `${challenge.win_rate}%`, sub: '≥ 75% required', highlight: challenge.win_rate >= 75 ? 'green' : 'amber' },
-                { label: 'Drawdown', value: `${challenge.drawdown}%`, sub: '50% max', highlight: challenge.drawdown > 40 ? 'red' : 'default' },
+                { label: 'Win Rate', value: `${challenge.win_rate}%`, sub: '≥ 70% required', highlight: challenge.win_rate >= 70 ? 'green' : 'amber' },
+                { label: 'Drawdown', value: `${challenge.drawdown}%`, sub: '30% max', highlight: challenge.drawdown > 24 ? 'red' : 'default' },
                 { label: 'Open Positions', value: `${challenge.open_positions}`, sub: '3 max' },
               ].map((m, i) => (
                 <div key={i} className="bg-black/20 rounded-xl p-4 border border-white/[0.04]">
@@ -367,14 +368,14 @@ function ChallengeSection() {
             {/* Progress bar */}
             <div className="p-4 bg-black/20 rounded-lg border border-white/[0.04]">
               <div className="flex justify-between items-center mb-2">
-                <span className="metric-label">Win Rate Progress (Target: 75%)</span>
-                <span className="font-mono font-bold text-primary text-sm">{challenge.win_rate}% / 75%</span>
+                <span className="metric-label">Win Rate Progress (Target: 70%)</span>
+                <span className="font-mono font-bold text-primary text-sm">{challenge.win_rate}% / 70%</span>
               </div>
               <div className="h-3 bg-white/5 rounded-full overflow-hidden">
                 <motion.div
-                  className={`h-full rounded-full ${challenge.win_rate >= 75 ? 'bg-gradient-to-r from-emerald-500 to-emerald-400' : 'bg-gradient-to-r from-primary to-purple-400'}`}
+                  className={`h-full rounded-full ${challenge.win_rate >= 70 ? 'bg-gradient-to-r from-emerald-500 to-emerald-400' : 'bg-gradient-to-r from-primary to-purple-400'}`}
                   initial={{ width: 0 }}
-                  animate={{ width: `${Math.min(100, (challenge.win_rate / 75) * 100)}%` }}
+                  animate={{ width: `${Math.min(100, (challenge.win_rate / 70) * 100)}%` }}
                   transition={{ duration: 1, ease: 'easeOut' }}
                 />
               </div>
@@ -600,11 +601,28 @@ function OrdersSection() {
 // ── REFERRALS SECTION ─────────────────────────────────────────────────────────
 function ReferralsSection() {
   const { profile } = useAuth();
+  const { stats, isLoading: statsLoading, isSubmitting, pendingWithdrawal, requestWithdrawal } = useReferrals();
+  const [, setLocation] = useLocation();
+
   const handleCopy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
     toast.success(`${label} copied to clipboard`);
   };
   const referralLink = `https://fundedfrens.com/signup?ref=${profile?.referral_code || ''}`;
+
+  const handleWithdrawal = async () => {
+    if (!profile?.payout_wallet) {
+      toast.error('No payout wallet set. Please add one in your Profile first.');
+      setLocation('/profile');
+      return;
+    }
+    const result = await requestWithdrawal();
+    if (result.success) {
+      toast.success('Withdrawal request submitted! We will process it within 24–48 hours.');
+    } else {
+      toast.error(result.error ?? 'Failed to submit withdrawal request.');
+    }
+  };
 
   return (
     <motion.div variants={container} initial="hidden" animate="show" className="space-y-6 pb-10">
@@ -646,16 +664,47 @@ function ReferralsSection() {
       {/* Stats */}
       <motion.div variants={item}>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          {[
-            { label: 'Successful Referrals', value: '—' },
-            { label: 'Pending Rewards', value: '$0.00', accent: 'amber' },
-            { label: 'Paid Out', value: '$0.00', accent: 'green' },
-            { label: 'Total Earnings', value: '$0.00', accent: 'default' },
-          ].map((m, i) => (
-            <MetricCard key={i} label={m.label} value={m.value} accent={m.accent} />
-          ))}
+          {statsLoading ? (
+            Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="glass rounded-xl p-4 animate-pulse h-20" />
+            ))
+          ) : (
+            <>
+              <MetricCard label="Successful Referrals" value={String(stats.successfulReferrals)} />
+              <MetricCard label="Pending Rewards" value={`${stats.pendingRewards.toFixed(2)}`} accent="amber" />
+              <MetricCard label="Paid Out" value={`${stats.creditedRewards.toFixed(2)}`} accent="green" />
+              <MetricCard label="Total Earnings" value={`${stats.totalEarnings.toFixed(2)}`} />
+            </>
+          )}
         </div>
       </motion.div>
+
+      {/* Withdrawal */}
+      {!statsLoading && stats.creditedRewards > 0 && (
+        <motion.div variants={item}>
+          <div className="glass rounded-xl p-6 border border-emerald-500/15 bg-emerald-500/5">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <div className="section-label mb-1 text-emerald-400 flex items-center gap-2"><Send className="w-3.5 h-3.5" /> Available to Withdraw</div>
+                <p className="font-mono text-2xl font-bold text-emerald-300">${stats.creditedRewards.toFixed(2)}</p>
+                {pendingWithdrawal && (
+                  <p className="text-xs font-mono text-amber-400/80 mt-1">Withdrawal pending — submitted {new Date(pendingWithdrawal.created_at).toLocaleDateString()}</p>
+                )}
+                {!profile?.payout_wallet && (
+                  <p className="text-xs font-mono text-muted-foreground mt-1">Set a payout wallet in your Profile first.</p>
+                )}
+              </div>
+              <Button
+                onClick={handleWithdrawal}
+                disabled={isSubmitting || !!pendingWithdrawal}
+                className="font-mono uppercase tracking-wider text-xs shrink-0 bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+              >
+                {isSubmitting ? <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Submitting...</> : pendingWithdrawal ? 'Request Pending' : 'Request Withdrawal'}
+              </Button>
+            </div>
+          </div>
+        </motion.div>
+      )}
 
       {/* How it works */}
       <motion.div variants={item}>
@@ -664,7 +713,7 @@ function ReferralsSection() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { step: '01', title: 'Share Your Code', desc: 'Give friends your referral code or link. They use it during signup.' },
-              { step: '02', title: 'They Pass a Challenge', desc: 'Your referee purchases and completes a Demo Challenge successfully.' },
+              { step: '02', title: 'They Complete a Challenge', desc: 'Your referee purchases and completes a Demo Challenge successfully.' },
               { step: '03', title: 'You Earn 10%', desc: 'You automatically receive 10% of their challenge fee. No hidden conditions.' },
             ].map(({ step, title, desc }, i) => (
               <div key={i} className="bg-black/20 rounded-xl p-5 border border-white/[0.04]">

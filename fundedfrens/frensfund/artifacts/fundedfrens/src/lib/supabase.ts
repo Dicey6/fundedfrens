@@ -9,9 +9,19 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
-// ── Treasury Wallet ─────────────────────────────────────────────────────────
-// Set VITE_TREASURY_WALLET in your .env / Vercel environment variables
-export const TREASURY_WALLET = import.meta.env.VITE_TREASURY_WALLET as string | undefined;
+// ── Treasury Wallets ─────────────────────────────────────────────────────────
+// Set VITE_TREASURY_WALLETS as a comma-separated list in your .env / Vercel environment variables
+// e.g. VITE_TREASURY_WALLETS=wallet1,wallet2,wallet3
+const _walletList = (import.meta.env.VITE_TREASURY_WALLETS as string | undefined)
+  ?.split(',')
+  .map(w => w.trim())
+  .filter(Boolean) ?? [];
+
+/** Pick a random treasury wallet for a new order. Never changes after order creation. */
+export function pickTreasuryWallet(): string {
+  if (_walletList.length === 0) return 'TREASURY_WALLET_NOT_CONFIGURED';
+  return _walletList[Math.floor(Math.random() * _walletList.length)];
+}
 
 // ── Challenge Plans (hardcoded — not stored in DB) ──────────────────────────
 export interface ChallengePlan {

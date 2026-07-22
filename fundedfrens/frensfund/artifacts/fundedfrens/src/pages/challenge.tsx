@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { useAuth } from '@/contexts/AuthContext';
-import { supabase, CHALLENGE_PLANS, fetchSolPrice, usdToSol, TREASURY_WALLET } from '@/lib/supabase';
+import { supabase, CHALLENGE_PLANS, fetchSolPrice, usdToSol, pickTreasuryWallet } from '@/lib/supabase';
 import { useLocation, Link } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
@@ -68,7 +68,7 @@ export default function ChallengePage() {
         purchase_price_usd: selectedPlan.purchasePriceUsd,
         sol_price_usd: solPrice,
         required_sol: usdToSol(selectedPlan.purchasePriceUsd, solPrice),
-        treasury_wallet: TREASURY_WALLET || 'TREASURY_WALLET_NOT_CONFIGURED',
+        treasury_wallet: pickTreasuryWallet(),
         user_wallet: walletAddress.trim(),
         expires_at: expiresAt.toISOString(),
       }).select().single();
@@ -159,10 +159,12 @@ export default function ChallengePage() {
                   
                   <div className="p-8 flex-1 flex flex-col justify-between">
                     <ul className="space-y-5 font-mono text-sm text-muted-foreground/90 mb-8">
-                      <li className="flex items-center gap-3"><div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-primary" /></div> Profit Target: 10%</li>
-                      <li className="flex items-center gap-3"><div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-primary" /></div> Max Drawdown: 10%</li>
-                      <li className="flex items-center gap-3"><div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-primary" /></div> Daily Drawdown: 5%</li>
-                      <li className="flex items-center gap-3"><div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-primary" /></div> Trading Days: ∞</li>
+                      <li className="flex items-center gap-3"><div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-primary" /></div> Evaluation Period: 21 Days</li>
+                      <li className="flex items-center gap-3"><div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-primary" /></div> Required Win Rate: 70%</li>
+                      <li className="flex items-center gap-3"><div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-primary" /></div> Max Drawdown: 30%</li>
+                      <li className="flex items-center gap-3"><div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-primary" /></div> Min Trading Days: 5</li>
+                      <li className="flex items-center gap-3"><div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-primary" /></div> Max Position Size: 30%</li>
+                      <li className="flex items-center gap-3"><div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0"><Check className="w-3 h-3 text-primary" /></div> Max Open Positions: 3</li>
                     </ul>
                     
                     <div className="bg-black/30 rounded-xl p-5 border border-white/[0.04] mb-6">
