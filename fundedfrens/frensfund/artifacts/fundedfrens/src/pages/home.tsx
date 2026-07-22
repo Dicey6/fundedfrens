@@ -1,4 +1,4 @@
-import { Link } from 'wouter';
+import { Link, useLocation } from 'wouter';
 import { motion } from 'framer-motion';
 import {
   ArrowRight, Check, ChevronRight, Shield, Zap, TrendingUp,
@@ -36,7 +36,7 @@ const trustSignals = [
 const steps = [
   { icon: Users, step: '01', title: 'Create Your Account', desc: 'Sign up in seconds. No KYC required. Start with just your email address.' },
   { icon: Wallet, step: '02', title: 'Purchase a Demo Challenge', desc: 'Choose your capital tier. Pay the evaluation fee in SOL on the Solana network.' },
-  { icon: BarChart3, step: '03', title: 'Complete the Evaluation', desc: 'Trade via your Telegram bot. Hit 75%+ win rate within the risk rules over 21 days.' },
+  { icon: BarChart3, step: '03', title: 'Complete the Evaluation', desc: 'Trade via your Telegram bot. Hit 70%+ win rate within the risk rules over 21 days.' },
   { icon: Shield, step: '04', title: 'Get Approved', desc: 'Our team reviews your performance. Approval is granted to consistently profitable traders.' },
   { icon: Award, step: '05', title: 'Unlock Your Funded Account', desc: 'Receive real firm capital and keep 80% of all profits you generate.' },
 ];
@@ -83,20 +83,21 @@ const paymentSteps = [
 
 const faqs = [
   { q: 'What is FundedFrens?', a: 'FundedFrens is a Solana-native prop trading platform. Traders complete a Demo Challenge to prove their skills, then unlock real firm capital with an 80% profit split.' },
-  { q: 'What is a Demo Challenge?', a: 'A Demo Challenge is an evaluation period where you trade a simulated account. Hit 75%+ win rate over 5+ trading days within 21 days, respecting all risk rules, and you pass.' },
+  { q: 'What is a Demo Challenge?', a: 'A Demo Challenge is an evaluation period where you trade a simulated account. Hit 70%+ win rate over 5+ trading days within 21 days, respecting all risk rules, and you pass.' },
   { q: 'How do funded accounts work?', a: "Once you pass and are approved, you receive access to a funded trading account with real firm capital. You keep 80% of all profits and the firm keeps 20%." },
   { q: 'How are payments verified?', a: 'Payments are processed on the Solana blockchain. Our system monitors your unique treasury wallet address and automatically activates your challenge when SOL is received.' },
-  { q: 'How long is the evaluation?', a: 'The evaluation period is 21 days. You need to trade on at least 5 of those days and maintain a 75%+ win rate.' },
-  { q: 'What happens if I fail?', a: 'If you breach the max drawdown (50%) or fail to meet targets within 21 days, your challenge is marked as failed. You can purchase a new challenge to try again.' },
+  { q: 'How long is the evaluation?', a: 'The evaluation period is 21 days. You need to trade on at least 5 of those days and maintain a 70%+ win rate.' },
+  { q: 'What happens if I fail?', a: 'If you breach the max drawdown (30%) or fail to meet targets within 21 days, your challenge is marked as failed. You can purchase a new challenge to try again.' },
   { q: 'Can I try again?', a: 'Yes — absolutely. There is no limit on how many challenges you can attempt. Each is a fresh evaluation period.' },
-  { q: 'How does the Telegram bot work?', a: 'All trading (buying, selling, position management) happens via @FundedFrensBot on Telegram. The website handles everything else: dashboard, analytics, payments, and referrals.' },
-  { q: 'How do referrals work?', a: 'Share your unique referral code or link. When someone uses it to sign up and completes their first challenge purchase, you automatically earn 10% of their fee. No hidden conditions.' },
+  { q: 'How does the Telegram bot work?', a: 'All trading (buying, selling, position management) happens via @fundedfrensbot on Telegram. The website handles everything else: dashboard, analytics, payments, and referrals.' },
+  { q: 'How do referrals work?', a: 'Share your unique referral code or link. When someone signs up with your code and purchases any challenge, you automatically earn 10% of their fee. They only need to purchase — no completion required.' },
 ];
 
 export default function HomePage() {
   const [navOpen, setNavOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const { theme, toggleTheme } = useTheme();
+  const [, navigate] = useLocation();
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -128,14 +129,10 @@ export default function HomePage() {
             >
               {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
-            <Link href="/login">
-              <Button variant="ghost" className="font-sans text-sm text-muted-foreground hover:text-foreground">Log In</Button>
-            </Link>
-            <Link href="/signup">
-              <Button className="font-sans text-sm font-semibold px-5 shadow-[0_0_20px_rgba(139,92,246,0.3)]">
-                Get Started <ArrowRight className="w-4 h-4 ml-1.5" />
-              </Button>
-            </Link>
+            <Button variant="ghost" className="font-sans text-sm text-muted-foreground hover:text-foreground" onClick={() => navigate('/login')}>Log In</Button>
+            <Button className="font-sans text-sm font-semibold px-5 shadow-[0_0_20px_rgba(139,92,246,0.3)]" onClick={() => navigate('/signup')}>
+              Get Started <ArrowRight className="w-4 h-4 ml-1.5" />
+            </Button>
           </div>
 
           <button
@@ -160,12 +157,8 @@ export default function HomePage() {
               </a>
             ))}
             <div className="pt-3 grid grid-cols-2 gap-2 border-t border-white/[0.06]">
-              <Link href="/login">
-                <Button variant="outline" className="w-full text-sm" onClick={() => setNavOpen(false)}>Login</Button>
-              </Link>
-              <Link href="/signup">
-                <Button className="w-full text-sm font-semibold" onClick={() => setNavOpen(false)}>Get Started</Button>
-              </Link>
+              <Button variant="outline" className="w-full text-sm" onClick={() => { setNavOpen(false); navigate('/login'); }}>Login</Button>
+              <Button className="w-full text-sm font-semibold" onClick={() => { setNavOpen(false); navigate('/signup'); }}>Get Started</Button>
             </div>
           </div>
         )}
@@ -332,8 +325,8 @@ export default function HomePage() {
                   <div className="p-7 flex-1 flex flex-col">
                     <ul className="space-y-2.5 mb-7 flex-1">
                       {[
-                        'Win Rate: 75% Required',
-                        'Max Drawdown: 50%',
+                        'Win Rate: 70% Required',
+                        'Max Drawdown: 30%',
                         'Evaluation: 21 Days',
                         'Min Trading Days: 5',
                         'Max Positions: 3',
@@ -415,7 +408,7 @@ export default function HomePage() {
               <h3 className="font-display font-bold text-xl mb-2">Web Platform</h3>
               <p className="text-sm text-muted-foreground mb-5">The FundedFrens website handles everything non-trading.</p>
               <ul className="space-y-2.5">
-                {['Dashboard & Analytics', 'Challenge Management', 'Payment Processing', 'Referral Center', 'Notifications', 'Profile & Settings'].map(f => (
+                {['Dashboard & Analytics', 'Challenge Management', 'Payment Processing', 'Referral Center', 'Profile & Settings'].map(f => (
                   <li key={f} className="flex items-center gap-3 text-sm text-muted-foreground/90">
                     <Check className="w-3.5 h-3.5 text-primary flex-shrink-0" />{f}
                   </li>
@@ -430,7 +423,7 @@ export default function HomePage() {
                 <Bot className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-display font-bold text-xl mb-2">Telegram Bot</h3>
-              <p className="text-sm text-muted-foreground mb-5">@FundedFrensBot handles all your trading actions in real time.</p>
+              <p className="text-sm text-muted-foreground mb-5">@fundedfrensbot handles all your trading actions in real time.</p>
               <ul className="space-y-2.5">
                 {['Buying & Selling Tokens', 'Portfolio Management', 'Open Positions View', 'Trading Controls', 'PnL Cards', 'Stop Loss / Take Profit'].map(f => (
                   <li key={f} className="flex items-center gap-3 text-sm text-muted-foreground/90">
@@ -438,7 +431,7 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <a href="https://t.me/FundedFrensBot" target="_blank" rel="noopener noreferrer" className="mt-6 inline-block">
+              <a href="https://t.me/fundedfrensbot" target="_blank" rel="noopener noreferrer" className="mt-6 inline-block">
                 <Button className="font-mono uppercase tracking-wider text-xs">
                   Open Bot <ExternalLink className="w-3 h-3 ml-2" />
                 </Button>

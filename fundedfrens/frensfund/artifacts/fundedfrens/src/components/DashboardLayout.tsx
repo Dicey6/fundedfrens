@@ -1,12 +1,11 @@
 import React from 'react';
 import { Link, useLocation } from 'wouter';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNotifications } from '@/hooks/use-notifications';
 import { useTheme } from '@/contexts/ThemeContext';
 import { supabase } from '@/lib/supabase';
 import {
   LayoutDashboard, Target, BarChart3, Briefcase, ShoppingCart,
-  Users, Bell, MessageCircle, User, Settings, LogOut, Menu, X,
+  Users, MessageCircle, User, Settings, LogOut, Menu, X,
   Shield, ChevronRight, Lock, Sun, Moon
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -15,7 +14,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 // ── Dashboard Section Context ─────────────────────────────────────────────────
 export type DashboardSection =
   | 'overview' | 'challenge' | 'analytics' | 'portfolio'
-  | 'orders' | 'referrals' | 'notifications' | 'telegram'
+  | 'orders' | 'referrals' | 'telegram'
   | 'profile' | 'funded';
 
 interface DashboardContextValue {
@@ -45,7 +44,6 @@ const mainNav: NavItem[] = [
 
 const accountNav: NavItem[] = [
   { kind: 'section', label: 'Referrals',       section: 'referrals',      icon: Users },
-  { kind: 'section', label: 'Notifications',   section: 'notifications',  icon: Bell },
   { kind: 'section', label: 'Telegram',        section: 'telegram',       icon: MessageCircle },
   { kind: 'section', label: 'Profile',         section: 'profile',        icon: User },
   { kind: 'link',    label: 'Settings',        href: '/profile',          icon: Settings },
@@ -64,7 +62,6 @@ function SidebarContent({
   setActiveSection: (s: DashboardSection) => void;
   location: string;
   profile: any;
-  unreadCount: number;
   onNav?: () => void;
 }) {
   const handleLogout = async () => {
@@ -77,7 +74,6 @@ function SidebarContent({
 
     if (item.kind === 'section') {
       const isActive = location === '/dashboard' && activeSection === item.section;
-      const showBadge = item.section === 'notifications' && unreadCount > 0;
       return (
         <button
           key={idx}
@@ -93,11 +89,6 @@ function SidebarContent({
           )}
           <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-primary' : 'group-hover:text-foreground'}`} />
           <span className="text-xs font-mono uppercase tracking-wider flex-1">{item.label}</span>
-          {showBadge && (
-            <span className="ml-auto flex items-center justify-center w-5 h-5 rounded-full bg-primary text-primary-foreground text-[9px] font-bold">
-              {unreadCount > 9 ? '9+' : unreadCount}
-            </span>
-          )}
         </button>
       );
     }
@@ -209,7 +200,6 @@ function SidebarContent({
 export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [location] = useLocation();
   const { profile } = useAuth();
-  const { unreadCount } = useNotifications();
   const { theme, toggleTheme } = useTheme();
   const [activeSection, setActiveSection] = React.useState<DashboardSection>('overview');
   const [drawerOpen, setDrawerOpen] = React.useState(false);
@@ -222,7 +212,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
     portfolio: 'Portfolio',
     orders: 'Orders',
     referrals: 'Referrals',
-    notifications: 'Notifications',
     telegram: 'Telegram',
     profile: 'Profile',
     funded: 'Funded Account',
@@ -245,7 +234,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
             setActiveSection={setActiveSection}
             location={location}
             profile={profile}
-            unreadCount={unreadCount}
           />
         </div>
 
@@ -293,7 +281,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   setActiveSection={setActiveSection}
                   location={location}
                   profile={profile}
-                  unreadCount={unreadCount}
                   onNav={() => setDrawerOpen(false)}
                 />
               </motion.div>
@@ -333,17 +320,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 aria-label="Toggle theme"
               >
                 {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-              </button>
-              <button
-                onClick={() => setActiveSection('notifications')}
-                className="relative w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-white/[0.06] transition-colors"
-              >
-                <Bell className="w-4 h-4" />
-                {unreadCount > 0 && (
-                  <span className="absolute top-0.5 right-0.5 w-4 h-4 rounded-full bg-primary text-primary-foreground text-[8px] font-bold flex items-center justify-center">
-                    {unreadCount > 9 ? '9+' : unreadCount}
-                  </span>
-                )}
               </button>
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary/30 to-primary/10 flex items-center justify-center border border-primary/20 text-primary font-mono font-bold text-xs">
                 {profile?.username?.substring(0, 2).toUpperCase() || 'FF'}

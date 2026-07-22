@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { DashboardLayout, useDashboardContext } from '@/components/DashboardLayout';
 import { useAuth } from '@/contexts/AuthContext';
-import { useNotifications } from '@/hooks/use-notifications';
 import { useChallenge } from '@/hooks/use-challenge';
 import { useOrders } from '@/hooks/use-orders';
 import { useReferrals } from '@/hooks/use-referrals';
 import {
   Shield, Wallet, Trophy, Target, Award, Copy,
   TrendingUp, Activity, BarChart3, LineChart, CheckCircle2,
-  AlertCircle, Lock, Unlock, Bell, BellRing,
+  AlertCircle, Lock, Unlock,
   Clock, ArrowRight, Users, MessageCircle,
   ChevronRight, ExternalLink, RefreshCw, Check, Send, Loader2
 } from 'lucide-react';
@@ -238,7 +237,7 @@ function OverviewSection() {
             {hasActiveChallenge ? (
               <div className="space-y-4 flex-1">
                 {[
-                  { label: 'Max Drawdown (50% Limit)', value: challenge.drawdown, max: 50 },
+                  { label: 'Max Drawdown (30% Limit)', value: challenge.drawdown, max: 30 },
                 ].map((r, i) => (
                   <div key={i} className="p-4 bg-black/20 rounded-lg border border-white/[0.04]">
                     <div className="flex justify-between items-end mb-2">
@@ -713,7 +712,7 @@ function ReferralsSection() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
               { step: '01', title: 'Share Your Code', desc: 'Give friends your referral code or link. They use it during signup.' },
-              { step: '02', title: 'They Complete a Challenge', desc: 'Your referee purchases and completes a Demo Challenge successfully.' },
+              { step: '02', title: 'They Purchase a Challenge', desc: 'Your referee just needs to purchase a challenge — that\'s all it takes for you to earn your bonus.' },
               { step: '03', title: 'You Earn 10%', desc: 'You automatically receive 10% of their challenge fee. No hidden conditions.' },
             ].map(({ step, title, desc }, i) => (
               <div key={i} className="bg-black/20 rounded-xl p-5 border border-white/[0.04]">
@@ -723,62 +722,6 @@ function ReferralsSection() {
               </div>
             ))}
           </div>
-        </div>
-      </motion.div>
-    </motion.div>
-  );
-}
-
-// ── NOTIFICATIONS SECTION ─────────────────────────────────────────────────────
-function NotificationsSection() {
-  const { notifications, isLoading, markAsRead, markAllAsRead, unreadCount } = useNotifications();
-
-  return (
-    <motion.div variants={container} initial="hidden" animate="show" className="space-y-6 pb-10">
-      <div className="flex items-start justify-between">
-        <SectionHeader title="Notifications" subtitle="System events and platform updates" />
-        {unreadCount > 0 && (
-          <Button variant="outline" size="sm" onClick={markAllAsRead} className="font-mono text-xs uppercase tracking-wider border-white/10 mt-1">
-            Mark all read
-          </Button>
-        )}
-      </div>
-
-      <motion.div variants={item}>
-        <div className="glass rounded-xl overflow-hidden">
-          {isLoading ? (
-            <div className="flex flex-col items-center justify-center py-20 text-muted-foreground/40">
-              <div className="w-8 h-8 rounded-full border-2 border-primary/30 border-t-primary animate-spin mb-3" />
-              <p className="font-mono text-xs uppercase tracking-widest">Loading notifications...</p>
-            </div>
-          ) : notifications.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-20 text-muted-foreground/40">
-              <BellRing className="w-10 h-10 mb-3 opacity-40" />
-              <p className="font-mono text-xs uppercase tracking-widest">No notifications yet</p>
-              <p className="text-[10px] font-mono text-muted-foreground/30 mt-1">Activity will appear here</p>
-            </div>
-          ) : (
-            <div className="divide-y divide-white/[0.04]">
-              {notifications.map(notif => (
-                <div
-                  key={notif.id}
-                  onClick={() => !notif.read && markAsRead(notif.id)}
-                  className={`p-5 flex gap-4 cursor-pointer transition-colors ${notif.read ? 'hover:bg-white/[0.02]' : 'bg-primary/5 hover:bg-primary/8'}`}
-                >
-                  <div className={`w-2 h-2 rounded-full mt-1.5 shrink-0 ${notif.read ? 'bg-white/20' : 'bg-primary animate-pulse shadow-[0_0_6px_rgba(139,92,246,0.8)]'}`} />
-                  <div className="flex-1 min-w-0">
-                    <p className={`text-sm leading-relaxed ${notif.read ? 'text-muted-foreground' : 'text-foreground font-medium'}`}>{notif.message}</p>
-                    <p className="text-[10px] font-mono text-muted-foreground/50 uppercase tracking-widest mt-1.5">
-                      {format(new Date(notif.created_at), 'HH:mm · MMM dd, yyyy')}
-                    </p>
-                  </div>
-                  {!notif.read && (
-                    <span className="text-[9px] font-mono text-primary/70 border border-primary/20 px-1.5 py-0.5 rounded h-fit mt-0.5">NEW</span>
-                  )}
-                </div>
-              ))}
-            </div>
-          )}
         </div>
       </motion.div>
     </motion.div>
@@ -823,7 +766,7 @@ function TelegramSection() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {[
                   { step: '1', title: 'Copy Your Code', desc: 'Copy your personal link code below. Keep it private.' },
-                  { step: '2', title: 'Open FundedFrensBot', desc: 'Open Telegram and start a chat with @FundedFrensBot.' },
+                  { step: '2', title: 'Open @fundedfrensbot', desc: 'Open Telegram and start a chat with @fundedfrensbot.' },
                   { step: '3', title: 'Send Link Command', desc: 'Send the command: /link YOUR_CODE to the bot.' },
                 ].map(({ step, title, desc }) => (
                   <div key={step} className="bg-black/20 rounded-xl p-5 border border-white/[0.04]">
@@ -847,9 +790,9 @@ function TelegramSection() {
                 </div>
               </div>
 
-              <a href="https://t.me/FundedFrensBot" target="_blank" rel="noopener noreferrer">
+              <a href="https://t.me/fundedfrensbot" target="_blank" rel="noopener noreferrer">
                 <Button className="font-mono uppercase tracking-wider shadow-[0_0_20px_rgba(139,92,246,0.3)]">
-                  <MessageCircle className="w-4 h-4 mr-2" /> Open FundedFrensBot <ExternalLink className="w-3 h-3 ml-2" />
+                  <MessageCircle className="w-4 h-4 mr-2" /> Open @fundedfrensbot <ExternalLink className="w-3 h-3 ml-2" />
                 </Button>
               </a>
             </div>
@@ -989,7 +932,6 @@ function DashboardContent() {
         {activeSection === 'portfolio' && <PortfolioSection />}
         {activeSection === 'orders' && <OrdersSection />}
         {activeSection === 'referrals' && <ReferralsSection />}
-        {activeSection === 'notifications' && <NotificationsSection />}
         {activeSection === 'telegram' && <TelegramSection />}
         {activeSection === 'profile' && <ProfileSummarySection />}
         {activeSection === 'funded' && <FundedSection />}
