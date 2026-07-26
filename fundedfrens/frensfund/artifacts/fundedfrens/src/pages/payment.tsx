@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase, Order } from '@/lib/supabase';
@@ -18,12 +18,33 @@ export default function PaymentPage() {
   const [isPolling, setIsPolling] = useState(true);
   const [isManualChecking, setIsManualChecking] = useState(false);
 
+  // Refs to prevent stale-closure / concurrent-call issues
+  const verifyingRef = useRef(false);       // mutual exclusion: poll + manual check
+  const redirectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Stable callbacks so polling effect deps don't change every render
+  const stableRefreshProfile = useRef(refreshProfile);
+  useEffect(() => { stableRefreshProfile.current = refreshProfile; }, [refreshProfile]);
+
+  const stableSetLocation = useRef(setLocation);
+  useEffect(() => { stableSetLocation.current = setLocation; }, [setLocation]);
+
+  // Clear redirect timer on unmount
+  useEffect(() => {
+    return () => {
+      if (redirectTimerRef.current !== null) {
+        clearTimeout(redirectTimerRef.current);
+      }
+    };
+  }, []);
+
+  // ── Initial order fetch ────────────────────────────────────────────────────
   useEffect(() => {
     let mounted = true;
-    
+
     const fetchOrder = async () => {
       if (!user || !orderId) return;
-      
+
       try {
         const { data, error } = await supabase
           .from('orders')
@@ -31,9 +52,9 @@ export default function PaymentPage() {
           .eq('id', orderId)
           .eq('user_id', user.id)
           .single();
-          
+
         if (error) throw error;
-        
+
         if (mounted) {
           setOrder(data as Order);
           if (data.status !== 'pending_payment') {
@@ -49,27 +70,25 @@ export default function PaymentPage() {
     };
 
     fetchOrder();
-
     return () => { mounted = false; };
   }, [user, orderId]);
 
+  // ── Countdown timer ────────────────────────────────────────────────────────
   useEffect(() => {
     if (!order || order.status !== 'pending_payment') return;
 
     const calculateTimeLeft = () => {
       const expiresAt = new Date(order.expires_at).getTime();
-      const now = new Date().getTime();
-      const diff = Math.max(0, Math.floor((expiresAt - now) / 1000));
-      return diff;
+      const now = Date.now();
+      return Math.max(0, Math.floor((expiresAt - now) / 1000));
     };
 
     setTimeLeft(calculateTimeLeft());
 
     const timer = setInterval(() => {
-      const newTimeLeft = calculateTimeLeft();
-      setTimeLeft(newTimeLeft);
-      
-      if (newTimeLeft === 0) {
+      const remaining = calculateTimeLeft();
+      setTimeLeft(remaining);
+      if (remaining === 0) {
         setIsPolling(false);
         setOrder(prev => prev ? { ...prev, status: 'expired' } : null);
         clearInterval(timer);
@@ -79,50 +98,73 @@ export default function PaymentPage() {
     return () => clearInterval(timer);
   }, [order?.expires_at, order?.status]);
 
+  // ── Auto-polling ───────────────────────────────────────────────────────────
+  // Uses stable refs for refreshProfile / setLocation so deps never change spuriously,
+  // meaning only one interval is ever alive at a time.
   useEffect(() => {
     if (!orderId || !isPolling || !order || order.status !== 'pending_payment') return;
 
     const poll = async () => {
+      // Skip if a manual check (or another poll) is already in flight
+      if (verifyingRef.current) return;
+      verifyingRef.current = true;
+
       try {
-        const { data, error } = await supabase.functions.invoke('verify-payment', {
-          body: { orderId }
+        const { data } = await supabase.functions.invoke('verify-payment', {
+          body: { orderId },
         });
-        
+
         if (data?.status === 'confirmed') {
           setIsPolling(false);
-          await refreshProfile();
+          await stableRefreshProfile.current();
           setOrder(prev => prev ? { ...prev, status: 'confirmed' } : null);
           toast.success('Payment confirmed! Your challenge is now active.');
-          setTimeout(() => setLocation('/dashboard'), 3000);
+          redirectTimerRef.current = setTimeout(
+            () => stableSetLocation.current('/dashboard'),
+            3000,
+          );
         } else if (data?.status === 'expired') {
           setIsPolling(false);
           setOrder(prev => prev ? { ...prev, status: 'expired' } : null);
         }
       } catch (err) {
         console.error('Polling error:', err);
+      } finally {
+        verifyingRef.current = false;
       }
     };
 
     const interval = setInterval(poll, 15000);
     return () => clearInterval(interval);
-  }, [orderId, isPolling, order?.status, refreshProfile, setLocation]);
+    // orderId and order.status are the only things that should restart the interval
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderId, isPolling, order?.status]);
 
+  // ── Copy helper ────────────────────────────────────────────────────────────
   const handleCopy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
     toast.success(`${label} copied to clipboard`);
   };
 
-  const handleManualCheck = async () => {
-    if (!orderId || !user || isManualChecking) return;
+  // ── Manual payment check ───────────────────────────────────────────────────
+  const handleManualCheck = useCallback(async () => {
+    if (!orderId || !user || verifyingRef.current) return;
+
+    verifyingRef.current = true;
     setIsManualChecking(true);
+
     try {
       const { data } = await supabase.functions.invoke('verify-payment', { body: { orderId } });
+
       if (data?.status === 'confirmed') {
         setIsPolling(false);
-        await refreshProfile();
+        await stableRefreshProfile.current();
         setOrder(prev => prev ? { ...prev, status: 'confirmed' } : null);
         toast.success('Payment confirmed! Your challenge is now active.');
-        setTimeout(() => setLocation('/dashboard'), 3000);
+        redirectTimerRef.current = setTimeout(
+          () => stableSetLocation.current('/dashboard'),
+          3000,
+        );
       } else if (data?.status === 'expired') {
         setIsPolling(false);
         setOrder(prev => prev ? { ...prev, status: 'expired' } : null);
@@ -133,9 +175,10 @@ export default function PaymentPage() {
     } catch {
       toast.error('Unable to check payment status. Please try again.');
     } finally {
+      verifyingRef.current = false;
       setIsManualChecking(false);
     }
-  };
+  }, [orderId, user]);
 
   const formatTime = (seconds: number) => {
     const m = Math.floor(seconds / 60).toString().padStart(2, '0');
@@ -183,7 +226,7 @@ export default function PaymentPage() {
           {isConfirmed && (
             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 blur-[50px] pointer-events-none" />
           )}
-          
+
           <div className="relative z-10">
             <div className="section-label mb-2 text-primary/80">Payment Gateway</div>
             <div className="flex items-center gap-4 mb-2">
@@ -206,7 +249,7 @@ export default function PaymentPage() {
             </div>
             <p className="text-muted-foreground font-mono text-[10px] uppercase tracking-widest mt-2">ID: {order.id}</p>
           </div>
-          
+
           {order.status === 'pending_payment' && !isExpired && (
             <div className="flex items-center gap-4 glass bg-black/40 px-6 py-4 rounded-xl relative z-10 border border-amber-500/20">
               <div className="flex flex-col">
@@ -225,13 +268,13 @@ export default function PaymentPage() {
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ type: "spring", stiffness: 300, damping: 24 }} className="md:col-span-2">
             <div className="glass rounded-2xl p-6 h-full flex flex-col">
               <div className="section-label mb-6 flex items-center gap-2"><ShieldCheck className="w-4 h-4" /> Invoice Details</div>
-              
+
               <div className="space-y-6 flex-1">
                 <div>
                   <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1">Allocation Plan</div>
                   <div className="font-display text-2xl capitalize text-foreground">{order.challenge_plan}</div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="glass bg-black/20 p-4 rounded-xl">
                     <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">USD Base</div>
@@ -268,9 +311,10 @@ export default function PaymentPage() {
 
           {/* Action Column */}
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, type: "spring", stiffness: 300, damping: 24 }} className="md:col-span-3">
-            <AnimatePresence mode="wait">
+            {/* mode="sync" — exit and enter animate simultaneously, never blocks interaction */}
+            <AnimatePresence mode="sync">
               {isConfirmed ? (
-                <motion.div key="confirmed" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="h-full">
+                <motion.div key="confirmed" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
                   <div className="glass bg-emerald-500/5 border-emerald-500/30 rounded-2xl h-full flex flex-col items-center justify-center p-12 text-center shadow-[0_0_40px_rgba(16,185,129,0.1)] relative overflow-hidden">
                     <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.15)_0%,transparent_70%)]" />
                     <CheckCircle2 className="w-24 h-24 text-emerald-400 mb-8 drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
@@ -284,7 +328,7 @@ export default function PaymentPage() {
                   </div>
                 </motion.div>
               ) : isExpired ? (
-                <motion.div key="expired" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="h-full">
+                <motion.div key="expired" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
                   <div className="glass bg-red-500/5 border-red-500/20 rounded-2xl h-full flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
                     <AlertCircle className="w-20 h-20 text-red-500/50 mb-6" />
                     <h3 className="font-display text-2xl font-bold mb-4">Session Timeout</h3>
@@ -297,10 +341,10 @@ export default function PaymentPage() {
                   </div>
                 </motion.div>
               ) : (
-                <motion.div key="pending" initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="h-full">
+                <motion.div key="pending" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
                   <div className="glass glass-primary rounded-2xl h-full flex flex-col p-8">
                     <div className="section-label mb-8">Execution Protocol</div>
-                    
+
                     <ol className="space-y-8 font-mono text-sm mb-auto">
                       <li className="flex gap-5 group">
                         <div className="w-8 h-8 rounded-full glass bg-primary/10 border-primary/20 text-primary flex items-center justify-center font-bold shrink-0 shadow-[0_0_10px_rgba(20,184,166,0.1)] group-hover:scale-110 transition-transform">1</div>
@@ -312,7 +356,7 @@ export default function PaymentPage() {
                           </Button>
                         </div>
                       </li>
-                      
+
                       <li className="flex gap-5 group">
                         <div className="w-8 h-8 rounded-full glass bg-primary/10 border-primary/20 text-primary flex items-center justify-center font-bold shrink-0 shadow-[0_0_10px_rgba(20,184,166,0.1)] group-hover:scale-110 transition-transform">2</div>
                         <div className="flex-1 pt-1.5">
@@ -321,8 +365,8 @@ export default function PaymentPage() {
                             <div className="px-4 py-2 font-mono text-sm truncate flex-1 text-muted-foreground group-hover:text-foreground transition-colors">
                               {order.treasury_wallet}
                             </div>
-                            <Button 
-                              variant="ghost" 
+                            <Button
+                              variant="ghost"
                               className="rounded-none h-full px-6 border-l border-white/10 hover:bg-primary hover:text-primary-foreground shrink-0 transition-colors"
                               onClick={() => handleCopy(order.treasury_wallet, 'Treasury wallet address')}
                               data-testid="button-copy-treasury"
@@ -332,12 +376,12 @@ export default function PaymentPage() {
                           </div>
                         </div>
                       </li>
-                      
+
                       <li className="flex gap-5 group">
                         <div className="w-8 h-8 rounded-full glass bg-primary/10 border-primary/20 text-primary flex items-center justify-center font-bold shrink-0 shadow-[0_0_10px_rgba(20,184,166,0.1)] group-hover:scale-110 transition-transform">3</div>
                         <div className="flex-1 pt-1.5">
                           <p className="text-foreground uppercase tracking-widest text-[10px] mb-2">Maintain Connection</p>
-                          <p className="text-xs text-muted-foreground leading-relaxed">The system continuously polls the Solana mempool. Payment verification typically resolves within 15-30 seconds. Do not close this terminal.</p>
+                          <p className="text-xs text-muted-foreground leading-relaxed">The system continuously polls the Solana mempool. Payment verification typically resolves within 15–30 seconds. Do not close this terminal.</p>
                         </div>
                       </li>
                     </ol>

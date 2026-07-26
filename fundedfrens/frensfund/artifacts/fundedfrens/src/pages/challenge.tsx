@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { DashboardLayout } from '@/components/DashboardLayout';
 import { useAuth } from '@/contexts/AuthContext';
 import { supabase, CHALLENGE_PLANS, fetchSolPrice, usdToSol, pickTreasuryWallet } from '@/lib/supabase';
@@ -19,6 +19,9 @@ export default function ChallengePage() {
   const [selectedPlan, setSelectedPlan] = useState<typeof CHALLENGE_PLANS[0] | null>(null);
   const [walletAddress, setWalletAddress] = useState('');
   const [creatingOrder, setCreatingOrder] = useState(false);
+
+  // Ref guard — prevents double-submit even if the button re-renders between clicks
+  const creatingOrderRef = useRef(false);
 
   const loadPrice = async () => {
     setLoadingPrice(true);
@@ -51,15 +54,17 @@ export default function ChallengePage() {
   }
 
   const handleCreateOrder = async () => {
-    if (!selectedPlan || !solPrice || !user) return;
-    
+    // Belt-and-suspenders: ref guard prevents any concurrent submission
+    if (creatingOrderRef.current || !selectedPlan || !solPrice || !user) return;
+
     if (!walletAddress.trim() || walletAddress.trim().length < 32) {
       toast.error('Please enter a valid Solana wallet address');
       return;
     }
 
+    creatingOrderRef.current = true;
     setCreatingOrder(true);
-    
+
     try {
       const expiresAt = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes
       const { data: order, error } = await supabase.from('orders').insert({
@@ -74,14 +79,27 @@ export default function ChallengePage() {
       }).select().single();
 
       if (error) throw error;
-      
+
+      // Close dialog before navigating so the overlay is cleanly removed
+      setSelectedPlan(null);
       toast.success('Order created successfully');
-      setLocation(`/payment/${order.id}`);
+
+      // Small defer so dialog close animation can begin before unmount
+      setTimeout(() => setLocation(`/payment/${order.id}`), 80);
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to create order. Please try again.');
     } finally {
+      creatingOrderRef.current = false;
       setCreatingOrder(false);
+    }
+  };
+
+  const handleDialogOpenChange = (open: boolean) => {
+    // Only allow closing when not mid-request
+    if (!open && !creatingOrder) {
+      setSelectedPlan(null);
+      setWalletAddress('');
     }
   };
 
@@ -195,7 +213,7 @@ export default function ChallengePage() {
         </div>
       </div>
 
-      <Dialog open={!!selectedPlan} onOpenChange={(open) => !open && setSelectedPlan(null)}>
+      <Dialog open={!!selectedPlan} onOpenChange={handleDialogOpenChange}>
         <DialogContent className="sm:max-w-lg glass bg-background/80 p-0 overflow-hidden border-white/10">
           <div className="p-6 md:p-8 border-b border-white/[0.05]">
             <DialogHeader>
@@ -246,10 +264,10 @@ export default function ChallengePage() {
           
           <div className="p-6 border-t border-white/[0.05] bg-background/50">
             <DialogFooter className="gap-3 sm:gap-0">
-              <Button variant="ghost" onClick={() => setSelectedPlan(null)} className="font-mono uppercase text-xs tracking-wider" disabled={creatingOrder}>
+              <Button variant="ghost" onClick={() => handleDialogOpenChange(false)} className="font-mono uppercase text-xs tracking-wider" disabled={creatingOrder}>
                 Abort
               </Button>
-              <Button onClick={handleCreateOrder} disabled={creatingOrder || !walletAddress} className="font-mono uppercase text-xs tracking-wider shadow-[0_0_15px_rgba(20,184,166,0.2)]" data-testid="button-create-order">
+              <Button onClick={handleCreateOrder} disabled={creatingOrder || !walletAddress.trim() || walletAddress.trim().length < 32} className="font-mono uppercase text-xs tracking-wider shadow-[0_0_15px_rgba(20,184,166,0.2)]" data-testid="button-create-order">
                 {creatingOrder ? 'Generating Order...' : 'Generate Invoice'}
               </Button>
             </DialogFooter>
