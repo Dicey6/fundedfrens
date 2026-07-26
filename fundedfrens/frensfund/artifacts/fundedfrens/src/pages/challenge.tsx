@@ -80,12 +80,10 @@ export default function ChallengePage() {
 
       if (error) throw error;
 
-      // Close dialog before navigating so the overlay is cleanly removed
+      // Close dialog then navigate. The dialog unmounts cleanly with the page.
       setSelectedPlan(null);
       toast.success('Order created successfully');
-
-      // Small defer so dialog close animation can begin before unmount
-      setTimeout(() => setLocation(`/payment/${order.id}`), 80);
+      setLocation(`/payment/${order.id}`);
     } catch (err: any) {
       console.error(err);
       toast.error('Failed to create order. Please try again.');

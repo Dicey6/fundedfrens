@@ -64,6 +64,17 @@ function SidebarContent({
   profile: any;
   onNav?: () => void;
 }) {
+  const [, navigate] = useLocation();
+
+  const handleSectionNav = (section: DashboardSection) => {
+    setActiveSection(section);
+    // If not already on the dashboard, navigate there so the section is visible.
+    if (location !== '/dashboard') {
+      navigate('/dashboard');
+    }
+    onNav?.();
+  };
+
   const handleLogout = async () => {
     await supabase.auth.signOut();
     window.location.href = '/login';
@@ -77,7 +88,7 @@ function SidebarContent({
       return (
         <button
           key={idx}
-          onClick={() => { setActiveSection(item.section); onNav?.(); }}
+          onClick={() => handleSectionNav(item.section)}
           className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-150 group relative ${
             isActive
               ? 'bg-primary/10 text-primary border border-primary/20'
@@ -147,7 +158,7 @@ function SidebarContent({
         <div>
           <div className="px-3 mb-2 text-[9px] font-mono text-muted-foreground/50 uppercase tracking-[0.2em]">Capital</div>
           <button
-            onClick={() => { setActiveSection('funded'); onNav?.(); }}
+            onClick={() => handleSectionNav('funded')}
             className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-150 group relative ${
               location === '/dashboard' && activeSection === 'funded'
                 ? 'bg-primary/10 text-primary border border-primary/20'
