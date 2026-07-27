@@ -23,6 +23,20 @@ export function pickTreasuryWallet(): string {
   return _walletList[Math.floor(Math.random() * _walletList.length)];
 }
 
+// ── Robinhood Chain Treasury Wallets ─────────────────────────────────────────
+// Set VITE_RH_TREASURY_WALLETS as a comma-separated list of EVM addresses
+// e.g. VITE_RH_TREASURY_WALLETS=0xWallet1,0xWallet2,0xWallet3
+const _rhWalletList = (import.meta.env.VITE_RH_TREASURY_WALLETS as string | undefined)
+  ?.split(',')
+  .map(w => w.trim())
+  .filter(Boolean) ?? [];
+
+/** Pick a random Robinhood Chain treasury wallet for a new order. Never changes after order creation. */
+export function pickRobinhoodTreasuryWallet(): string {
+  if (_rhWalletList.length === 0) return 'RH_TREASURY_WALLET_NOT_CONFIGURED';
+  return _rhWalletList[Math.floor(Math.random() * _rhWalletList.length)];
+}
+
 // ── Challenge Plans (hardcoded — not stored in DB) ──────────────────────────
 export interface ChallengePlan {
   id: 'starter' | 'advanced' | 'professional';
@@ -69,13 +83,21 @@ export interface Order {
   user_id: string;
   challenge_plan: 'starter' | 'advanced' | 'professional';
   purchase_price_usd: number;
-  sol_price_usd: number;
-  required_sol: number;
+  payment_network: 'solana' | 'robinhood';
+  // Solana-specific (null for Robinhood orders)
+  sol_price_usd: number | null;
+  required_sol: number | null;
+  tx_signature: string | null;
+  amount_received_sol: number | null;
+  // Robinhood Chain-specific (null for Solana orders)
+  eth_price_usd: number | null;
+  required_eth: number | null;
+  tx_hash: string | null;
+  amount_received_eth: number | null;
+  // Shared
   treasury_wallet: string;
   user_wallet: string;
   status: 'pending_payment' | 'confirmed' | 'expired' | 'failed';
-  tx_signature: string | null;
-  amount_received_sol: number | null;
   confirmed_at: string | null;
   expires_at: string;
   created_at: string;
@@ -125,8 +147,28 @@ export async function fetchSolPrice(): Promise<number> {
   }
 }
 
+/** Fetch live ETH/USD price from CoinGecko public API */
+export async function fetchEthPrice(): Promise<number> {
+  try {
+    const res = await fetch(
+      'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd',
+      { headers: { Accept: 'application/json' } }
+    );
+    const data = await res.json();
+    return data?.ethereum?.usd ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
 /** Calculate SOL amount needed to cover a USD price at a given SOL/USD rate */
 export function usdToSol(usdAmount: number, solPriceUsd: number): number {
   if (!solPriceUsd) return 0;
   return parseFloat((usdAmount / solPriceUsd).toFixed(6));
+}
+
+/** Calculate ETH amount needed to cover a USD price at a given ETH/USD rate */
+export function usdToEth(usdAmount: number, ethPriceUsd: number): number {
+  if (!ethPriceUsd) return 0;
+  return parseFloat((usdAmount / ethPriceUsd).toFixed(6));
 }

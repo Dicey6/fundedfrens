@@ -216,6 +216,13 @@ export default function PaymentPage() {
   const isExpired = order.status === 'expired' || (order.status === 'pending_payment' && timeLeft === 0);
   const isConfirmed = order.status === 'confirmed';
 
+  // Network-aware display helpers
+  const isRobinhood = order.payment_network === 'robinhood';
+  const networkLabel = isRobinhood ? 'Robinhood Chain' : 'Solana';
+  const currencySymbol = isRobinhood ? 'ETH' : 'SOL';
+  const requiredAmount = isRobinhood ? order.required_eth : order.required_sol;
+  const oracleRate = isRobinhood ? order.eth_price_usd : order.sol_price_usd;
+
   return (
     <DashboardLayout>
       <div className="max-w-4xl mx-auto space-y-8 pb-20">
@@ -275,6 +282,11 @@ export default function PaymentPage() {
                   <div className="font-display text-2xl capitalize text-foreground">{order.challenge_plan}</div>
                 </div>
 
+                <div className="glass bg-black/20 p-4 rounded-xl">
+                  <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">Payment Network</div>
+                  <div className="font-mono text-sm font-bold">{networkLabel} ({currencySymbol})</div>
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="glass bg-black/20 p-4 rounded-xl">
                     <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">USD Base</div>
@@ -282,7 +294,7 @@ export default function PaymentPage() {
                   </div>
                   <div className="glass bg-black/20 p-4 rounded-xl">
                     <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">Oracle Rate</div>
-                    <div className="font-mono text-lg font-bold">${order.sol_price_usd.toFixed(2)}</div>
+                    <div className="font-mono text-lg font-bold">${(oracleRate ?? 0).toFixed(2)}</div>
                   </div>
                 </div>
 
@@ -290,9 +302,9 @@ export default function PaymentPage() {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   <div className="text-[10px] font-mono text-primary uppercase tracking-widest mb-3 relative z-10">Exact Amount Required</div>
                   <div className="flex items-center justify-between relative z-10">
-                    <div className="font-mono text-3xl font-bold text-foreground drop-shadow-[0_0_10px_rgba(20,184,166,0.3)]">{order.required_sol} SOL</div>
+                    <div className="font-mono text-3xl font-bold text-foreground drop-shadow-[0_0_10px_rgba(20,184,166,0.3)]">{requiredAmount} {currencySymbol}</div>
                     {order.status === 'pending_payment' && !isExpired && (
-                      <Button variant="ghost" size="icon" onClick={() => handleCopy(order.required_sol.toString(), 'Amount')} className="hover:bg-primary/20 hover:text-primary h-10 w-10 bg-black/20 border border-white/5">
+                      <Button variant="ghost" size="icon" onClick={() => handleCopy((requiredAmount ?? 0).toString(), 'Amount')} className="hover:bg-primary/20 hover:text-primary h-10 w-10 bg-black/20 border border-white/5">
                         <Copy className="w-4 h-4" />
                       </Button>
                     )}
@@ -350,8 +362,8 @@ export default function PaymentPage() {
                         <div className="w-8 h-8 rounded-full glass bg-primary/10 border-primary/20 text-primary flex items-center justify-center font-bold shrink-0 shadow-[0_0_10px_rgba(20,184,166,0.1)] group-hover:scale-110 transition-transform">1</div>
                         <div className="flex-1 pt-1.5">
                           <p className="text-muted-foreground uppercase tracking-widest text-[10px] mb-3">Copy Exact Payload Amount</p>
-                          <Button variant="outline" onClick={() => handleCopy(order.required_sol.toString(), 'Amount')} className="font-mono text-sm w-full justify-between h-14 bg-black/40 border-white/10 hover:border-primary/50 hover:bg-primary/5 transition-all">
-                            <span className="font-bold text-foreground">{order.required_sol} SOL</span>
+                          <Button variant="outline" onClick={() => handleCopy((requiredAmount ?? 0).toString(), 'Amount')} className="font-mono text-sm w-full justify-between h-14 bg-black/40 border-white/10 hover:border-primary/50 hover:bg-primary/5 transition-all">
+                            <span className="font-bold text-foreground">{requiredAmount} {currencySymbol}</span>
                             <div className="flex items-center gap-2 text-muted-foreground"><span className="text-[10px] uppercase">Copy</span> <Copy className="w-4 h-4 text-primary" /></div>
                           </Button>
                         </div>
@@ -381,7 +393,7 @@ export default function PaymentPage() {
                         <div className="w-8 h-8 rounded-full glass bg-primary/10 border-primary/20 text-primary flex items-center justify-center font-bold shrink-0 shadow-[0_0_10px_rgba(20,184,166,0.1)] group-hover:scale-110 transition-transform">3</div>
                         <div className="flex-1 pt-1.5">
                           <p className="text-foreground uppercase tracking-widest text-[10px] mb-2">Maintain Connection</p>
-                          <p className="text-xs text-muted-foreground leading-relaxed">The system continuously polls the Solana mempool. Payment verification typically resolves within 15–30 seconds. Do not close this terminal.</p>
+                          <p className="text-xs text-muted-foreground leading-relaxed">The system continuously polls the {isRobinhood ? 'Robinhood Chain' : 'Solana'} network. Payment verification typically resolves within 15–30 seconds. Do not close this terminal.</p>
                         </div>
                       </li>
                     </ol>
@@ -394,7 +406,7 @@ export default function PaymentPage() {
                         </div>
                         <div className="relative z-10 flex-1">
                           <p className="font-mono text-sm font-bold text-foreground">Listening for network events...</p>
-                          <p className="font-mono text-[10px] uppercase tracking-widest text-primary/70 mt-1">Polling mempool / Confirming blocks</p>
+                          <p className="font-mono text-[10px] uppercase tracking-widest text-primary/70 mt-1">Polling {isRobinhood ? 'Robinhood Chain' : 'mempool'} / Confirming blocks</p>
                         </div>
                       </div>
 
