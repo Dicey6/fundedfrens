@@ -7,18 +7,15 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { toast } from 'sonner';
-import { 
-  User, Wallet, Mail, Hash, ShieldCheck, 
-  Smartphone, Loader2, Key, History
+import {
+  User, Wallet, Mail, Hash, ShieldCheck,
+  Smartphone, Loader2, Key, History, CheckCircle2, XCircle
 } from 'lucide-react';
 import { format } from 'date-fns';
 
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
 
 const profileSchema = z.object({
   username: z.string().min(3, 'Username must be at least 3 characters.').max(20, 'Username too long.'),
@@ -26,6 +23,16 @@ const profileSchema = z.object({
 });
 
 type ProfileForm = z.infer<typeof profileSchema>;
+
+const container = {
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.08 } },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 12 },
+  show: { opacity: 1, y: 0, transition: { type: 'spring' as const, stiffness: 300, damping: 28 } },
+};
 
 export default function ProfilePage() {
   const { profile, user, refreshProfile } = useAuth();
@@ -39,7 +46,6 @@ export default function ProfilePage() {
     },
   });
 
-  // Update form if profile loads later
   React.useEffect(() => {
     if (profile) {
       form.reset({
@@ -52,7 +58,6 @@ export default function ProfilePage() {
   const onSubmit = async (data: ProfileForm) => {
     if (!user) return;
     setIsUpdating(true);
-    
     try {
       const { error } = await supabase
         .from('profiles')
@@ -61,11 +66,9 @@ export default function ProfilePage() {
           payout_wallet: data.payout_wallet || null,
         })
         .eq('id', user.id);
-
       if (error) throw error;
-      
       await refreshProfile();
-      toast.success('Configuration updated successfully');
+      toast.success('Profile updated successfully');
     } catch (err: any) {
       console.error(err);
       toast.error(err.message || 'Failed to update profile');
@@ -74,44 +77,34 @@ export default function ProfilePage() {
     }
   };
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring" as const, stiffness: 300, damping: 24 } }
-  };
-
   return (
     <DashboardLayout>
-      <motion.div 
-        variants={containerVariants}
+      <motion.div
+        variants={container}
         initial="hidden"
         animate="show"
         className="max-w-4xl mx-auto space-y-6"
       >
         <div>
-          <h1 className="text-3xl font-display font-bold tracking-tight">System Configuration</h1>
-          <p className="text-muted-foreground font-mono text-sm mt-1">Manage identity, payout routes, and security parameters.</p>
+          <h1 className="text-2xl font-display font-bold tracking-tight">Settings</h1>
+          <p className="text-muted-foreground text-sm mt-1">Manage your account details and preferences.</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Identity Form (Left) */}
-          <motion.div variants={itemVariants} className="md:col-span-2">
-            <Card className="border-border bg-card/50 backdrop-blur-sm">
-              <CardHeader className="border-b border-border/50 bg-sidebar/50">
-                <CardTitle className="font-display flex items-center gap-2 text-lg">
-                  <User className="w-5 h-5 text-primary" /> Identity Parameters
-                </CardTitle>
-                <CardDescription className="font-mono text-xs">Update your public handle and payout destination.</CardDescription>
-              </CardHeader>
-              <CardContent className="pt-6">
+
+          {/* Identity Form */}
+          <motion.div variants={item} className="md:col-span-2">
+            <div className="glass rounded-2xl overflow-hidden">
+              <div className="px-6 py-5 border-b border-border flex items-center gap-3">
+                <div className="w-9 h-9 rounded-lg bg-primary/10 border border-primary/15 flex items-center justify-center">
+                  <User className="w-4 h-4 text-primary" />
+                </div>
+                <div>
+                  <h2 className="font-display font-semibold text-base">Identity</h2>
+                  <p className="text-xs text-muted-foreground">Update your handle and payout destination</p>
+                </div>
+              </div>
+              <div className="p-6">
                 <Form {...form}>
                   <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                     <FormField
@@ -120,13 +113,13 @@ export default function ProfilePage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="font-mono text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                            <Hash className="w-3 h-3" /> Operator Handle
+                            <Hash className="w-3 h-3" /> Username
                           </FormLabel>
                           <FormControl>
-                            <Input 
-                              placeholder="trader_alpha" 
-                              {...field} 
-                              className="font-mono bg-background border-input"
+                            <Input
+                              placeholder="trader_alpha"
+                              {...field}
+                              className="font-mono bg-foreground/[0.02] border-border focus-visible:ring-primary focus-visible:border-primary rounded-xl h-11"
                               data-testid="input-profile-username"
                             />
                           </FormControl>
@@ -142,13 +135,13 @@ export default function ProfilePage() {
                       render={({ field }) => (
                         <FormItem>
                           <FormLabel className="font-mono text-xs uppercase tracking-wider text-muted-foreground flex items-center gap-2">
-                            <Wallet className="w-3 h-3" /> Payout Destination (ERC-20 / SOL)
+                            <Wallet className="w-3 h-3" /> Payout Wallet (ERC-20 / SOL)
                           </FormLabel>
                           <FormControl>
-                            <Input 
-                              placeholder="0x..." 
-                              {...field} 
-                              className="font-mono bg-background border-input"
+                            <Input
+                              placeholder="0x... or Sol address"
+                              {...field}
+                              className="font-mono bg-foreground/[0.02] border-border focus-visible:ring-primary focus-visible:border-primary rounded-xl h-11"
                               data-testid="input-profile-wallet"
                             />
                           </FormControl>
@@ -158,89 +151,126 @@ export default function ProfilePage() {
                       )}
                     />
 
-                    <div className="pt-4 flex justify-end">
-                      <Button 
-                        type="submit" 
+                    <div className="pt-2 flex justify-end">
+                      <Button
+                        type="submit"
                         disabled={isUpdating || !form.formState.isDirty}
-                        className="font-mono uppercase tracking-wider min-w-[150px]"
+                        className="font-mono uppercase tracking-wider min-w-[140px] rounded-xl"
                         data-testid="button-save-profile"
                       >
-                        {isUpdating ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                        {isUpdating ? 'Saving...' : 'Save Changes'}
+                        {isUpdating ? (
+                          <><Loader2 className="w-4 h-4 animate-spin mr-2" /> Saving…</>
+                        ) : 'Save Changes'}
                       </Button>
                     </div>
                   </form>
                 </Form>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </motion.div>
 
-          {/* Read-only Specs (Right) */}
-          <div className="space-y-6 md:col-span-1">
-            <motion.div variants={itemVariants}>
-              <Card className="border-border bg-sidebar/50">
-                <CardHeader className="border-b border-border/50 pb-3">
-                  <CardTitle className="font-display text-sm flex items-center gap-2">
-                    <ShieldCheck className="w-4 h-4 text-primary" /> Security Clearance
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4 space-y-4">
+          {/* Right column */}
+          <div className="space-y-4">
+
+            {/* Security card */}
+            <motion.div variants={item}>
+              <div className="glass rounded-2xl overflow-hidden">
+                <div className="px-5 py-4 border-b border-border flex items-center gap-2.5">
+                  <ShieldCheck className="w-4 h-4 text-primary" />
+                  <h3 className="font-display text-sm font-semibold">Security</h3>
+                </div>
+                <div className="p-5 space-y-4">
                   <div>
-                    <label className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 mb-1">
-                      <Mail className="w-3 h-3" /> Registered Email
+                    <label className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 mb-1.5">
+                      <Mail className="w-3 h-3" /> Email
                     </label>
-                    <div className="font-mono text-sm truncate bg-background p-2 rounded border border-border">
+                    <div className="font-mono text-sm truncate bg-foreground/[0.03] border border-border p-2.5 rounded-lg">
                       {user?.email}
                     </div>
                   </div>
-                  
+
                   <div>
-                    <label className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 mb-1">
-                      <Key className="w-3 h-3" /> System ID
+                    <label className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 mb-1.5">
+                      <Key className="w-3 h-3" /> Account ID
                     </label>
-                    <div className="font-mono text-xs text-muted-foreground truncate bg-background p-2 rounded border border-border">
+                    <div className="font-mono text-[10px] text-muted-foreground truncate bg-foreground/[0.03] border border-border p-2.5 rounded-lg">
                       {profile?.id}
                     </div>
                   </div>
 
                   <div>
-                    <label className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 mb-1">
-                      <History className="w-3 h-3" /> Account Initialization
+                    <label className="text-[10px] font-mono uppercase tracking-wider text-muted-foreground flex items-center gap-1 mb-1.5">
+                      <History className="w-3 h-3" /> Joined
                     </label>
-                    <div className="font-mono text-sm text-foreground bg-background p-2 rounded border border-border">
-                      {profile?.created_at ? format(new Date(profile.created_at), 'MMMM dd, yyyy HH:mm') : '—'}
+                    <div className="font-mono text-sm text-foreground bg-foreground/[0.03] border border-border p-2.5 rounded-lg">
+                      {profile?.created_at ? format(new Date(profile.created_at), 'MMM dd, yyyy') : '—'}
                     </div>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </motion.div>
 
-            <motion.div variants={itemVariants}>
-              <Card className="border-border bg-sidebar/50">
-                <CardHeader className="border-b border-border/50 pb-3">
-                  <CardTitle className="font-display text-sm flex items-center gap-2">
-                    <Smartphone className="w-4 h-4 text-accent" /> Telemetry Status
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="pt-4 space-y-4">
+            {/* Status card */}
+            <motion.div variants={item}>
+              <div className="glass rounded-2xl overflow-hidden">
+                <div className="px-5 py-4 border-b border-border flex items-center gap-2.5">
+                  <Smartphone className="w-4 h-4 text-muted-foreground" />
+                  <h3 className="font-display text-sm font-semibold">Connections</h3>
+                </div>
+                <div className="p-5 space-y-4">
                   <div className="flex justify-between items-center">
-                    <span className="font-mono text-xs text-muted-foreground uppercase">Telegram Link</span>
+                    <div>
+                      <p className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Telegram</p>
+                    </div>
                     {profile?.telegram_linked ? (
-                      <Badge variant="outline" className="border-primary text-primary font-mono text-[10px]">Connected</Badge>
+                      <div className="flex items-center gap-1.5 text-emerald-500">
+                        <CheckCircle2 className="w-3.5 h-3.5" />
+                        <span className="text-[10px] font-mono uppercase tracking-wider">Connected</span>
+                      </div>
                     ) : (
-                      <Badge variant="outline" className="border-destructive text-destructive font-mono text-[10px]">Offline</Badge>
+                      <div className="flex items-center gap-1.5 text-muted-foreground/60">
+                        <XCircle className="w-3.5 h-3.5" />
+                        <span className="text-[10px] font-mono uppercase tracking-wider">Offline</span>
+                      </div>
                     )}
                   </div>
-                  <Separator className="bg-border/50" />
+
+                  <div className="h-px bg-border" />
+
                   <div className="flex justify-between items-center">
-                    <span className="font-mono text-xs text-muted-foreground uppercase">Reliability</span>
-                    <span className="font-mono font-bold">{profile?.reliability_rating}/100</span>
+                    <div>
+                      <p className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Reliability</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="h-1.5 w-16 bg-foreground/[0.06] rounded-full overflow-hidden">
+                        <div
+                          className="h-full bg-primary rounded-full transition-all"
+                          style={{ width: `${Math.min(100, profile?.reliability_rating ?? 0)}%` }}
+                        />
+                      </div>
+                      <span className="font-mono font-bold text-sm">{profile?.reliability_rating ?? 0}<span className="text-muted-foreground text-xs">/100</span></span>
+                    </div>
                   </div>
-                </CardContent>
-              </Card>
+
+                  {profile?.challenge_status && profile.challenge_status !== 'none' && (
+                    <>
+                      <div className="h-px bg-border" />
+                      <div className="flex justify-between items-center">
+                        <p className="text-xs font-mono uppercase tracking-wider text-muted-foreground">Challenge</p>
+                        <span className={`text-[10px] font-mono uppercase tracking-wider font-semibold ${
+                          profile.challenge_status === 'active' ? 'text-primary' :
+                          profile.challenge_status === 'approved' ? 'text-emerald-500' :
+                          profile.challenge_status === 'failed' ? 'text-red-400' : 'text-muted-foreground'
+                        }`}>
+                          {profile.challenge_status.replace('_', ' ')}
+                        </span>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
             </motion.div>
           </div>
-
         </div>
       </motion.div>
     </DashboardLayout>

@@ -18,48 +18,30 @@ export default function PaymentPage() {
   const [isPolling, setIsPolling] = useState(true);
   const [isManualChecking, setIsManualChecking] = useState(false);
 
-  // Refs to prevent stale-closure / concurrent-call issues
-  const verifyingRef = useRef(false);       // mutual exclusion: poll + manual check
+  const verifyingRef = useRef(false);
   const redirectTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  // Stable callbacks so polling effect deps don't change every render
   const stableRefreshProfile = useRef(refreshProfile);
   useEffect(() => { stableRefreshProfile.current = refreshProfile; }, [refreshProfile]);
-
   const stableSetLocation = useRef(setLocation);
   useEffect(() => { stableSetLocation.current = setLocation; }, [setLocation]);
 
-  // Clear redirect timer on unmount
   useEffect(() => {
     return () => {
-      if (redirectTimerRef.current !== null) {
-        clearTimeout(redirectTimerRef.current);
-      }
+      if (redirectTimerRef.current !== null) clearTimeout(redirectTimerRef.current);
     };
   }, []);
 
-  // ── Initial order fetch ────────────────────────────────────────────────────
   useEffect(() => {
     let mounted = true;
-
     const fetchOrder = async () => {
       if (!user || !orderId) return;
-
       try {
         const { data, error } = await supabase
-          .from('orders')
-          .select('*')
-          .eq('id', orderId)
-          .eq('user_id', user.id)
-          .single();
-
+          .from('orders').select('*').eq('id', orderId).eq('user_id', user.id).single();
         if (error) throw error;
-
         if (mounted) {
           setOrder(data as Order);
-          if (data.status !== 'pending_payment') {
-            setIsPolling(false);
-          }
+          if (data.status !== 'pending_payment') setIsPolling(false);
         }
       } catch (err) {
         console.error(err);
@@ -68,23 +50,17 @@ export default function PaymentPage() {
         if (mounted) setLoading(false);
       }
     };
-
     fetchOrder();
     return () => { mounted = false; };
   }, [user, orderId]);
 
-  // ── Countdown timer ────────────────────────────────────────────────────────
   useEffect(() => {
     if (!order || order.status !== 'pending_payment') return;
-
     const calculateTimeLeft = () => {
       const expiresAt = new Date(order.expires_at).getTime();
-      const now = Date.now();
-      return Math.max(0, Math.floor((expiresAt - now) / 1000));
+      return Math.max(0, Math.floor((expiresAt - Date.now()) / 1000));
     };
-
     setTimeLeft(calculateTimeLeft());
-
     const timer = setInterval(() => {
       const remaining = calculateTimeLeft();
       setTimeLeft(remaining);
@@ -94,35 +70,22 @@ export default function PaymentPage() {
         clearInterval(timer);
       }
     }, 1000);
-
     return () => clearInterval(timer);
   }, [order?.expires_at, order?.status]);
 
-  // ── Auto-polling ───────────────────────────────────────────────────────────
-  // Uses stable refs for refreshProfile / setLocation so deps never change spuriously,
-  // meaning only one interval is ever alive at a time.
   useEffect(() => {
     if (!orderId || !isPolling || !order || order.status !== 'pending_payment') return;
-
     const poll = async () => {
-      // Skip if a manual check (or another poll) is already in flight
       if (verifyingRef.current) return;
       verifyingRef.current = true;
-
       try {
-        const { data } = await supabase.functions.invoke('verify-payment', {
-          body: { orderId },
-        });
-
+        const { data } = await supabase.functions.invoke('verify-payment', { body: { orderId } });
         if (data?.status === 'confirmed') {
           setIsPolling(false);
           await stableRefreshProfile.current();
           setOrder(prev => prev ? { ...prev, status: 'confirmed' } : null);
           toast.success('Payment confirmed! Your challenge is now active.');
-          redirectTimerRef.current = setTimeout(
-            () => stableSetLocation.current('/dashboard'),
-            3000,
-          );
+          redirectTimerRef.current = setTimeout(() => stableSetLocation.current('/dashboard'), 3000);
         } else if (data?.status === 'expired') {
           setIsPolling(false);
           setOrder(prev => prev ? { ...prev, status: 'expired' } : null);
@@ -133,44 +96,34 @@ export default function PaymentPage() {
         verifyingRef.current = false;
       }
     };
-
     const interval = setInterval(poll, 15000);
     return () => clearInterval(interval);
-    // orderId and order.status are the only things that should restart the interval
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderId, isPolling, order?.status]);
 
-  // ── Copy helper ────────────────────────────────────────────────────────────
   const handleCopy = (text: string, label: string) => {
     navigator.clipboard.writeText(text);
     toast.success(`${label} copied to clipboard`);
   };
 
-  // ── Manual payment check ───────────────────────────────────────────────────
   const handleManualCheck = useCallback(async () => {
     if (!orderId || !user || verifyingRef.current) return;
-
     verifyingRef.current = true;
     setIsManualChecking(true);
-
     try {
       const { data } = await supabase.functions.invoke('verify-payment', { body: { orderId } });
-
       if (data?.status === 'confirmed') {
         setIsPolling(false);
         await stableRefreshProfile.current();
         setOrder(prev => prev ? { ...prev, status: 'confirmed' } : null);
         toast.success('Payment confirmed! Your challenge is now active.');
-        redirectTimerRef.current = setTimeout(
-          () => stableSetLocation.current('/dashboard'),
-          3000,
-        );
+        redirectTimerRef.current = setTimeout(() => stableSetLocation.current('/dashboard'), 3000);
       } else if (data?.status === 'expired') {
         setIsPolling(false);
         setOrder(prev => prev ? { ...prev, status: 'expired' } : null);
         toast.error('Payment window has expired. Please start a new challenge.');
       } else {
-        toast.info('Blockchain verification still in progress. Please wait a moment and try again.');
+        toast.info('Blockchain verification in progress. Please wait a moment and try again.');
       }
     } catch {
       toast.error('Unable to check payment status. Please try again.');
@@ -190,7 +143,7 @@ export default function PaymentPage() {
     return (
       <DashboardLayout>
         <div className="flex h-[60vh] items-center justify-center">
-          <Loader2 className="w-12 h-12 animate-spin text-primary opacity-50" />
+          <Loader2 className="w-10 h-10 animate-spin text-primary opacity-40" />
         </div>
       </DashboardLayout>
     );
@@ -199,14 +152,16 @@ export default function PaymentPage() {
   if (!order) {
     return (
       <DashboardLayout>
-        <div className="glass rounded-2xl flex flex-col items-center justify-center p-12 text-center min-h-[60vh]">
-          <AlertCircle className="w-16 h-16 text-destructive mb-6 opacity-80" />
-          <h2 className="text-2xl font-display font-bold mb-4">Invoice Not Found</h2>
+        <div className="flex flex-col items-center justify-center p-12 text-center min-h-[60vh]">
+          <div className="w-16 h-16 rounded-2xl bg-destructive/10 border border-destructive/20 flex items-center justify-center mb-6">
+            <AlertCircle className="w-8 h-8 text-destructive/70" />
+          </div>
+          <h2 className="text-2xl font-display font-bold mb-3">Invoice Not Found</h2>
           <p className="text-muted-foreground font-mono mb-8 max-w-md text-sm">
-            The requested invoice could not be located in the registry.
+            The requested invoice could not be located.
           </p>
-          <Button onClick={() => setLocation('/dashboard')} variant="outline" className="font-mono uppercase tracking-wider bg-black/20 border-white/10 hover:bg-white/5">
-            Return to Terminal
+          <Button onClick={() => setLocation('/dashboard')} variant="outline" className="font-mono uppercase tracking-wider rounded-xl">
+            Return to Dashboard
           </Button>
         </div>
       </DashboardLayout>
@@ -215,8 +170,8 @@ export default function PaymentPage() {
 
   const isExpired = order.status === 'expired' || (order.status === 'pending_payment' && timeLeft === 0);
   const isConfirmed = order.status === 'confirmed';
+  const isPending = order.status === 'pending_payment' && !isExpired;
 
-  // Network-aware display helpers
   const isRobinhood = order.payment_network === 'robinhood';
   const networkLabel = isRobinhood ? 'Robinhood Chain' : 'Solana';
   const currencySymbol = isRobinhood ? 'ETH' : 'SOL';
@@ -225,161 +180,184 @@ export default function PaymentPage() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-4xl mx-auto space-y-8 pb-20">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 glass rounded-2xl p-6 relative overflow-hidden">
-          {order.status === 'pending_payment' && !isExpired && (
-            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500/10 blur-[50px] pointer-events-none" />
-          )}
-          {isConfirmed && (
-            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/20 blur-[50px] pointer-events-none" />
-          )}
+      <div className="max-w-4xl mx-auto space-y-6 pb-20">
 
-          <div className="relative z-10">
-            <div className="section-label mb-2 text-primary/80">Payment Gateway</div>
-            <div className="flex items-center gap-4 mb-2">
-              <h1 className="text-3xl font-display font-bold tracking-tight">Invoice Awaiting</h1>
-              {order.status === 'pending_payment' && !isExpired && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-amber-500/10 text-amber-500 border border-amber-500/20 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" /> Pending
-                </span>
-              )}
-              {isConfirmed && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                  <CheckCircle2 className="w-3 h-3" /> Confirmed
-                </span>
-              )}
-              {isExpired && (
-                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">
-                  <AlertCircle className="w-3 h-3" /> Expired
-                </span>
-              )}
-            </div>
-            <p className="text-muted-foreground font-mono text-[10px] uppercase tracking-widest mt-2">ID: {order.id}</p>
-          </div>
+        {/* Header */}
+        <div className="glass rounded-2xl p-6 relative overflow-hidden">
+          {isPending && <div className="absolute top-0 left-0 right-0 h-0.5 bg-amber-400/60" />}
+          {isConfirmed && <div className="absolute top-0 left-0 right-0 h-0.5 bg-emerald-500/60" />}
+          {isExpired && <div className="absolute top-0 left-0 right-0 h-0.5 bg-red-500/40" />}
 
-          {order.status === 'pending_payment' && !isExpired && (
-            <div className="flex items-center gap-4 glass bg-black/40 px-6 py-4 rounded-xl relative z-10 border border-amber-500/20">
-              <div className="flex flex-col">
-                <span className="text-[10px] font-mono uppercase tracking-widest text-amber-500/80 mb-1">Time Remaining</span>
-                <div className="font-mono text-3xl font-bold tracking-widest text-amber-500 drop-shadow-[0_0_8px_rgba(245,158,11,0.5)]">
-                  {formatTime(timeLeft)}
-                </div>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+            <div>
+              <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-2">Payment Gateway</p>
+              <div className="flex items-center gap-3 flex-wrap">
+                <h1 className="text-2xl font-display font-bold tracking-tight">
+                  {isConfirmed ? 'Payment Confirmed' : isExpired ? 'Payment Expired' : 'Awaiting Payment'}
+                </h1>
+                {isPending && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-amber-500/10 text-amber-500 border border-amber-500/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" /> Pending
+                  </span>
+                )}
+                {isConfirmed && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                    <CheckCircle2 className="w-3 h-3" /> Confirmed
+                  </span>
+                )}
+                {isExpired && (
+                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider bg-red-500/10 text-red-400 border border-red-500/20">
+                    <AlertCircle className="w-3 h-3" /> Expired
+                  </span>
+                )}
               </div>
-              <Clock className="w-8 h-8 text-amber-500/30 ml-2" />
+              <p className="text-muted-foreground font-mono text-[10px] uppercase tracking-widest mt-2">ID: {order.id}</p>
             </div>
-          )}
+
+            {isPending && (
+              <div className="flex items-center gap-3 bg-amber-500/6 border border-amber-500/20 px-5 py-3.5 rounded-xl">
+                <div className="flex flex-col">
+                  <span className="text-[10px] font-mono uppercase tracking-widest text-amber-500/70 mb-0.5">Time Remaining</span>
+                  <div className="font-mono text-2xl font-bold tracking-widest text-amber-500">
+                    {formatTime(timeLeft)}
+                  </div>
+                </div>
+                <Clock className="w-6 h-6 text-amber-500/30" />
+              </div>
+            )}
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-8">
-          {/* Order Details Column */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ type: "spring", stiffness: 300, damping: 24 }} className="md:col-span-2">
-            <div className="glass rounded-2xl p-6 h-full flex flex-col">
-              <div className="section-label mb-6 flex items-center gap-2"><ShieldCheck className="w-4 h-4" /> Invoice Details</div>
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-5">
+          {/* Invoice Details */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 28 }}
+            className="md:col-span-2"
+          >
+            <div className="glass rounded-2xl p-6 h-full flex flex-col gap-5">
+              <p className="section-label flex items-center gap-2"><ShieldCheck className="w-4 h-4" /> Invoice Details</p>
 
-              <div className="space-y-6 flex-1">
-                <div>
-                  <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1">Allocation Plan</div>
-                  <div className="font-display text-2xl capitalize text-foreground">{order.challenge_plan}</div>
+              <div>
+                <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-1">Allocation Plan</div>
+                <div className="font-display text-xl capitalize text-foreground font-semibold">{order.challenge_plan}</div>
+              </div>
+
+              <div className="bg-foreground/[0.03] border border-border p-4 rounded-xl">
+                <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">Payment Network</div>
+                <div className="font-mono text-sm font-bold">{networkLabel} ({currencySymbol})</div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div className="bg-foreground/[0.03] border border-border p-4 rounded-xl">
+                  <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">USD Base</div>
+                  <div className="font-mono text-lg font-bold">${order.purchase_price_usd.toFixed(2)}</div>
                 </div>
-
-                <div className="glass bg-black/20 p-4 rounded-xl">
-                  <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">Payment Network</div>
-                  <div className="font-mono text-sm font-bold">{networkLabel} ({currencySymbol})</div>
+                <div className="bg-foreground/[0.03] border border-border p-4 rounded-xl">
+                  <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">Oracle Rate</div>
+                  <div className="font-mono text-lg font-bold">${(oracleRate ?? 0).toFixed(2)}</div>
                 </div>
+              </div>
 
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="glass bg-black/20 p-4 rounded-xl">
-                    <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">USD Base</div>
-                    <div className="font-mono text-lg font-bold">${order.purchase_price_usd.toFixed(2)}</div>
-                  </div>
-                  <div className="glass bg-black/20 p-4 rounded-xl">
-                    <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">Oracle Rate</div>
-                    <div className="font-mono text-lg font-bold">${(oracleRate ?? 0).toFixed(2)}</div>
-                  </div>
+              {/* Amount required */}
+              <div className="bg-primary/6 border border-primary/20 p-5 rounded-xl relative overflow-hidden">
+                <div className="text-[10px] font-mono text-primary uppercase tracking-widest mb-2">Exact Amount Required</div>
+                <div className="flex items-center justify-between">
+                  <div className="font-mono text-3xl font-bold text-foreground">{requiredAmount} {currencySymbol}</div>
+                  {isPending && (
+                    <Button variant="ghost" size="icon" onClick={() => handleCopy((requiredAmount ?? 0).toString(), 'Amount')} className="hover:bg-primary/10 hover:text-primary h-10 w-10 rounded-lg">
+                      <Copy className="w-4 h-4" />
+                    </Button>
+                  )}
                 </div>
+              </div>
 
-                <div className="glass glass-primary bg-primary/5 p-5 rounded-xl border border-primary/20 relative overflow-hidden group">
-                  <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                  <div className="text-[10px] font-mono text-primary uppercase tracking-widest mb-3 relative z-10">Exact Amount Required</div>
-                  <div className="flex items-center justify-between relative z-10">
-                    <div className="font-mono text-3xl font-bold text-foreground drop-shadow-[0_0_10px_rgba(20,184,166,0.3)]">{requiredAmount} {currencySymbol}</div>
-                    {order.status === 'pending_payment' && !isExpired && (
-                      <Button variant="ghost" size="icon" onClick={() => handleCopy((requiredAmount ?? 0).toString(), 'Amount')} className="hover:bg-primary/20 hover:text-primary h-10 w-10 bg-black/20 border border-white/5">
-                        <Copy className="w-4 h-4" />
-                      </Button>
-                    )}
-                  </div>
-                </div>
-
-                <div>
-                  <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-2">Expecting Transfer From</div>
-                  <div className="font-mono text-xs break-all glass bg-black/40 p-3 rounded-lg text-muted-foreground border-white/[0.03]">
-                    {order.user_wallet}
-                  </div>
+              <div>
+                <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-2">Sending From</div>
+                <div className="font-mono text-xs break-all bg-foreground/[0.03] border border-border p-3 rounded-lg text-muted-foreground">
+                  {order.user_wallet}
                 </div>
               </div>
             </div>
           </motion.div>
 
           {/* Action Column */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, type: "spring", stiffness: 300, damping: 24 }} className="md:col-span-3">
-            {/* mode="sync" — exit and enter animate simultaneously, never blocks interaction */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.08, type: 'spring', stiffness: 300, damping: 28 }}
+            className="md:col-span-3"
+          >
             <AnimatePresence mode="sync">
               {isConfirmed ? (
-                <motion.div key="confirmed" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
-                  <div className="glass bg-emerald-500/5 border-emerald-500/30 rounded-2xl h-full flex flex-col items-center justify-center p-12 text-center shadow-[0_0_40px_rgba(16,185,129,0.1)] relative overflow-hidden">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.15)_0%,transparent_70%)]" />
-                    <CheckCircle2 className="w-24 h-24 text-emerald-400 mb-8 drop-shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
-                    <h3 className="font-display text-3xl font-bold mb-4 text-emerald-50">Transaction Verified</h3>
-                    <p className="font-mono text-sm text-emerald-500/70 mb-10 max-w-sm leading-relaxed">
-                      Payment detected on-chain. Your evaluation environment is being provisioned. Redirecting sequence initiated.
+                <motion.div key="confirmed" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
+                  <div className="glass rounded-2xl h-full flex flex-col items-center justify-center p-12 text-center relative overflow-hidden border border-emerald-500/20">
+                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-emerald-500/50" />
+                    <div className="w-20 h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center mb-6">
+                      <CheckCircle2 className="w-10 h-10 text-emerald-400" />
+                    </div>
+                    <h3 className="font-display text-2xl font-bold mb-3 text-emerald-400">Payment Verified</h3>
+                    <p className="font-mono text-sm text-muted-foreground mb-8 max-w-sm leading-relaxed">
+                      Your payment was detected on-chain. Your evaluation environment is being provisioned. Redirecting in a moment…
                     </p>
-                    <Button onClick={() => setLocation('/dashboard')} className="font-mono uppercase tracking-wider w-full max-w-xs h-12 bg-emerald-600 hover:bg-emerald-500 text-white shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-                      Enter Terminal <ArrowRight className="w-4 h-4 ml-2" />
+                    <Button onClick={() => setLocation('/dashboard')} className="font-mono uppercase tracking-wider w-full max-w-xs h-12 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl">
+                      Enter Dashboard <ArrowRight className="w-4 h-4 ml-2" />
                     </Button>
                   </div>
                 </motion.div>
               ) : isExpired ? (
-                <motion.div key="expired" initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
-                  <div className="glass bg-red-500/5 border-red-500/20 rounded-2xl h-full flex flex-col items-center justify-center p-12 text-center relative overflow-hidden">
-                    <AlertCircle className="w-20 h-20 text-red-500/50 mb-6" />
-                    <h3 className="font-display text-2xl font-bold mb-4">Session Timeout</h3>
+                <motion.div key="expired" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
+                  <div className="glass rounded-2xl h-full flex flex-col items-center justify-center p-12 text-center relative overflow-hidden border border-red-500/15">
+                    <div className="w-16 h-16 rounded-2xl bg-red-500/8 border border-red-500/20 flex items-center justify-center mb-6">
+                      <AlertCircle className="w-8 h-8 text-red-400/70" />
+                    </div>
+                    <h3 className="font-display text-2xl font-bold mb-3">Payment Expired</h3>
                     <p className="font-mono text-sm text-muted-foreground mb-8 max-w-sm leading-relaxed">
-                      The active payment window has elapsed. The exchange rate is no longer guaranteed. Please generate a new invoice.
+                      The payment window has elapsed. The exchange rate is no longer guaranteed. Please generate a new invoice.
                     </p>
-                    <Button onClick={() => setLocation('/challenge')} variant="outline" className="border-red-500/30 text-red-400 hover:bg-red-500/10 font-mono uppercase tracking-wider w-full max-w-xs h-12">
-                      Initialize New Run
+                    <Button onClick={() => setLocation('/challenge')} variant="outline" className="border-red-500/25 text-red-400 hover:bg-red-500/8 font-mono uppercase tracking-wider w-full max-w-xs h-12 rounded-xl">
+                      Start New Challenge
                     </Button>
                   </div>
                 </motion.div>
               ) : (
                 <motion.div key="pending" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
-                  <div className="glass glass-primary rounded-2xl h-full flex flex-col p-8">
-                    <div className="section-label mb-8">Execution Protocol</div>
+                  <div className="glass rounded-2xl h-full flex flex-col p-8">
+                    <p className="section-label mb-8">Payment Instructions</p>
 
-                    <ol className="space-y-8 font-mono text-sm mb-auto">
-                      <li className="flex gap-5 group">
-                        <div className="w-8 h-8 rounded-full glass bg-primary/10 border-primary/20 text-primary flex items-center justify-center font-bold shrink-0 shadow-[0_0_10px_rgba(20,184,166,0.1)] group-hover:scale-110 transition-transform">1</div>
-                        <div className="flex-1 pt-1.5">
-                          <p className="text-muted-foreground uppercase tracking-widest text-[10px] mb-3">Copy Exact Payload Amount</p>
-                          <Button variant="outline" onClick={() => handleCopy((requiredAmount ?? 0).toString(), 'Amount')} className="font-mono text-sm w-full justify-between h-14 bg-black/40 border-white/10 hover:border-primary/50 hover:bg-primary/5 transition-all">
+                    <ol className="space-y-7 font-mono text-sm mb-auto">
+                      {/* Step 1 */}
+                      <li className="flex gap-4">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 text-primary flex items-center justify-center font-bold shrink-0 text-xs">1</div>
+                        <div className="flex-1 pt-1">
+                          <p className="text-muted-foreground uppercase tracking-widest text-[10px] mb-2">Copy exact amount</p>
+                          <Button
+                            variant="outline"
+                            onClick={() => handleCopy((requiredAmount ?? 0).toString(), 'Amount')}
+                            className="font-mono text-sm w-full justify-between h-14 bg-foreground/[0.02] border-border hover:border-primary/40 hover:bg-primary/4 transition-all rounded-xl"
+                          >
                             <span className="font-bold text-foreground">{requiredAmount} {currencySymbol}</span>
-                            <div className="flex items-center gap-2 text-muted-foreground"><span className="text-[10px] uppercase">Copy</span> <Copy className="w-4 h-4 text-primary" /></div>
+                            <div className="flex items-center gap-2 text-muted-foreground">
+                              <span className="text-[10px] uppercase">Copy</span>
+                              <Copy className="w-4 h-4 text-primary" />
+                            </div>
                           </Button>
                         </div>
                       </li>
 
-                      <li className="flex gap-5 group">
-                        <div className="w-8 h-8 rounded-full glass bg-primary/10 border-primary/20 text-primary flex items-center justify-center font-bold shrink-0 shadow-[0_0_10px_rgba(20,184,166,0.1)] group-hover:scale-110 transition-transform">2</div>
-                        <div className="flex-1 pt-1.5">
-                          <p className="text-muted-foreground uppercase tracking-widest text-[10px] mb-3">Transmit to Treasury Address</p>
-                          <div className="flex items-center glass bg-black/40 border-white/10 rounded-lg overflow-hidden h-14 transition-all hover:border-primary/50 group-hover:bg-primary/5">
-                            <div className="px-4 py-2 font-mono text-sm truncate flex-1 text-muted-foreground group-hover:text-foreground transition-colors">
+                      {/* Step 2 */}
+                      <li className="flex gap-4">
+                        <div className="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 text-primary flex items-center justify-center font-bold shrink-0 text-xs">2</div>
+                        <div className="flex-1 pt-1">
+                          <p className="text-muted-foreground uppercase tracking-widest text-[10px] mb-2">Send to treasury address</p>
+                          <div className="flex items-center bg-foreground/[0.02] border border-border rounded-xl overflow-hidden h-14 hover:border-primary/40 transition-all">
+                            <div className="px-4 py-2 font-mono text-xs truncate flex-1 text-muted-foreground">
                               {order.treasury_wallet}
                             </div>
                             <Button
                               variant="ghost"
-                              className="rounded-none h-full px-6 border-l border-white/10 hover:bg-primary hover:text-primary-foreground shrink-0 transition-colors"
+                              className="rounded-none h-full px-5 border-l border-border hover:bg-primary hover:text-black shrink-0 transition-all"
                               onClick={() => handleCopy(order.treasury_wallet, 'Treasury wallet address')}
                               data-testid="button-copy-treasury"
                             >
@@ -389,43 +367,40 @@ export default function PaymentPage() {
                         </div>
                       </li>
 
-                      <li className="flex gap-5 group">
-                        <div className="w-8 h-8 rounded-full glass bg-primary/10 border-primary/20 text-primary flex items-center justify-center font-bold shrink-0 shadow-[0_0_10px_rgba(20,184,166,0.1)] group-hover:scale-110 transition-transform">3</div>
+                      {/* Step 3 */}
+                      <li className="flex gap-4">
+                        <div className="w-8 h-8 rounded-lg bg-foreground/[0.06] border border-border text-muted-foreground flex items-center justify-center font-bold shrink-0 text-xs">3</div>
                         <div className="flex-1 pt-1.5">
-                          <p className="text-foreground uppercase tracking-widest text-[10px] mb-2">Maintain Connection</p>
-                          <p className="text-xs text-muted-foreground leading-relaxed">The system continuously polls the {isRobinhood ? 'Robinhood Chain' : 'Solana'} network. Payment verification typically resolves within 15–30 seconds. Do not close this terminal.</p>
+                          <p className="text-foreground uppercase tracking-widest text-[10px] mb-1.5">Keep this page open</p>
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            The system continuously polls the {isRobinhood ? 'Robinhood Chain' : 'Solana'} network. Payment verification typically resolves within 15–30 seconds.
+                          </p>
                         </div>
                       </li>
                     </ol>
 
-                    <div className="mt-10 space-y-3">
-                      <div className="p-5 glass bg-black/40 border-primary/20 rounded-xl flex items-center gap-4 relative overflow-hidden">
-                        <div className="absolute inset-0 bg-primary/5 animate-pulse" />
-                        <div className="relative z-10 p-2 glass rounded-full bg-primary/10 border-primary/30">
-                          <Loader2 className="w-5 h-5 text-primary animate-spin" />
+                    <div className="mt-8 space-y-3">
+                      {/* Polling indicator */}
+                      <div className="p-4 bg-primary/4 border border-primary/15 rounded-xl flex items-center gap-3">
+                        <div className="p-1.5 bg-primary/10 rounded-lg flex-shrink-0">
+                          <Loader2 className="w-4 h-4 text-primary animate-spin" />
                         </div>
-                        <div className="relative z-10 flex-1">
-                          <p className="font-mono text-sm font-bold text-foreground">Listening for network events...</p>
-                          <p className="font-mono text-[10px] uppercase tracking-widest text-primary/70 mt-1">Polling {isRobinhood ? 'Robinhood Chain' : 'mempool'} / Confirming blocks</p>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-mono text-xs font-semibold text-foreground">Listening for payment…</p>
+                          <p className="font-mono text-[10px] text-primary/60 mt-0.5 uppercase tracking-widest">Polling {isRobinhood ? 'Robinhood Chain' : 'Solana'} · Auto-verifying</p>
                         </div>
                       </div>
 
                       <Button
                         onClick={handleManualCheck}
                         disabled={isManualChecking}
-                        className="w-full h-12 font-mono uppercase tracking-wider text-sm font-semibold"
+                        className="w-full h-12 font-mono uppercase tracking-wider text-sm font-semibold rounded-xl"
                         variant="outline"
                       >
                         {isManualChecking ? (
-                          <>
-                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                            Checking blockchain...
-                          </>
+                          <><Loader2 className="w-4 h-4 mr-2 animate-spin" /> Checking…</>
                         ) : (
-                          <>
-                            <RefreshCw className="w-4 h-4 mr-2" />
-                            I've Made the Payment
-                          </>
+                          <><RefreshCw className="w-4 h-4 mr-2" /> I've Sent the Payment</>
                         )}
                       </Button>
                     </div>
