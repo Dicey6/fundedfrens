@@ -20,7 +20,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const stored = localStorage.getItem('ff-theme');
       if (stored === 'light' || stored === 'dark') return stored;
     } catch {}
-    return 'light';
+    return 'dark';
   });
 
   useEffect(() => {
