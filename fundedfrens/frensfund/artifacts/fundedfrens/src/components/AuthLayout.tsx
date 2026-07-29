@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { TrendingUp, ShieldCheck, Zap, Users, CheckCircle } from 'lucide-react';
+import { TrendingUp, ShieldCheck, Zap, Users } from 'lucide-react';
 import { Link } from 'wouter';
 
 interface AuthLayoutProps {
@@ -28,7 +28,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
     <div className="min-h-screen bg-background flex flex-col md:flex-row">
 
       {/* ── Left panel — branding ── */}
-      <div className="hidden md:flex md:w-[50%] lg:w-[48%] flex-col justify-between relative overflow-hidden bg-sidebar border-r border-border">
+      <div className="hidden md:flex md:w-[50%] lg:w-[48%] flex-col justify-between relative overflow-hidden bg-sidebar border-r border-sidebar-border">
 
         {/* Subtle background */}
         <div className="absolute inset-0 pointer-events-none">
@@ -43,9 +43,9 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
           <div>
             <div className="flex items-center justify-between mb-14">
               <Link href="/">
-                <div className="flex items-center gap-3 cursor-pointer">
-                  <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center">
-                    <span className="text-black font-display font-bold text-sm">FF</span>
+                <div className="flex items-center gap-3 cursor-pointer group">
+                  <div className="w-10 h-10 rounded-xl overflow-hidden border-2 border-primary/40 flex-shrink-0 group-hover:border-primary/70 transition-colors shadow-lg">
+                    <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
                   </div>
                   <span className="font-display font-bold text-xl text-foreground tracking-tight">FundedFrens</span>
                 </div>
@@ -69,6 +69,19 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
               <p className="text-muted-foreground text-sm leading-relaxed max-w-sm">
                 Prove your edge on a demo account. Hit the targets. Get funded with real firm capital and keep 80% of profits.
               </p>
+            </div>
+
+            {/* Network badges */}
+            <div className="flex items-center gap-3 mb-8">
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl network-badge-solana">
+                <img src="/solana-logo.jpeg" alt="Solana" className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
+                <span className="text-xs font-mono font-semibold text-purple-300">Solana</span>
+              </div>
+              <div className="text-muted-foreground/30 text-xs">+</div>
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl network-badge-robinhood">
+                <img src="/robinhood-logo.png" alt="Robinhood" className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
+                <span className="text-xs font-mono font-semibold text-primary">Robinhood Chain</span>
+              </div>
             </div>
 
             {/* Feature list */}
@@ -105,8 +118,8 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
         <div className="w-full max-w-md relative z-10">
           {/* Mobile logo */}
           <div className="md:hidden flex flex-col items-center mb-10 text-center">
-            <div className="w-14 h-14 rounded-2xl bg-primary flex items-center justify-center mb-4">
-              <span className="text-black font-display font-bold text-xl">FF</span>
+            <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-primary/40 mb-4 shadow-xl">
+              <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
             </div>
             <span className="font-display font-bold text-2xl text-foreground">FundedFrens</span>
             <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mt-1">Crypto Prop Trading</span>
@@ -115,7 +128,7 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
           <motion.div
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.35, ease: 'easeOut' }}
+            transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
           >
             <div className="mb-8">
               <h2 className="text-3xl font-display font-semibold tracking-tight text-foreground mb-2">{title}</h2>
@@ -125,9 +138,10 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
             {children}
           </motion.div>
 
-          <div className="md:hidden mt-10 flex items-center justify-center gap-2 text-[10px] font-mono text-muted-foreground/50">
-            <CheckCircle className="w-3 h-3 text-primary/50" />
-            <span className="uppercase tracking-widest">Secure · Encrypted · Non-custodial</span>
+          <div className="md:hidden mt-10 flex items-center justify-center gap-3">
+            <img src="/solana-logo.jpeg" alt="Solana" className="w-5 h-5 rounded-full object-cover opacity-60" />
+            <span className="text-[10px] font-mono text-muted-foreground/50 uppercase tracking-widest">Secure · Encrypted · Non-custodial</span>
+            <img src="/robinhood-logo.png" alt="Robinhood" className="w-5 h-5 rounded-full object-cover opacity-60" />
           </div>
         </div>
       </div>

@@ -12,8 +12,8 @@ import { Button } from '@/components/ui/button';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const fadeUp = {
-  hidden: { opacity: 0, y: 20 },
-  show: (i = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.07, duration: 0.45, ease: 'easeOut' } }),
+  hidden: { opacity: 0, y: 24 },
+  show: (i = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.07, duration: 0.5, ease: [0.4, 0, 0.2, 1] } }),
 };
 
 const stats = [
@@ -103,6 +103,69 @@ function SectionTag({ children }: { children: React.ReactNode }) {
   );
 }
 
+// ── Creative Network Hero Badge ───────────────────────────────────────────────
+function NetworkHeroBadge() {
+  return (
+    <div className="inline-flex items-center gap-0 relative select-none">
+      {/* Solana chip */}
+      <motion.div
+        className="flex items-center gap-2.5 px-4 py-2.5 rounded-l-full border-2 border-r-0 z-10 relative"
+        style={{
+          background: 'linear-gradient(135deg, rgba(153,69,255,0.18) 0%, rgba(0,209,140,0.10) 100%)',
+          borderColor: 'rgba(153,69,255,0.45)',
+        }}
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+        whileHover={{ y: -2, transition: { duration: 0.15 } }}
+      >
+        <div className="w-6 h-6 rounded-full overflow-hidden border border-purple-400/40 flex-shrink-0 shadow-lg float-anim">
+          <img src="/solana-logo.jpeg" alt="Solana" className="w-full h-full object-cover" />
+        </div>
+        <div>
+          <div className="text-[11px] font-mono font-bold uppercase tracking-widest text-purple-300 leading-none">Solana</div>
+          <div className="text-[9px] font-mono text-purple-300/50 uppercase tracking-wider mt-0.5">SOL</div>
+        </div>
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+      </motion.div>
+
+      {/* Centre divider */}
+      <motion.div
+        className="relative z-20 -mx-1"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.35, duration: 0.3 }}
+      >
+        <div className="w-8 h-8 rounded-full bg-background border-2 border-primary/40 flex items-center justify-center shadow-md">
+          <span className="text-primary text-[10px] font-bold">+</span>
+        </div>
+      </motion.div>
+
+      {/* Robinhood chip */}
+      <motion.div
+        className="flex items-center gap-2.5 px-4 py-2.5 rounded-r-full border-2 border-l-0 z-10 relative"
+        style={{
+          background: 'linear-gradient(135deg, rgba(204,255,0,0.15) 0%, rgba(0,0,0,0.08) 100%)',
+          borderColor: 'rgba(204,255,0,0.45)',
+        }}
+        initial={{ opacity: 0, x: 20 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
+        whileHover={{ y: -2, transition: { duration: 0.15 } }}
+      >
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
+        <div>
+          <div className="text-[11px] font-mono font-bold uppercase tracking-widest text-primary leading-none">Robinhood Chain</div>
+          <div className="text-[9px] font-mono text-primary/50 uppercase tracking-wider mt-0.5">ETH</div>
+        </div>
+        <div className="w-6 h-6 rounded-full overflow-hidden border border-primary/40 flex-shrink-0 shadow-lg float-anim-delay">
+          <img src="/robinhood-logo.png" alt="Robinhood Chain" className="w-full h-full object-cover" />
+        </div>
+      </motion.div>
+    </div>
+  );
+}
+
 export default function HomePage() {
   const [navOpen, setNavOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -115,9 +178,9 @@ export default function HomePage() {
       {/* ── NAVBAR ── */}
       <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-3 flex-shrink-0">
-            <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center">
-              <span className="text-black font-display font-bold text-sm">FF</span>
+          <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
+            <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-primary/30 group-hover:border-primary/60 transition-all duration-200 shadow-md flex-shrink-0">
+              <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
             </div>
             <span className="font-display font-bold text-lg text-foreground tracking-tight">FundedFrens</span>
           </Link>
@@ -129,20 +192,27 @@ export default function HomePage() {
               { label: 'Pricing', href: '#plans' },
               { label: 'FAQ', href: '#faq' },
             ].map(({ label, href }) => (
-              <a key={href} href={href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">{label}</a>
+              <a key={href} href={href} className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-150">{label}</a>
             ))}
           </nav>
 
           <div className="hidden md:flex items-center gap-2">
             <button
               onClick={toggleTheme}
-              className="w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-foreground/[0.05] transition-colors"
+              className="w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-foreground/[0.06] transition-all duration-200"
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              <motion.div
+                key={theme}
+                initial={{ rotate: -30, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                transition={{ duration: 0.2 }}
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </motion.div>
             </button>
             <Button variant="ghost" className="text-sm text-muted-foreground hover:text-foreground" onClick={() => navigate('/login')}>Log In</Button>
-            <Button className="text-sm font-semibold px-5 rounded-xl" onClick={() => navigate('/signup')}>
+            <Button className="text-sm font-semibold px-5 rounded-xl neon-glow" onClick={() => navigate('/signup')}>
               Get Started <ArrowRight className="w-4 h-4 ml-1.5" />
             </Button>
           </div>
@@ -156,7 +226,12 @@ export default function HomePage() {
         </div>
 
         {navOpen && (
-          <div className="md:hidden border-t border-border bg-background px-4 pb-4 space-y-1">
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden border-t border-border bg-background px-4 pb-4 space-y-1"
+          >
             {[
               { label: 'Features', href: '#features' },
               { label: 'How It Works', href: '#how-it-works' },
@@ -168,34 +243,45 @@ export default function HomePage() {
                 {label}
               </a>
             ))}
-            <div className="pt-3 grid grid-cols-2 gap-2 border-t border-border">
-              <Button variant="outline" className="w-full text-sm rounded-xl" onClick={() => { setNavOpen(false); navigate('/login'); }}>Login</Button>
-              <Button className="w-full text-sm font-semibold rounded-xl" onClick={() => { setNavOpen(false); navigate('/signup'); }}>Get Started</Button>
+            <div className="pt-3 space-y-2 border-t border-border">
+              <button
+                onClick={toggleTheme}
+                className="w-full flex items-center gap-2 py-2.5 px-3 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04] transition-colors"
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+              </button>
+              <div className="grid grid-cols-2 gap-2">
+                <Button variant="outline" className="w-full text-sm rounded-xl" onClick={() => { setNavOpen(false); navigate('/login'); }}>Login</Button>
+                <Button className="w-full text-sm font-semibold rounded-xl" onClick={() => { setNavOpen(false); navigate('/signup'); }}>Get Started</Button>
+              </div>
             </div>
-          </div>
+          </motion.div>
         )}
       </header>
 
       {/* ── HERO ── */}
       <section className="relative pt-20 pb-28 px-4 sm:px-6 overflow-hidden">
         <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/6 blur-[120px] rounded-full" />
-          <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-primary/4 blur-[100px] rounded-full" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-primary/5 blur-[140px] rounded-full" />
+          <div className="absolute bottom-0 right-0 w-[300px] h-[300px] bg-primary/3 blur-[100px] rounded-full" />
+          <div className="absolute top-1/3 left-0 w-[200px] h-[200px] bg-purple-500/5 blur-[80px] rounded-full" />
         </div>
 
         <div className="max-w-5xl mx-auto text-center relative z-10">
-          <motion.div variants={fadeUp} initial="hidden" animate="show" custom={0}>
-            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/25 bg-primary/8 text-[10px] font-mono uppercase tracking-widest text-primary mb-8">
-              <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-              Prop Trading · Solana & Robinhood Chain
-            </span>
+          {/* Creative network badge — replaces plain pill */}
+          <motion.div
+            variants={fadeUp} initial="hidden" animate="show" custom={0}
+            className="flex justify-center mb-8"
+          >
+            <NetworkHeroBadge />
           </motion.div>
 
           <motion.h1 variants={fadeUp} initial="hidden" animate="show" custom={1}
             className="text-5xl sm:text-6xl md:text-7xl font-display font-bold tracking-tight leading-[1.05] mb-6">
             Prove Your Edge.
             <br />
-            <span className="text-primary">Get Funded.</span>
+            <span className="text-primary neon-text-glow">Get Funded.</span>
           </motion.h1>
 
           <motion.p variants={fadeUp} initial="hidden" animate="show" custom={2}
@@ -206,12 +292,12 @@ export default function HomePage() {
           <motion.div variants={fadeUp} initial="hidden" animate="show" custom={3}
             className="flex flex-col sm:flex-row gap-3 justify-center mb-16">
             <Link href="/signup">
-              <Button size="lg" className="w-full sm:w-auto text-base font-semibold px-8 h-13 rounded-xl neon-glow">
+              <Button size="lg" className="w-full sm:w-auto text-base font-semibold px-8 h-13 rounded-xl neon-glow transition-all duration-200">
                 Start Your Challenge <ArrowRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
             <a href="#how-it-works">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto text-base px-8 h-13 rounded-xl text-muted-foreground hover:text-foreground">
+              <Button size="lg" variant="outline" className="w-full sm:w-auto text-base px-8 h-13 rounded-xl text-muted-foreground hover:text-foreground border-foreground/10 hover:border-foreground/25 transition-all duration-200">
                 Learn More <ChevronRight className="w-4 h-4 ml-1" />
               </Button>
             </a>
@@ -220,7 +306,7 @@ export default function HomePage() {
           <motion.div variants={fadeUp} initial="hidden" animate="show" custom={4}
             className="grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
             {stats.map(({ value, label }) => (
-              <div key={label} className="glass rounded-2xl p-5">
+              <div key={label} className="glass outline-card rounded-2xl p-5 hover:border-primary/20 transition-all duration-200">
                 <div className="font-mono font-bold text-2xl sm:text-3xl text-foreground mb-1">{value}</div>
                 <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">{label}</div>
               </div>
@@ -230,7 +316,7 @@ export default function HomePage() {
       </section>
 
       {/* ── TRUST BAR ── */}
-      <section className="border-y border-border bg-card py-4 px-4 sm:px-6">
+      <section className="border-y border-border bg-card/60 py-4 px-4 sm:px-6 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
             {trustSignals.map(({ icon: Icon, label }, i) => (
@@ -255,10 +341,10 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             {/* Solana */}
             <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={0}
-              className="glass glass-hover rounded-2xl p-8 flex flex-col gap-5">
+              className="glass glass-hover rounded-2xl p-8 flex flex-col gap-5 border-[1.5px] border-purple-500/20 hover:border-purple-500/40 transition-all duration-250">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500/20 to-purple-600/10 border border-purple-500/20 flex items-center justify-center text-2xl">
-                  🟣
+                <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-purple-500/30 flex-shrink-0 shadow-lg">
+                  <img src="/solana-logo.jpeg" alt="Solana" className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h3 className="font-display font-bold text-xl">Solana</h3>
@@ -276,10 +362,10 @@ export default function HomePage() {
 
             {/* Robinhood Chain */}
             <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={1}
-              className="glass glass-hover rounded-2xl p-8 flex flex-col gap-5">
+              className="glass glass-hover rounded-2xl p-8 flex flex-col gap-5 border-[1.5px] border-primary/20 hover:border-primary/40 transition-all duration-250">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-emerald-500/20 to-emerald-600/10 border border-emerald-500/20 flex items-center justify-center text-2xl">
-                  ⚫
+                <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-primary/30 flex-shrink-0 shadow-lg">
+                  <img src="/robinhood-logo.png" alt="Robinhood Chain" className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <h3 className="font-display font-bold text-xl">Robinhood Chain</h3>
@@ -310,9 +396,9 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {steps.map(({ icon: Icon, step, title, desc }, i) => (
               <motion.div key={step} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={i}
-                className="glass rounded-2xl p-6 flex flex-col items-start gap-4 relative glass-hover group">
+                className="glass outline-card rounded-2xl p-6 flex flex-col items-start gap-4 relative group hover:border-primary/25 transition-all duration-200">
                 <div className="absolute top-4 right-4 font-mono text-[10px] text-muted-foreground/20 font-bold">{step}</div>
-                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/15 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/15 transition-colors duration-200">
                   <Icon className="w-5 h-5 text-primary" />
                 </div>
                 <div>
@@ -337,8 +423,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
             {whyFeatures.map(({ icon: Icon, title, desc }, i) => (
               <motion.div key={title} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={i % 5}
-                className="glass glass-hover rounded-2xl p-5 group">
-                <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-3 group-hover:bg-primary/15 transition-colors">
+                className="glass glass-hover outline-card rounded-2xl p-5 group hover:border-primary/20 transition-all duration-200">
+                <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/15 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors duration-200">
                   <Icon className="w-4 h-4 text-primary" />
                 </div>
                 <h3 className="font-display font-semibold text-sm mb-1.5">{title}</h3>
@@ -363,27 +449,27 @@ export default function HomePage() {
               const isPopular = plan.id === 'advanced';
               return (
                 <motion.div key={plan.id} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={i}>
-                  <div className={`relative rounded-2xl flex flex-col border overflow-hidden transition-all duration-200 hover:-translate-y-1 ${
+                  <div className={`relative rounded-2xl flex flex-col overflow-hidden transition-all duration-250 hover:-translate-y-1.5 ${
                     isPopular
-                      ? 'bg-card border-primary/30 shadow-[0_0_0_1px_rgba(204,255,0,0.1),0_20px_40px_-8px_rgba(0,0,0,0.3)]'
-                      : 'bg-card border-border shadow-sm hover:shadow-md hover:border-border/80'
+                      ? 'bg-card border-[1.5px] border-primary/35 shadow-[0_0_0_1px_rgba(204,255,0,0.08),0_20px_40px_-8px_rgba(0,0,0,0.35)] hover:shadow-[0_0_0_1px_rgba(204,255,0,0.15),0_28px_56px_-10px_rgba(0,0,0,0.4)]'
+                      : 'bg-card border-[1.5px] border-foreground/10 shadow-sm hover:shadow-lg hover:border-foreground/20'
                   }`}>
                     {isPopular && (
-                      <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary" />
+                      <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-primary/60 via-primary to-primary/60" />
                     )}
                     {isPopular && (
-                      <div className="px-6 py-2 bg-primary/8 border-b border-primary/15">
+                      <div className="px-6 py-2.5 bg-primary/8 border-b border-primary/15">
                         <div className="flex items-center gap-1.5 justify-center text-[10px] font-mono font-bold uppercase tracking-wider text-primary">
                           <Zap className="w-3 h-3" /> Most Popular
                         </div>
                       </div>
                     )}
 
-                    <div className={`p-7 border-b ${isPopular ? 'border-primary/10' : 'border-border'}`}>
+                    <div className={`p-7 border-b ${isPopular ? 'border-primary/10' : 'border-foreground/[0.08]'}`}>
                       <div className={`text-xs font-mono uppercase tracking-widest mb-3 ${isPopular ? 'text-primary' : 'text-muted-foreground'}`}>{plan.name}</div>
                       <div className="font-mono text-4xl font-bold mb-1">${plan.fundedValueUsd.toLocaleString()}</div>
                       <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest mb-4">Approximate Funded Value</div>
-                      <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-foreground/5 border border-border rounded-lg">
+                      <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-foreground/5 border border-foreground/10 rounded-lg">
                         <span className="text-xs font-mono text-muted-foreground">Fee:</span>
                         <span className="font-mono font-bold text-foreground">${plan.purchasePriceUsd}</span>
                       </div>
@@ -400,7 +486,7 @@ export default function HomePage() {
                           '80% Profit Split',
                         ].map(feat => (
                           <li key={feat} className="flex items-center gap-3 text-xs text-muted-foreground">
-                            <div className="w-4 h-4 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                            <div className="w-4 h-4 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center flex-shrink-0">
                               <Check className="w-2.5 h-2.5 text-primary" />
                             </div>
                             {feat}
@@ -410,7 +496,7 @@ export default function HomePage() {
 
                       <Link href="/signup">
                         <Button
-                          className={`w-full font-semibold rounded-xl ${isPopular ? 'neon-glow' : 'bg-foreground/5 hover:bg-foreground/10 text-foreground border border-border'}`}
+                          className={`w-full font-semibold rounded-xl transition-all duration-200 ${isPopular ? 'neon-glow' : 'bg-foreground/[0.06] hover:bg-foreground/[0.1] text-foreground border border-foreground/10 hover:border-foreground/20'}`}
                           variant={isPopular ? 'default' : 'outline'}
                         >
                           Start Challenge <ArrowRight className="w-4 h-4 ml-1.5" />
@@ -426,9 +512,19 @@ export default function HomePage() {
           <p className="text-center text-xs font-mono text-muted-foreground/60 px-4">
             Funded values are approximate and adjust with the live market price. The USD value is the source of truth.
           </p>
-          <p className="text-center text-xs font-mono text-muted-foreground/40 mt-1">
-            Fees payable in SOL or ETH · No KYC required · Instant order generation
-          </p>
+          <div className="flex items-center justify-center gap-4 mt-2">
+            <div className="flex items-center gap-1.5">
+              <img src="/solana-logo.jpeg" alt="Solana" className="w-3.5 h-3.5 rounded-full object-cover opacity-50" />
+              <span className="text-[10px] font-mono text-muted-foreground/40">SOL</span>
+            </div>
+            <span className="text-muted-foreground/20 text-xs">·</span>
+            <div className="flex items-center gap-1.5">
+              <img src="/robinhood-logo.png" alt="Robinhood" className="w-3.5 h-3.5 rounded-full object-cover opacity-50" />
+              <span className="text-[10px] font-mono text-muted-foreground/40">ETH</span>
+            </div>
+            <span className="text-muted-foreground/20 text-xs">·</span>
+            <span className="text-[10px] font-mono text-muted-foreground/40">No KYC · Instant order generation</span>
+          </div>
         </div>
       </section>
 
@@ -444,8 +540,8 @@ export default function HomePage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {challengeRules.map(({ label, value }, i) => (
               <motion.div key={label} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={i}
-                className="glass glass-hover rounded-2xl p-6 flex flex-col gap-3 relative overflow-hidden">
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary/60 to-transparent" />
+                className="glass outline-card glass-hover rounded-2xl p-6 flex flex-col gap-3 relative overflow-hidden hover:border-primary/25 transition-all duration-200">
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-primary/70 via-primary/40 to-transparent" />
                 <div className="font-mono text-3xl sm:text-4xl font-bold text-foreground">{value}</div>
                 <div className="text-xs font-mono uppercase tracking-wider text-muted-foreground">{label}</div>
               </motion.div>
@@ -465,7 +561,7 @@ export default function HomePage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={0}
-              className="glass rounded-2xl p-7">
+              className="glass outline-card rounded-2xl p-7">
               <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-5">
                 <Globe className="w-6 h-6 text-primary" />
               </div>
@@ -481,7 +577,7 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={1}
-              className="glass rounded-2xl p-7 border-primary/20" style={{ borderColor: 'rgba(204,255,0,0.15)' }}>
+              className="glass outline-card rounded-2xl p-7 border-primary/20 hover:border-primary/35 transition-all duration-200" style={{ borderColor: 'rgba(204,255,0,0.2)' }}>
               <div className="w-12 h-12 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center mb-5">
                 <Bot className="w-6 h-6 text-primary" />
               </div>
@@ -495,7 +591,7 @@ export default function HomePage() {
                 ))}
               </ul>
               <a href="https://t.me/fundedfrensbot" target="_blank" rel="noopener noreferrer" className="mt-6 inline-block">
-                <Button className="font-mono uppercase tracking-wider text-xs rounded-xl">
+                <Button className="font-mono uppercase tracking-wider text-xs rounded-xl neon-glow">
                   Open Bot <ExternalLink className="w-3 h-3 ml-2" />
                 </Button>
               </a>
@@ -513,10 +609,23 @@ export default function HomePage() {
             <p className="text-muted-foreground max-w-xl mx-auto text-sm">Blockchain-verified, fully automatic — from payment to activation without manual review.</p>
           </div>
 
+          {/* Network logos row */}
+          <div className="flex items-center justify-center gap-4 mb-10">
+            <div className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-purple-500/25 bg-purple-500/6">
+              <img src="/solana-logo.jpeg" alt="Solana" className="w-5 h-5 rounded-full object-cover" />
+              <span className="text-xs font-mono text-purple-300">Solana (SOL)</span>
+            </div>
+            <div className="text-muted-foreground/30 text-xs font-mono">+</div>
+            <div className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-primary/25 bg-primary/6">
+              <img src="/robinhood-logo.png" alt="Robinhood Chain" className="w-5 h-5 rounded-full object-cover" />
+              <span className="text-xs font-mono text-primary">Robinhood Chain (ETH)</span>
+            </div>
+          </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {paymentSteps.map(({ n, title, desc }, i) => (
               <motion.div key={n} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={i % 3}
-                className="glass glass-hover rounded-2xl p-5 flex gap-4">
+                className="glass glass-hover outline-card rounded-2xl p-5 flex gap-4 hover:border-primary/20 transition-all duration-200">
                 <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center font-mono font-bold text-primary text-xs flex-shrink-0">{n}</div>
                 <div>
                   <h4 className="font-display font-semibold text-sm mb-1">{title}</h4>
@@ -532,8 +641,8 @@ export default function HomePage() {
       <section className="py-20 px-4 sm:px-6 bg-card/50">
         <div className="max-w-4xl mx-auto">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="glass rounded-3xl p-10 sm:p-14 text-center border border-primary/20 relative overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+            className="glass rounded-3xl p-10 sm:p-14 text-center border-[1.5px] border-primary/25 relative overflow-hidden outline-card-bold">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
             <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-6">
               <Users className="w-8 h-8 text-primary" />
             </div>
@@ -560,11 +669,11 @@ export default function HomePage() {
             <p className="text-muted-foreground max-w-xl mx-auto text-sm">Professional-grade metrics delivered directly from your Telegram trading activity.</p>
           </div>
 
-          <div className="glass rounded-2xl p-6">
+          <div className="glass outline-card rounded-2xl p-6">
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
               {analyticsPreview.map(({ label, value }, i) => (
                 <motion.div key={label} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={i % 4}
-                  className="bg-foreground/[0.02] border border-border rounded-xl p-4 hover:bg-foreground/[0.04] transition-colors">
+                  className="bg-foreground/[0.02] border border-border rounded-xl p-4 hover:bg-foreground/[0.04] hover:border-foreground/15 transition-all duration-200">
                   <div className="metric-label mb-2">{label}</div>
                   <div className="font-mono text-xl font-bold text-muted-foreground/20">{value}</div>
                 </motion.div>
@@ -584,18 +693,29 @@ export default function HomePage() {
           </div>
           <div className="space-y-2">
             {faqs.map(({ q, a }, i) => (
-              <div key={i} className="glass rounded-xl overflow-hidden">
+              <div key={i} className="glass outline-card rounded-xl overflow-hidden hover:border-foreground/15 transition-all duration-200">
                 <button
                   className="w-full flex items-center justify-between p-5 text-left gap-4"
                   onClick={() => setOpenFaq(openFaq === i ? null : i)}
                 >
                   <span className="font-display font-medium text-sm sm:text-base">{q}</span>
-                  <ChevronDown className={`w-4 h-4 text-muted-foreground flex-shrink-0 transition-transform duration-200 ${openFaq === i ? 'rotate-180' : ''}`} />
+                  <motion.div
+                    animate={{ rotate: openFaq === i ? 180 : 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ChevronDown className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                  </motion.div>
                 </button>
                 {openFaq === i && (
-                  <div className="px-5 pb-5">
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.22 }}
+                    className="px-5 pb-5"
+                  >
                     <p className="text-sm text-muted-foreground leading-relaxed border-t border-border pt-4">{a}</p>
-                  </div>
+                  </motion.div>
                 )}
               </div>
             ))}
@@ -607,12 +727,12 @@ export default function HomePage() {
       <section className="py-20 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
-            className="relative rounded-3xl overflow-hidden glass border border-primary/20 p-10 sm:p-16 text-center">
-            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/60 to-transparent" />
+            className="relative rounded-3xl overflow-hidden glass border-[1.5px] border-primary/25 p-10 sm:p-16 text-center outline-card-bold">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
             <div className="absolute inset-0 bg-gradient-to-b from-primary/4 to-transparent pointer-events-none" />
             <div className="relative z-10">
-              <div className="w-16 h-16 rounded-2xl bg-primary flex items-center justify-center mx-auto mb-6">
-                <span className="text-black font-display font-bold text-xl">FF</span>
+              <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-primary/40 flex items-center justify-center mx-auto mb-6 shadow-xl pulse-ring">
+                <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
               </div>
               <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-4">
                 Ready to prove your trading skills?
@@ -636,15 +756,15 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
             <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                  <span className="text-black font-display font-bold text-xs">FF</span>
+                <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-primary/25 flex-shrink-0 shadow-md">
+                  <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
                 </div>
                 <span className="font-display font-semibold text-foreground">FundedFrens</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed max-w-[220px] mb-5">
                 The premier on-chain prop trading platform. Prove your edge, unlock real capital.
               </p>
-              <div className="flex items-center gap-2.5">
+              <div className="flex items-center gap-2.5 mb-4">
                 <a href="https://t.me/FundedFrens" target="_blank" rel="noopener noreferrer"
                   className="w-8 h-8 rounded-lg glass flex items-center justify-center text-muted-foreground hover:text-[#2AABEE] transition-colors"
                   aria-label="Telegram">
@@ -659,6 +779,17 @@ export default function HomePage() {
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                   </svg>
                 </a>
+              </div>
+              {/* Network indicators in footer */}
+              <div className="flex items-center gap-2">
+                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md border border-border bg-foreground/[0.02]">
+                  <img src="/solana-logo.jpeg" alt="Solana" className="w-3.5 h-3.5 rounded-full object-cover" />
+                  <span className="text-[9px] font-mono text-muted-foreground/60">SOL</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md border border-border bg-foreground/[0.02]">
+                  <img src="/robinhood-logo.png" alt="Robinhood" className="w-3.5 h-3.5 rounded-full object-cover" />
+                  <span className="text-[9px] font-mono text-muted-foreground/60">ETH</span>
+                </div>
               </div>
             </div>
 

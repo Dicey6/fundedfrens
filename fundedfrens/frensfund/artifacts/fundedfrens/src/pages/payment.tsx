@@ -178,6 +178,8 @@ export default function PaymentPage() {
   const requiredAmount = isRobinhood ? order.required_eth : order.required_sol;
   const oracleRate = isRobinhood ? order.eth_price_usd : order.sol_price_usd;
 
+  const networkLogo = isRobinhood ? '/robinhood-logo.png' : '/solana-logo.jpeg';
+
   return (
     <DashboardLayout>
       <div className="max-w-4xl mx-auto space-y-6 pb-20">
@@ -244,9 +246,18 @@ export default function PaymentPage() {
                 <div className="font-display text-xl capitalize text-foreground font-semibold">{order.challenge_plan}</div>
               </div>
 
+              {/* Network with logo */}
               <div className="bg-foreground/[0.03] border border-border p-4 rounded-xl">
-                <div className="text-[10px] font-mono text-muted-foreground mb-1 uppercase tracking-widest">Payment Network</div>
-                <div className="font-mono text-sm font-bold">{networkLabel} ({currencySymbol})</div>
+                <div className="text-[10px] font-mono text-muted-foreground mb-2 uppercase tracking-widest">Payment Network</div>
+                <div className="flex items-center gap-2.5">
+                  <div className="w-8 h-8 rounded-full overflow-hidden border border-border/60 flex-shrink-0">
+                    <img src={networkLogo} alt={networkLabel} className="w-full h-full object-cover" />
+                  </div>
+                  <div>
+                    <div className="font-mono text-sm font-bold">{networkLabel}</div>
+                    <div className="text-[10px] font-mono text-muted-foreground">{currencySymbol}</div>
+                  </div>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
@@ -291,7 +302,7 @@ export default function PaymentPage() {
           >
             <AnimatePresence mode="sync">
               {isConfirmed ? (
-                <motion.div key="confirmed" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
+                <motion.div key="confirmed" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="h-full">
                   <div className="glass rounded-2xl h-full flex flex-col items-center justify-center p-12 text-center relative overflow-hidden border border-emerald-500/20">
                     <div className="absolute top-0 left-0 right-0 h-0.5 bg-emerald-500/50" />
                     <div className="w-20 h-20 rounded-2xl bg-emerald-500/10 border border-emerald-500/25 flex items-center justify-center mb-6">
@@ -307,7 +318,7 @@ export default function PaymentPage() {
                   </div>
                 </motion.div>
               ) : isExpired ? (
-                <motion.div key="expired" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
+                <motion.div key="expired" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="h-full">
                   <div className="glass rounded-2xl h-full flex flex-col items-center justify-center p-12 text-center relative overflow-hidden border border-red-500/15">
                     <div className="w-16 h-16 rounded-2xl bg-red-500/8 border border-red-500/20 flex items-center justify-center mb-6">
                       <AlertCircle className="w-8 h-8 text-red-400/70" />
@@ -322,9 +333,15 @@ export default function PaymentPage() {
                   </div>
                 </motion.div>
               ) : (
-                <motion.div key="pending" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.15 }} className="h-full">
+                <motion.div key="pending" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="h-full">
                   <div className="glass rounded-2xl h-full flex flex-col p-8">
-                    <p className="section-label mb-8">Payment Instructions</p>
+                    <div className="flex items-center gap-3 mb-8">
+                      <p className="section-label">Payment Instructions</p>
+                      <div className="flex items-center gap-1.5 ml-auto px-2.5 py-1 rounded-lg bg-foreground/[0.03] border border-border">
+                        <img src={networkLogo} alt={networkLabel} className="w-4 h-4 rounded-full object-cover" />
+                        <span className="text-[10px] font-mono text-muted-foreground">{networkLabel}</span>
+                      </div>
+                    </div>
 
                     <ol className="space-y-7 font-mono text-sm mb-auto">
                       {/* Step 1 */}
@@ -389,6 +406,7 @@ export default function PaymentPage() {
                           <p className="font-mono text-xs font-semibold text-foreground">Listening for payment…</p>
                           <p className="font-mono text-[10px] text-primary/60 mt-0.5 uppercase tracking-widest">Polling {isRobinhood ? 'Robinhood Chain' : 'Solana'} · Auto-verifying</p>
                         </div>
+                        <img src={networkLogo} alt={networkLabel} className="w-6 h-6 rounded-full object-cover opacity-60 flex-shrink-0" />
                       </div>
 
                       <Button

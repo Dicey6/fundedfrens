@@ -140,7 +140,7 @@ export default function ChallengePage() {
       <div className="space-y-8 pb-20">
 
         {/* Header card */}
-        <div className="glass rounded-2xl p-6">
+        <div className="glass rounded-2xl p-6 border border-border/60">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <div>
               <p className="text-xs font-mono text-muted-foreground uppercase tracking-widest mb-2">Evaluation Phase</p>
@@ -151,7 +151,7 @@ export default function ChallengePage() {
             </div>
 
             {/* Oracle Rate */}
-            <div className="bg-foreground/[0.03] border border-border rounded-xl p-4 min-w-[200px]">
+            <div className="bg-foreground/[0.03] border border-border p-4 rounded-xl min-w-[200px] outline-card">
               <div className="flex justify-between items-center text-xs font-mono uppercase tracking-wider text-muted-foreground mb-1">
                 <span>Oracle Rate</span>
                 <span className="text-primary">{paymentNetwork === 'robinhood' ? 'ETH/USD' : 'SOL/USD'}</span>
@@ -181,28 +181,32 @@ export default function ChallengePage() {
           <div className="flex flex-col sm:flex-row gap-3 mt-6">
             <button
               onClick={() => setPaymentNetwork('solana')}
-              className={`flex-1 flex items-center gap-3 px-4 py-3 rounded-xl border font-mono text-sm transition-all ${
+              className={`flex-1 flex items-center gap-3 px-4 py-3.5 rounded-xl border font-mono text-sm transition-all duration-200 ${
                 paymentNetwork === 'solana'
-                  ? 'border-primary/40 bg-primary/8 text-foreground'
+                  ? 'border-purple-500/40 bg-purple-500/8 text-foreground shadow-sm'
                   : 'border-border bg-foreground/[0.02] text-muted-foreground hover:border-border/80 hover:bg-foreground/[0.04]'
               }`}
             >
-              <span className="text-lg">🟣</span>
+              <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-purple-500/20">
+                <img src="/solana-logo.jpeg" alt="Solana" className="w-full h-full object-cover" />
+              </div>
               <div className="text-left">
                 <div className="font-semibold uppercase tracking-wider text-[11px]">Solana</div>
                 <div className="text-[10px] opacity-60">Pay in SOL</div>
               </div>
-              {paymentNetwork === 'solana' && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />}
+              {paymentNetwork === 'solana' && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />}
             </button>
             <button
               onClick={() => setPaymentNetwork('robinhood')}
-              className={`flex-1 flex items-center gap-3 px-4 py-3 rounded-xl border font-mono text-sm transition-all ${
+              className={`flex-1 flex items-center gap-3 px-4 py-3.5 rounded-xl border font-mono text-sm transition-all duration-200 ${
                 paymentNetwork === 'robinhood'
-                  ? 'border-primary/40 bg-primary/8 text-foreground'
+                  ? 'border-primary/40 bg-primary/8 text-foreground shadow-sm'
                   : 'border-border bg-foreground/[0.02] text-muted-foreground hover:border-border/80 hover:bg-foreground/[0.04]'
               }`}
             >
-              <span className="text-lg">⚫</span>
+              <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-primary/20">
+                <img src="/robinhood-logo.png" alt="Robinhood Chain" className="w-full h-full object-cover" />
+              </div>
               <div className="text-left">
                 <div className="font-semibold uppercase tracking-wider text-[11px]">Robinhood Chain</div>
                 <div className="text-[10px] opacity-60">Pay in ETH</div>
@@ -229,15 +233,15 @@ export default function ChallengePage() {
                 transition={{ delay: i * 0.08, type: 'spring', stiffness: 300, damping: 28 }}
                 className="h-full"
               >
-                <div className={`h-full flex flex-col rounded-2xl border transition-all duration-200 hover:-translate-y-1 overflow-hidden ${
+                <div className={`h-full flex flex-col rounded-2xl border transition-all duration-250 hover:-translate-y-1.5 overflow-hidden ${
                   isPopular
-                    ? 'bg-card border-primary/30 shadow-[0_0_0_1px_rgba(204,255,0,0.08),0_16px_32px_-6px_rgba(0,0,0,0.25)]'
-                    : 'bg-card border-border shadow-sm hover:shadow-md hover:border-border/70'
+                    ? 'bg-card border-primary/30 shadow-[0_0_0_1px_rgba(204,255,0,0.08),0_16px_32px_-6px_rgba(0,0,0,0.25)] hover:shadow-[0_0_0_1px_rgba(204,255,0,0.15),0_24px_48px_-8px_rgba(0,0,0,0.3)]'
+                    : 'bg-card border-border shadow-sm hover:shadow-lg hover:border-foreground/15'
                 }`}>
-                  {isPopular && <div className="h-0.5 bg-primary" />}
+                  {isPopular && <div className="h-0.5 bg-gradient-to-r from-primary/80 via-primary to-primary/80" />}
 
                   {isPopular && (
-                    <div className="px-6 py-2 bg-primary/6 border-b border-primary/12">
+                    <div className="px-6 py-2.5 bg-primary/6 border-b border-primary/12">
                       <div className="flex items-center gap-1.5 justify-center text-[10px] font-mono font-bold uppercase tracking-wider text-primary">
                         <Zap className="w-3 h-3" /> Most Selected
                       </div>
@@ -267,7 +271,7 @@ export default function ChallengePage() {
                         'Max Open Positions: 3',
                       ].map(feat => (
                         <li key={feat} className="flex items-center gap-3">
-                          <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                          <div className="w-5 h-5 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
                             <Check className="w-3 h-3 text-primary" />
                           </div>
                           {feat}
@@ -275,20 +279,27 @@ export default function ChallengePage() {
                       ))}
                     </ul>
 
-                    <div className="bg-foreground/[0.03] rounded-xl p-5 border border-border mb-6">
-                      <div className="flex justify-between items-center mb-1.5">
+                    <div className={`rounded-xl p-5 border mb-6 ${isPopular ? 'bg-primary/5 border-primary/20' : 'bg-foreground/[0.03] border-border'}`}>
+                      <div className="flex justify-between items-center mb-2">
                         <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Evaluation Fee</span>
                         <span className="font-display text-xl font-bold">${plan.purchasePriceUsd}</span>
                       </div>
-                      <div className="flex justify-between items-center text-[10px] font-mono text-muted-foreground">
-                        <span>Payable in {cryptoSymbol}</span>
-                        <span className="text-primary">{requiredCrypto ? `~${requiredCrypto} ${cryptoSymbol}` : '...'}</span>
+                      <div className="flex items-center justify-between text-[10px] font-mono text-muted-foreground">
+                        <div className="flex items-center gap-1.5">
+                          <img
+                            src={paymentNetwork === 'robinhood' ? '/robinhood-logo.png' : '/solana-logo.jpeg'}
+                            alt={cryptoSymbol}
+                            className="w-3.5 h-3.5 rounded-full object-cover"
+                          />
+                          <span>Payable in {cryptoSymbol}</span>
+                        </div>
+                        <span className="text-primary font-semibold">{requiredCrypto ? `~${requiredCrypto} ${cryptoSymbol}` : '...'}</span>
                       </div>
                     </div>
 
                     <Button
-                      className={`w-full h-12 font-mono uppercase tracking-wider text-xs rounded-xl ${
-                        isPopular ? '' : 'bg-foreground/5 hover:bg-foreground/10 text-foreground border border-border'
+                      className={`w-full h-12 font-mono uppercase tracking-wider text-xs rounded-xl transition-all duration-200 ${
+                        isPopular ? 'neon-glow hover:shadow-[0_0_30px_rgba(204,255,0,0.5)]' : 'bg-foreground/5 hover:bg-foreground/10 text-foreground border border-border hover:border-foreground/20'
                       }`}
                       variant={isPopular ? 'default' : 'outline'}
                       onClick={() => setSelectedPlan(plan)}
@@ -320,16 +331,32 @@ export default function ChallengePage() {
           <div className="p-6 md:p-8 space-y-6 bg-foreground/[0.02]">
             <div className="rounded-xl border border-border overflow-hidden">
               {[
-                { label: 'Payment Network', value: isRobinhoodNetwork ? 'Robinhood Chain (ETH)' : 'Solana (SOL)' },
+                {
+                  label: 'Payment Network',
+                  value: (
+                    <div className="flex items-center gap-2">
+                      <img
+                        src={isRobinhoodNetwork ? '/robinhood-logo.png' : '/solana-logo.jpeg'}
+                        alt={isRobinhoodNetwork ? 'Robinhood' : 'Solana'}
+                        className="w-4 h-4 rounded-full object-cover"
+                      />
+                      <span>{isRobinhoodNetwork ? 'Robinhood Chain (ETH)' : 'Solana (SOL)'}</span>
+                    </div>
+                  )
+                },
                 { label: 'USD Total', value: `$${selectedPlan?.purchasePriceUsd} USD`, bold: true },
-                { label: `Required ${isRobinhoodNetwork ? 'ETH' : 'SOL'}`, value: `${isRobinhoodNetwork
-                  ? (selectedPlan && ethPrice ? usdToEth(selectedPlan.purchasePriceUsd, ethPrice) : '...')
-                  : (selectedPlan && solPrice ? usdToSol(selectedPlan.purchasePriceUsd, solPrice) : '...')
-                } ${isRobinhoodNetwork ? 'ETH' : 'SOL'}`, primary: true },
+                {
+                  label: `Required ${isRobinhoodNetwork ? 'ETH' : 'SOL'}`,
+                  value: `${isRobinhoodNetwork
+                    ? (selectedPlan && ethPrice ? usdToEth(selectedPlan.purchasePriceUsd, ethPrice) : '...')
+                    : (selectedPlan && solPrice ? usdToSol(selectedPlan.purchasePriceUsd, solPrice) : '...')
+                  } ${isRobinhoodNetwork ? 'ETH' : 'SOL'}`,
+                  primary: true
+                },
               ].map(({ label, value, bold, primary }, i, arr) => (
                 <div key={label} className={`flex justify-between items-center px-4 py-3 font-mono text-sm ${i < arr.length - 1 ? 'border-b border-border' : ''}`}>
                   <span className="text-muted-foreground uppercase tracking-wider text-[10px]">{label}</span>
-                  <span className={`${primary ? 'text-primary font-bold text-base' : bold ? 'font-bold text-foreground' : 'text-foreground'}`}>{value}</span>
+                  <span className={`${primary ? 'text-primary font-bold text-base' : bold ? 'font-bold text-foreground' : 'text-foreground'}`}>{value as any}</span>
                 </div>
               ))}
             </div>

@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 import {
   LayoutDashboard, Target, BarChart3, Briefcase, ShoppingCart,
   Users, MessageCircle, User, Settings, LogOut, Menu, X,
-  Shield, Sun, Moon, Lock, ChevronDown
+  Shield, Sun, Moon, Lock,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -86,14 +86,14 @@ function SidebarContent({
         <button
           key={idx}
           onClick={() => handleSectionNav(item.section)}
-          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-150 group relative ${
+          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-200 group relative ${
             isActive
               ? 'bg-primary/10 text-foreground'
               : 'text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04]'
           }`}
         >
           {isActive && (
-            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-primary rounded-r-full" />
+            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-primary rounded-r-full" />
           )}
           <Icon className={`w-4 h-4 flex-shrink-0 transition-colors ${isActive ? 'text-primary' : 'group-hover:text-foreground'}`} />
           <span className="text-[11px] font-medium tracking-wide flex-1">{item.label}</span>
@@ -105,13 +105,13 @@ function SidebarContent({
     const isActive = location === item.href;
     return (
       <Link key={idx} href={item.href} onClick={onNav}>
-        <div className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-150 group relative cursor-pointer ${
+        <div className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group relative cursor-pointer ${
           isActive
             ? 'bg-primary/10 text-foreground'
             : 'text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04]'
         }`}>
           {isActive && (
-            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-primary rounded-r-full" />
+            <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-primary rounded-r-full" />
           )}
           <Icon className={`w-4 h-4 flex-shrink-0 ${isActive ? 'text-primary' : 'group-hover:text-foreground'}`} />
           <span className="text-[11px] font-medium tracking-wide">{item.label}</span>
@@ -125,12 +125,14 @@ function SidebarContent({
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="px-5 pt-6 pb-5">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center flex-shrink-0">
-            <span className="text-black font-display font-bold text-sm">FF</span>
+        <Link href="/">
+          <div className="flex items-center gap-3 cursor-pointer group">
+            <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-primary/30 flex-shrink-0 group-hover:border-primary/60 transition-all duration-200 shadow-md">
+              <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
+            </div>
+            <span className="font-display font-bold text-base text-foreground tracking-tight">FundedFrens</span>
           </div>
-          <span className="font-display font-bold text-base text-foreground tracking-tight">FundedFrens</span>
-        </div>
+        </Link>
         <div className="mt-5 h-px bg-border" />
       </div>
 
@@ -152,14 +154,14 @@ function SidebarContent({
           <div className="px-3 mb-1.5 text-[9px] font-mono text-muted-foreground/50 uppercase tracking-[0.2em]">Capital</div>
           <button
             onClick={() => handleSectionNav('funded')}
-            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-150 group relative ${
+            className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left transition-all duration-200 group relative ${
               location === '/dashboard' && activeSection === 'funded'
                 ? 'bg-primary/10 text-foreground'
                 : 'text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04]'
             }`}
           >
             {location === '/dashboard' && activeSection === 'funded' && (
-              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-4 bg-primary rounded-r-full" />
+              <span className="absolute left-0 top-1/2 -translate-y-1/2 w-[3px] h-5 bg-primary rounded-r-full" />
             )}
             <Lock className="w-4 h-4 flex-shrink-0" />
             <span className="text-[11px] font-medium tracking-wide flex-1">Funded Account</span>
@@ -171,7 +173,7 @@ function SidebarContent({
       {/* User info + Logout */}
       <div className="p-3 border-t border-border">
         <div className="flex items-center gap-3 mb-2 px-2 py-2.5 rounded-xl">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0 text-black font-mono font-bold text-xs">
+          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center flex-shrink-0 text-black font-mono font-bold text-xs shadow-sm">
             {profile?.username?.substring(0, 2).toUpperCase() || 'FF'}
           </div>
           <div className="overflow-hidden flex-1 min-w-0">
@@ -189,7 +191,7 @@ function SidebarContent({
         </div>
         <button
           onClick={handleLogout}
-          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/8 transition-all text-[11px] font-medium"
+          className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-muted-foreground hover:text-destructive hover:bg-destructive/8 transition-all duration-200 text-[11px] font-medium"
         >
           <LogOut className="w-3.5 h-3.5" />
           Sign out
@@ -242,7 +244,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         <div className="md:hidden fixed top-0 left-0 z-50 p-3">
           <button
             onClick={() => setDrawerOpen(true)}
-            className="w-10 h-10 flex items-center justify-center rounded-xl bg-card border border-border text-foreground/80 hover:text-foreground shadow-sm transition-colors"
+            className="w-10 h-10 flex items-center justify-center rounded-xl bg-card border border-border text-foreground/80 hover:text-foreground shadow-sm transition-all duration-200 hover:shadow-md"
             aria-label="Open navigation"
           >
             <Menu className="w-4.5 h-4.5" />
@@ -258,8 +260,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="md:hidden fixed inset-0 z-40 bg-black/50 backdrop-blur-sm"
+                transition={{ duration: 0.22 }}
+                className="md:hidden fixed inset-0 z-40 bg-black/60 backdrop-blur-sm"
                 onClick={() => setDrawerOpen(false)}
               />
               <motion.div
@@ -267,12 +269,12 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                 initial={{ x: '-100%' }}
                 animate={{ x: 0 }}
                 exit={{ x: '-100%' }}
-                transition={{ type: 'spring', stiffness: 320, damping: 32 }}
+                transition={{ type: 'spring', stiffness: 340, damping: 34 }}
                 className="md:hidden fixed top-0 left-0 z-50 h-full w-[240px] bg-sidebar border-r border-sidebar-border shadow-2xl flex flex-col"
               >
                 <button
                   onClick={() => setDrawerOpen(false)}
-                  className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04] transition-colors"
+                  className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-foreground/[0.06] transition-colors"
                   aria-label="Close navigation"
                 >
                   <X className="w-4 h-4" />
@@ -313,12 +315,19 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               )}
               <button
                 onClick={toggleTheme}
-                className="w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-foreground/[0.05] transition-colors"
+                className="w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-foreground/[0.06] transition-all duration-200"
                 aria-label="Toggle theme"
               >
-                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                <motion.div
+                  key={theme}
+                  initial={{ rotate: -30, opacity: 0 }}
+                  animate={{ rotate: 0, opacity: 1 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                </motion.div>
               </button>
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-black font-mono font-bold text-xs flex-shrink-0">
+              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-black font-mono font-bold text-xs flex-shrink-0 shadow-sm">
                 {profile?.username?.substring(0, 2).toUpperCase() || 'FF'}
               </div>
             </div>
@@ -326,13 +335,22 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
           {/* Page content */}
           <main className="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto w-full">
-            {children}
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
+            >
+              {children}
+            </motion.div>
           </main>
 
           {/* Footer */}
           <footer className="border-t border-border px-4 sm:px-6 py-3">
             <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
-              <span className="text-[10px] font-mono text-muted-foreground/40 uppercase tracking-widest">© 2026 FundedFrens · v1.0</span>
+              <div className="flex items-center gap-2">
+                <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-4 h-4 rounded object-cover opacity-40" />
+                <span className="text-[10px] font-mono text-muted-foreground/40 uppercase tracking-widest">© 2026 FundedFrens · v1.0</span>
+              </div>
               <div className="flex items-center gap-4">
                 <a href="/terms" className="text-[10px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors">Terms</a>
                 <a href="/privacy" className="text-[10px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors">Privacy</a>
