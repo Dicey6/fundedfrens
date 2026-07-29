@@ -17,12 +17,6 @@ const _walletList = (import.meta.env.VITE_TREASURY_WALLETS as string | undefined
   .map(w => w.trim())
   .filter(Boolean) ?? [];
 
-/** Pick a random treasury wallet for a new order. Never changes after order creation. */
-export function pickTreasuryWallet(): string {
-  if (_walletList.length === 0) return 'TREASURY_WALLET_NOT_CONFIGURED';
-  return _walletList[Math.floor(Math.random() * _walletList.length)];
-}
-
 // ── Robinhood Chain Treasury Wallets ─────────────────────────────────────────
 // Set VITE_RH_TREASURY_WALLETS as a comma-separated list of EVM addresses
 // e.g. VITE_RH_TREASURY_WALLETS=0xWallet1,0xWallet2,0xWallet3
@@ -31,9 +25,41 @@ const _rhWalletList = (import.meta.env.VITE_RH_TREASURY_WALLETS as string | unde
   .map(w => w.trim())
   .filter(Boolean) ?? [];
 
-/** Pick a random Robinhood Chain treasury wallet for a new order. Never changes after order creation. */
+// ── Environment validation (runs once at module load) ─────────────────────────
+if (_walletList.length === 0) {
+  console.error(
+    '[FundedFrens] Missing VITE_TREASURY_WALLETS — Solana treasury wallet pool is not configured. ' +
+    'Solana payments will fail. Set VITE_TREASURY_WALLETS to a comma-separated list of Solana addresses.'
+  );
+}
+if (_rhWalletList.length === 0) {
+  console.error(
+    '[FundedFrens] Missing VITE_RH_TREASURY_WALLETS — Robinhood Chain treasury wallet pool is not configured. ' +
+    'Robinhood Chain payments will fail. Set VITE_RH_TREASURY_WALLETS to a comma-separated list of EVM (0x...) addresses.'
+  );
+}
+
+/**
+ * Pick a random Solana treasury wallet for a new order.
+ * The wallet is permanently assigned at order creation and never regenerated.
+ * Throws if VITE_TREASURY_WALLETS is not configured.
+ */
+export function pickTreasuryWallet(): string {
+  if (_walletList.length === 0) {
+    throw new Error('VITE_TREASURY_WALLETS is not configured. Cannot create Solana order.');
+  }
+  return _walletList[Math.floor(Math.random() * _walletList.length)];
+}
+
+/**
+ * Pick a random Robinhood Chain treasury wallet for a new order.
+ * The wallet is permanently assigned at order creation and never regenerated.
+ * Throws if VITE_RH_TREASURY_WALLETS is not configured.
+ */
 export function pickRobinhoodTreasuryWallet(): string {
-  if (_rhWalletList.length === 0) return 'RH_TREASURY_WALLET_NOT_CONFIGURED';
+  if (_rhWalletList.length === 0) {
+    throw new Error('VITE_RH_TREASURY_WALLETS is not configured. Cannot create Robinhood Chain order.');
+  }
   return _rhWalletList[Math.floor(Math.random() * _rhWalletList.length)];
 }
 

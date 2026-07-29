@@ -57,11 +57,19 @@ async function findEthTx(
   for (const t of transfers) {
     if (usedHashes.includes(t.hash)) continue
 
-    // Validate block timestamp falls within the order's payment window
-    if (t.metadata?.blockTimestamp) {
-      const blockTime = new Date(t.metadata.blockTimestamp).getTime()
-      if (blockTime < fromTimestamp || blockTime > toTimestamp) continue
+    // Validate block timestamp falls within the order's payment window.
+    // A missing or unparseable timestamp means we cannot verify the payment window —
+    // never accept a transfer we cannot time-validate.
+    if (!t.metadata?.blockTimestamp) {
+      console.error(`verify-robinhood: transfer ${t.hash} has no blockTimestamp — cannot validate payment window, skipping`)
+      continue
     }
+    const blockTime = new Date(t.metadata.blockTimestamp).getTime()
+    if (isNaN(blockTime)) {
+      console.error(`verify-robinhood: transfer ${t.hash} has invalid blockTimestamp "${t.metadata.blockTimestamp}" — cannot validate payment window, skipping`)
+      continue
+    }
+    if (blockTime < fromTimestamp || blockTime > toTimestamp) continue
 
     const value = parseFloat(t.value ?? '0')
     if (value >= expectedEth * (1 - TOLERANCE)) {

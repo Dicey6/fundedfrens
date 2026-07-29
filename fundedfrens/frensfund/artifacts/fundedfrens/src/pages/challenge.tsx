@@ -271,7 +271,7 @@ export default function ChallengePage() {
                         <span className="font-display text-xl font-bold">${plan.purchasePriceUsd}</span>
                       </div>
                       <div className="flex justify-between items-center text-[10px] font-mono text-muted-foreground">
-                        <span>Payable in SOL</span>
+                        <span>Payable in {cryptoSymbol}</span>
                         <span className="text-primary">{requiredCrypto ? `~${requiredCrypto} ${cryptoSymbol}` : '...'}</span>
                       </div>
                     </div>
@@ -280,7 +280,7 @@ export default function ChallengePage() {
                       className={`w-full h-12 font-mono uppercase tracking-wider text-xs ${isPopular ? 'shadow-[0_0_20px_rgba(20,184,166,0.3)]' : 'bg-white/5 hover:bg-white/10 text-foreground border border-white/10'}`}
                       variant={isPopular ? 'default' : 'outline'}
                       onClick={() => setSelectedPlan(plan)}
-                      disabled={!solPrice}
+                      disabled={isRobinhoodNetwork ? !ethPrice : !solPrice}
                       data-testid={`button-select-${plan.id}`}
                     >
                       Initialize Challenge <ArrowRight className="w-4 h-4 ml-2 opacity-70" />

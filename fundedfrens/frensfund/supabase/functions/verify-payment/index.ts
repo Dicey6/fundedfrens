@@ -6,32 +6,6 @@ const TOLERANCE = 0.005
 const cors = { 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type' }
 const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: { ...cors, 'Content-Type': 'application/json' } })
 
-// ── Robinhood Chain (EVM) helpers ─────────────────────────────────────────────
-async function evmRpc(rpcUrl: string, method: string, params: unknown[]) {
-  const r = await fetch(rpcUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }) })
-  const d = await r.json()
-  if (d.error) throw new Error(JSON.stringify(d.error))
-  return d.result
-}
-
-async function findEthTx(rpcUrl: string, sender: string, receiver: string, expectedEth: number, fromTs: number, toTs: number, usedHashes: string[]) {
-  const currentBlockHex: string = await evmRpc(rpcUrl, 'eth_blockNumber', [])
-  const currentBlock = parseInt(currentBlockHex, 16)
-  // Robinhood Chain (Arbitrum Orbit) ~0.25 s blocks; 10 000 blocks ≈ 41 min — covers 30-min window
-  const fromBlockHex = '0x' + Math.max(0, currentBlock - 10_000).toString(16)
-  const result = await evmRpc(rpcUrl, 'alchemy_getAssetTransfers', [{ fromBlock: fromBlockHex, toBlock: 'latest', fromAddress: sender, toAddress: receiver, category: ['external'], withMetadata: true, maxCount: '0x32' }])
-  for (const t of (result?.transfers ?? [])) {
-    if (usedHashes.includes(t.hash)) continue
-    if (t.metadata?.blockTimestamp) {
-      const bt = new Date(t.metadata.blockTimestamp).getTime()
-      if (bt < fromTs || bt > toTs) continue
-    }
-    const value = parseFloat(t.value ?? '0')
-    if (value >= expectedEth * (1 - TOLERANCE)) return { hash: t.hash, amountEth: value }
-  }
-  return null
-}
-
 async function rpc(method: string, params: unknown[]) {
   const r = await fetch(RPC, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ jsonrpc: '2.0', id: 1, method, params }) })
   const d = await r.json()
@@ -81,32 +55,23 @@ Deno.serve(async (req) => {
     }
     if (order.status !== 'pending_payment') return json({ status: order.status })
 
-    // ── Route: Robinhood Chain ─────────────────────────────────────────────────
+    // ── Route: Robinhood Chain — forward to the standalone verify-robinhood function ──
     if (order.payment_network === 'robinhood') {
-      const rpcUrl = Deno.env.get('ROBINHOOD_RPC_URL')
-      if (!rpcUrl) return json({ error: 'ROBINHOOD_RPC_URL not configured' }, 500)
-      const { data: usedHashRows } = await sb.from('orders').select('tx_hash').not('tx_hash', 'is', null)
-      const usedHashes: string[] = (usedHashRows ?? []).map((r: any) => r.tx_hash).filter(Boolean)
-      const ethMatch = await findEthTx(rpcUrl, order.user_wallet, order.treasury_wallet, parseFloat(order.required_eth), new Date(order.created_at).getTime(), expires, usedHashes)
-      if (!ethMatch) return json({ status: 'pending_payment' })
-      await sb.from('orders').update({ status: 'confirmed', tx_hash: ethMatch.hash, amount_received_eth: ethMatch.amountEth, confirmed_at: new Date().toISOString() }).eq('id', orderId)
-      const endsAt = new Date(Date.now() + 21 * 86_400_000).toISOString()
-      const { data: rhChallenge } = await sb.from('challenges').insert({ user_id: order.user_id, order_id: orderId, challenge_plan: order.challenge_plan, status: 'active', evaluation_period_days: 21, ends_at: endsAt }).select().single()
-      await sb.from('profiles').update({ challenge_status: 'active', active_challenge_id: rhChallenge?.id ?? null, payout_wallet: order.user_wallet }).eq('id', order.user_id)
-      await sb.from('notifications').insert({ user_id: order.user_id, type: 'challenge_activated', message: `Your ${order.challenge_plan} challenge is now active! You have 21 days to prove your edge.` })
-      const { data: rhExistingReward } = await sb.from('referral_rewards').select('id').eq('referred_id', order.user_id).maybeSingle()
-      if (!rhExistingReward) {
-        const { data: rhProfile } = await sb.from('profiles').select('referred_by_code').eq('id', order.user_id).single()
-        if (rhProfile?.referred_by_code) {
-          const { data: rhReferrer } = await sb.from('profiles').select('id').eq('referral_code', rhProfile.referred_by_code).neq('id', order.user_id).maybeSingle()
-          if (rhReferrer) {
-            const reward = parseFloat(order.purchase_price_usd) * 0.1
-            await sb.from('referral_rewards').insert({ referrer_id: rhReferrer.id, referred_id: order.user_id, order_id: orderId, reward_usd: reward, status: 'credited' })
-            await sb.from('notifications').insert({ user_id: rhReferrer.id, type: 'referral_earned', message: `You earned a $${reward.toFixed(2)} referral reward!` })
-          }
-        }
-      }
-      return json({ status: 'confirmed', challengeId: rhChallenge?.id })
+      const supabaseUrl = Deno.env.get('SUPABASE_URL')!
+      const serviceKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
+      const resp = await fetch(`${supabaseUrl}/functions/v1/verify-robinhood`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${serviceKey}`,
+        },
+        body: JSON.stringify({ orderId }),
+      })
+      const result = await resp.json()
+      return new Response(JSON.stringify(result), {
+        status: resp.status,
+        headers: { ...cors, 'Content-Type': 'application/json' },
+      })
     }
     // ── End Robinhood Route ────────────────────────────────────────────────────
 
