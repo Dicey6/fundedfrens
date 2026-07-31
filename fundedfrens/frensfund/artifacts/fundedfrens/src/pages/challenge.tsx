@@ -235,7 +235,7 @@ export default function ChallengePage() {
               >
                 <div className={`h-full flex flex-col rounded-2xl border transition-all duration-250 hover:-translate-y-1.5 overflow-hidden ${
                   isPopular
-                    ? 'bg-card border-primary/30 shadow-[0_0_0_1px_rgba(204,255,0,0.08),0_16px_32px_-6px_rgba(0,0,0,0.25)] hover:shadow-[0_0_0_1px_rgba(204,255,0,0.15),0_24px_48px_-8px_rgba(0,0,0,0.3)]'
+                    ? 'bg-card border-primary/30 shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.08),0_16px_32px_-6px_rgba(0,0,0,0.25)] hover:shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.15),0_24px_48px_-8px_rgba(0,0,0,0.3)]'
                     : 'bg-card border-border shadow-sm hover:shadow-lg hover:border-foreground/15'
                 }`}>
                   {isPopular && <div className="h-0.5 bg-gradient-to-r from-primary/80 via-primary to-primary/80" />}
@@ -299,7 +299,7 @@ export default function ChallengePage() {
 
                     <Button
                       className={`w-full h-12 font-mono uppercase tracking-wider text-xs rounded-xl transition-all duration-200 ${
-                        isPopular ? 'neon-glow hover:shadow-[0_0_30px_rgba(204,255,0,0.5)]' : 'bg-foreground/5 hover:bg-foreground/10 text-foreground border border-border hover:border-foreground/20'
+                        isPopular ? 'neon-glow hover:shadow-[0_0_30px_rgba(var(--accent-rgb),0.5)]' : 'bg-foreground/5 hover:bg-foreground/10 text-foreground border border-border hover:border-foreground/20'
                       }`}
                       variant={isPopular ? 'default' : 'outline'}
                       onClick={() => setSelectedPlan(plan)}

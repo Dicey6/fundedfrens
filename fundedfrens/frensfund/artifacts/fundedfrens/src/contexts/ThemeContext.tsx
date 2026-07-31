@@ -8,7 +8,7 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue>({
-  theme: 'dark',
+  theme: 'light',
   toggleTheme: () => {},
 });
 
@@ -20,7 +20,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       const stored = localStorage.getItem('ff-theme');
       if (stored === 'light' || stored === 'dark' || stored === 'mono') return stored;
     } catch {}
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {

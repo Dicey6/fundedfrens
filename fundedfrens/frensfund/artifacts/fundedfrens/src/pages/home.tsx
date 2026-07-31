@@ -145,8 +145,8 @@ function NetworkHeroBadge() {
       <motion.div
         className="flex items-center gap-2.5 px-4 py-2.5 rounded-r-full border-2 border-l-0 z-10 relative"
         style={{
-          background: 'linear-gradient(135deg, rgba(204,255,0,0.15) 0%, rgba(0,0,0,0.08) 100%)',
-          borderColor: 'rgba(204,255,0,0.45)',
+          background: 'linear-gradient(135deg, rgba(var(--accent-rgb),0.15) 0%, rgba(0,0,0,0.08) 100%)',
+          borderColor: 'rgba(var(--accent-rgb),0.45)',
         }}
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -451,7 +451,7 @@ export default function HomePage() {
                 <motion.div key={plan.id} variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={i}>
                   <div className={`relative rounded-2xl flex flex-col overflow-hidden transition-all duration-250 hover:-translate-y-1.5 ${
                     isPopular
-                      ? 'bg-card border-[1.5px] border-primary/35 shadow-[0_0_0_1px_rgba(204,255,0,0.08),0_20px_40px_-8px_rgba(0,0,0,0.35)] hover:shadow-[0_0_0_1px_rgba(204,255,0,0.15),0_28px_56px_-10px_rgba(0,0,0,0.4)]'
+                      ? 'bg-card border-[1.5px] border-primary/35 shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.08),0_20px_40px_-8px_rgba(0,0,0,0.35)] hover:shadow-[0_0_0_1px_rgba(var(--accent-rgb),0.15),0_28px_56px_-10px_rgba(0,0,0,0.4)]'
                       : 'bg-card border-[1.5px] border-foreground/10 shadow-sm hover:shadow-lg hover:border-foreground/20'
                   }`}>
                     {isPopular && (
@@ -577,7 +577,7 @@ export default function HomePage() {
             </motion.div>
 
             <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={1}
-              className="glass outline-card rounded-2xl p-7 border-primary/20 hover:border-primary/35 transition-all duration-200" style={{ borderColor: 'rgba(204,255,0,0.2)' }}>
+              className="glass outline-card rounded-2xl p-7 border-primary/20 hover:border-primary/35 transition-all duration-200" style={{ borderColor: 'rgba(var(--accent-rgb),0.2)' }}>
               <div className="w-12 h-12 rounded-xl bg-primary/15 border border-primary/25 flex items-center justify-center mb-5">
                 <Bot className="w-6 h-6 text-primary" />
               </div>

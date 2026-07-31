@@ -79,6 +79,7 @@
 
   /* Robin Neon: #CCFF00 = hsl(72, 100%, 50%) */
   --neon: 204 255 0;
+  --accent-rgb: 204, 255, 0;
 
   --background: 0 0% 4%;
   --foreground: 0 0% 95%;
@@ -157,6 +158,7 @@
 
 /* ── LIGHT THEME — FLAGSHIP ──────────────────────────────────────────────── */
 .light {
+  --accent-rgb: 0, 0, 0;
   --button-outline: rgba(0, 0, 0, 0.07);
   --badge-outline: rgba(0, 0, 0, 0.04);
 
@@ -176,18 +178,17 @@
   --sidebar: 50 15% 98%;
   --sidebar-foreground: 0 0% 10%;
   --sidebar-border: 0 0% 88%;
-  --sidebar-primary: 72 100% 38%;
+  --sidebar-primary: 0 0% 0%;
   --sidebar-primary-foreground: 0 0% 0%;
   --sidebar-accent: 0 0% 93%;
   --sidebar-accent-foreground: 0 0% 10%;
-  --sidebar-ring: 72 100% 38%;
+  --sidebar-ring: 0 0% 0%;
 
   --popover: 0 0% 100%;
   --popover-foreground: 0 0% 6%;
   --popover-border: 0 0% 87%;
 
-  /* Slightly darker neon for light bg legibility */
-  --primary: 72 100% 36%;
+  --primary: 0 0% 0%;
   --primary-foreground: 0 0% 0%;
 
   --secondary: 0 0% 92%;
@@ -196,16 +197,16 @@
   --muted: 0 0% 92%;
   --muted-foreground: 0 0% 44%;
 
-  --accent: 72 100% 36%;
+  --accent: 0 0% 0%;
   --accent-foreground: 0 0% 0%;
 
   --destructive: 0 72% 50%;
   --destructive-foreground: 0 0% 100%;
 
   --input: 0 0% 88%;
-  --ring: 72 100% 36%;
+  --ring: 0 0% 0%;
 
-  --chart-1: 72 100% 36%;
+  --chart-1: 0 0% 0%;
   --chart-2: 142 76% 32%;
   --chart-3: 38 90% 46%;
   --chart-4: 210 100% 52%;
@@ -223,6 +224,7 @@
 
 /* ── MONO THEME — BLACK / WHITE WITH BRAND ACCENTS ───────────────────────── */
 .mono {
+  --accent-rgb: 204, 255, 0;
   --button-outline: rgba(255, 255, 255, 0.16);
   --badge-outline: rgba(255, 255, 255, 0.1);
 
@@ -296,19 +298,19 @@
   /* Dark body */
   body {
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(204,255,0,0.04) 0%, transparent 60%);
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(var(--accent-rgb),0.04) 0%, transparent 60%);
     background-attachment: fixed;
   }
 
   /* Light body */
   .light body, body.light {
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(204,255,0,0.06) 0%, transparent 60%);
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(var(--accent-rgb),0.06) 0%, transparent 60%);
   }
 
   .mono body, body.mono {
     background-image:
-      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(204,255,0,0.05) 0%, transparent 60%),
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(var(--accent-rgb),0.05) 0%, transparent 60%),
       linear-gradient(135deg, rgba(255,255,255,0.015) 25%, transparent 25%);
   }
 
@@ -333,8 +335,8 @@
   }
   .glass-primary {
     background: hsl(var(--card));
-    border: 1px solid rgba(204,255,0,0.15);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 0 0 1px rgba(204,255,0,0.06) inset;
+    border: 1px solid rgba(var(--accent-rgb),0.15);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4), 0 0 0 1px rgba(var(--accent-rgb),0.06) inset;
   }
   .glass-hover {
     transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
@@ -372,8 +374,8 @@
   }
   .light .glass-primary {
     background: hsl(var(--card));
-    border: 1px solid rgba(100,160,0,0.25);
-    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(100,160,0,0.05) inset;
+    border: 1px solid rgba(var(--accent-rgb),0.25);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 0 0 1px rgba(var(--accent-rgb),0.05) inset;
   }
   .light .glass-hover:hover {
     border-color: rgba(0,0,0,0.12);
@@ -383,16 +385,16 @@
 
   /* ── Neon glow utilities ── */
   .neon-glow {
-    box-shadow: 0 0 20px rgba(204,255,0,0.3), 0 0 40px rgba(204,255,0,0.12), 0 2px 8px rgba(0,0,0,0.3);
+    box-shadow: 0 0 20px rgba(var(--accent-rgb),0.3), 0 0 40px rgba(var(--accent-rgb),0.12), 0 2px 8px rgba(0,0,0,0.3);
   }
   .neon-glow:hover {
-    box-shadow: 0 0 28px rgba(204,255,0,0.4), 0 0 56px rgba(204,255,0,0.16), 0 4px 12px rgba(0,0,0,0.3);
+    box-shadow: 0 0 28px rgba(var(--accent-rgb),0.4), 0 0 56px rgba(var(--accent-rgb),0.16), 0 4px 12px rgba(0,0,0,0.3);
   }
   .neon-text-glow {
-    text-shadow: 0 0 20px rgba(204,255,0,0.4);
+    text-shadow: 0 0 20px rgba(var(--accent-rgb),0.4);
   }
   .light .neon-glow {
-    box-shadow: 0 0 16px rgba(100,160,0,0.2), 0 0 32px rgba(100,160,0,0.08);
+    box-shadow: 0 0 16px rgba(var(--accent-rgb),0.2), 0 0 32px rgba(var(--accent-rgb),0.08);
   }
 
   /* ── Network badge utilities ── */
@@ -401,8 +403,8 @@
     border: 1px solid rgba(153,69,255,0.25);
   }
   .network-badge-robinhood {
-    background: linear-gradient(135deg, rgba(204,255,0,0.12) 0%, rgba(0,0,0,0.08) 100%);
-    border: 1px solid rgba(204,255,0,0.25);
+    background: linear-gradient(135deg, rgba(var(--accent-rgb),0.12) 0%, rgba(0,0,0,0.08) 100%);
+    border: 1px solid rgba(var(--accent-rgb),0.25);
   }
 
   /* ── Typography utilities ── */
@@ -431,19 +433,19 @@
   /* ── Status badge utilities ── */
   .badge-neon {
     @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-wider;
-    background: rgba(204,255,0,0.08);
+    background: rgba(var(--accent-rgb),0.08);
     color: hsl(var(--primary));
-    border: 1px solid rgba(204,255,0,0.2);
+    border: 1px solid rgba(var(--accent-rgb),0.2);
   }
   .light .badge-neon {
-    background: rgba(100,160,0,0.08);
+    background: rgba(var(--accent-rgb),0.08);
     color: hsl(var(--primary));
-    border: 1px solid rgba(100,160,0,0.2);
+    border: 1px solid rgba(var(--accent-rgb),0.2);
   }
   .mono .badge-neon {
-    background: rgba(204,255,0,0.1);
+    background: rgba(var(--accent-rgb),0.1);
     color: hsl(var(--primary));
-    border: 1px solid rgba(204,255,0,0.3);
+    border: 1px solid rgba(var(--accent-rgb),0.3);
   }
 
   /* ── Page transition ── */
@@ -465,9 +467,9 @@
 
   /* ── Subtle pulse ring ── */
   @keyframes pulseRing {
-    0%   { box-shadow: 0 0 0 0 rgba(204,255,0,0.35); }
-    70%  { box-shadow: 0 0 0 10px rgba(204,255,0,0); }
-    100% { box-shadow: 0 0 0 0 rgba(204,255,0,0); }
+    0%   { box-shadow: 0 0 0 0 rgba(var(--accent-rgb),0.35); }
+    70%  { box-shadow: 0 0 0 10px rgba(var(--accent-rgb),0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb),0); }
   }
   .pulse-ring { animation: pulseRing 2.2s ease-out infinite; }
 
