@@ -4,7 +4,7 @@ import {
   ArrowRight, Check, ChevronRight, Shield, Zap, TrendingUp,
   Users, Target, Award, BarChart3, Clock, Star, Menu, X,
   MessageCircle, Wallet, Bell, Activity, Lock, ExternalLink,
-  ChevronDown, Globe, Bot, LineChart, RefreshCw, Copy, Sun, Moon
+  ChevronDown, Globe, Bot, LineChart, RefreshCw, Copy, Sun, Moon, Contrast
 } from 'lucide-react';
 import { useState } from 'react';
 import { CHALLENGE_PLANS } from '@/lib/supabase';
@@ -208,7 +208,7 @@ export default function HomePage() {
                 animate={{ rotate: 0, opacity: 1 }}
                 transition={{ duration: 0.2 }}
               >
-                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : theme === 'light' ? <Moon className="w-4 h-4" /> : <Contrast className="w-4 h-4" />}
               </motion.div>
             </button>
             <Button variant="ghost" className="text-sm text-muted-foreground hover:text-foreground" onClick={() => navigate('/login')}>Log In</Button>
@@ -248,8 +248,8 @@ export default function HomePage() {
                 onClick={toggleTheme}
                 className="w-full flex items-center gap-2 py-2.5 px-3 rounded-lg text-sm text-muted-foreground hover:text-foreground hover:bg-foreground/[0.04] transition-colors"
               >
-                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-                <span>{theme === 'dark' ? 'Light Mode' : 'Dark Mode'}</span>
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : theme === 'light' ? <Moon className="w-4 h-4" /> : <Contrast className="w-4 h-4" />}
+                <span>{theme === 'dark' ? 'Light Mode' : theme === 'light' ? 'Mono Mode' : 'Dark Mode'}</span>
               </button>
               <div className="grid grid-cols-2 gap-2">
                 <Button variant="outline" className="w-full text-sm rounded-xl" onClick={() => { setNavOpen(false); navigate('/login'); }}>Login</Button>

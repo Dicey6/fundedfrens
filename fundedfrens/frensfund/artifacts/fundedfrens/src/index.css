@@ -221,6 +221,65 @@
   --shadow-2xl: 0 48px 100px -16px rgba(0,0,0,0.1);
 }
 
+/* ── MONO THEME — BLACK / WHITE WITH BRAND ACCENTS ───────────────────────── */
+.mono {
+  --button-outline: rgba(255, 255, 255, 0.16);
+  --badge-outline: rgba(255, 255, 255, 0.1);
+
+  --opaque-button-border-intensity: 8;
+  --elevate-1: rgba(255, 255, 255, 0.04);
+  --elevate-2: rgba(255, 255, 255, 0.08);
+
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+
+  --border: 0 0% 18%;
+  --card: 0 0% 5%;
+  --card-foreground: 0 0% 100%;
+  --card-border: 0 0% 20%;
+
+  --sidebar: 0 0% 2%;
+  --sidebar-foreground: 0 0% 96%;
+  --sidebar-border: 0 0% 16%;
+  --sidebar-primary: 72 100% 50%;
+  --sidebar-primary-foreground: 0 0% 0%;
+  --sidebar-accent: 0 0% 10%;
+  --sidebar-accent-foreground: 0 0% 96%;
+  --sidebar-ring: 72 100% 50%;
+
+  --popover: 0 0% 4%;
+  --popover-foreground: 0 0% 100%;
+  --popover-border: 0 0% 20%;
+
+  --primary: 72 100% 50%;
+  --primary-foreground: 0 0% 0%;
+  --secondary: 0 0% 12%;
+  --secondary-foreground: 0 0% 100%;
+  --muted: 0 0% 13%;
+  --muted-foreground: 0 0% 66%;
+  --accent: 72 100% 50%;
+  --accent-foreground: 0 0% 0%;
+  --destructive: 0 80% 62%;
+  --destructive-foreground: 0 0% 100%;
+  --input: 0 0% 15%;
+  --ring: 72 100% 50%;
+
+  --chart-1: 72 100% 50%;
+  --chart-2: 188 92% 52%;
+  --chart-3: 272 92% 68%;
+  --chart-4: 38 96% 58%;
+  --chart-5: 0 80% 62%;
+
+  --shadow-2xs: 0 1px 2px 0 rgba(0,0,0,0.8);
+  --shadow-xs: 0 2px 4px 0 rgba(0,0,0,0.8);
+  --shadow-sm: 0 2px 8px -1px rgba(0,0,0,0.7);
+  --shadow: 0 4px 12px -2px rgba(0,0,0,0.75);
+  --shadow-md: 0 6px 20px -4px rgba(0,0,0,0.8);
+  --shadow-lg: 0 12px 32px -6px rgba(0,0,0,0.82);
+  --shadow-xl: 0 20px 48px -8px rgba(0,0,0,0.85);
+  --shadow-2xl: 0 32px 64px -12px rgba(0,0,0,0.9);
+}
+
 .dark {
   /* falls back to :root dark defaults */
 }
@@ -245,6 +304,12 @@
   .light body, body.light {
     background-image:
       radial-gradient(ellipse 80% 50% at 50% -10%, rgba(204,255,0,0.06) 0%, transparent 60%);
+  }
+
+  .mono body, body.mono {
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(204,255,0,0.05) 0%, transparent 60%),
+      linear-gradient(135deg, rgba(255,255,255,0.015) 25%, transparent 25%);
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -374,6 +439,11 @@
     background: rgba(100,160,0,0.08);
     color: hsl(var(--primary));
     border: 1px solid rgba(100,160,0,0.2);
+  }
+  .mono .badge-neon {
+    background: rgba(204,255,0,0.1);
+    color: hsl(var(--primary));
+    border: 1px solid rgba(204,255,0,0.3);
   }
 
   /* ── Page transition ── */

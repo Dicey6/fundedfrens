@@ -1,5 +1,5 @@
 import { Link } from 'wouter';
-import { ArrowLeft, Sun, Moon } from 'lucide-react';
+import { ArrowLeft, Sun, Moon, Contrast } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
 
 const sections = [
@@ -273,7 +273,7 @@ export default function PrivacyPage() {
               className="w-8 h-8 flex items-center justify-center rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
               aria-label="Toggle theme"
             >
-              {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {theme === 'dark' ? <Sun className="w-4 h-4" /> : theme === 'light' ? <Moon className="w-4 h-4" /> : <Contrast className="w-4 h-4" />}
             </button>
           </div>
         </div>
@@ -283,7 +283,7 @@ export default function PrivacyPage() {
         {/* Title block */}
         <div className="mb-10 pb-8 border-b border-border">
           <div className="flex items-center gap-3 mb-4">
-            <img src="/fundedfrens/logo.jpeg" alt="FundedFrens" className="w-10 h-10 rounded-xl object-cover" />
+            <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-10 h-10 rounded-xl object-cover" />
             <span className="font-display font-bold text-xl">FundedFrens</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-3">Privacy Policy</h1>

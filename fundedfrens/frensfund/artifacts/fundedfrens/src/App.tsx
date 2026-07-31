@@ -65,12 +65,13 @@ function Router() {
 
 function AppInner() {
   const { theme } = useTheme();
+  const toasterTheme = theme === 'light' ? 'light' : 'dark';
   return (
     <>
       <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, '')}>
         <Router />
       </WouterRouter>
-      <Toaster theme={theme} position="top-right" />
+      <Toaster theme={toasterTheme} position="top-right" />
     </>
   );
 }

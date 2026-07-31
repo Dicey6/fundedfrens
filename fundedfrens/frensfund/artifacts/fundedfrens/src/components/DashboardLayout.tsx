@@ -6,7 +6,7 @@ import { supabase } from '@/lib/supabase';
 import {
   LayoutDashboard, Target, BarChart3, Briefcase, ShoppingCart,
   Users, MessageCircle, User, Settings, LogOut, Menu, X,
-  Shield, Sun, Moon, Lock,
+  Shield, Sun, Moon, Contrast, Lock,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -324,7 +324,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
                   animate={{ rotate: 0, opacity: 1 }}
                   transition={{ duration: 0.2 }}
                 >
-                  {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                  {theme === 'dark' ? <Sun className="w-4 h-4" /> : theme === 'light' ? <Moon className="w-4 h-4" /> : <Contrast className="w-4 h-4" />}
                 </motion.div>
               </button>
               <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-black font-mono font-bold text-xs flex-shrink-0 shadow-sm">
