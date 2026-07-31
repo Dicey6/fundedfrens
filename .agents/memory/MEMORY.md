@@ -1,0 +1,1 @@
+- [GitHub push authorization](github-push-auth.md) — use the secure source-control connection; project token secrets may not work for Git pushes.
