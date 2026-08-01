@@ -93,6 +93,14 @@ const faqs = [
   { q: 'How do referrals work?', a: 'Share your unique referral code or link. When someone signs up with your code and purchases any challenge, you automatically earn 10% of their fee.' },
 ];
 
+// Update these values in one place when the token details or destinations change.
+const TOKEN_NAME = 'FundedFrens';
+const TOKEN_SYMBOL = 'FFRENS';
+const TOKEN_NETWORK = 'Solana';
+const TOKEN_CONTRACT_ADDRESS = '9qMLFMYMMXVUsgnDwm9FYuEYhENPiuYB8SnjofhDpump';
+const TOKEN_EXPLORER_URL = `https://solscan.io/token/${TOKEN_CONTRACT_ADDRESS}`;
+const TOKEN_TRADE_URL = '#';
+
 // ── Reusable components ───────────────────────────────────────────────────────
 function SectionTag({ children }: { children: React.ReactNode }) {
   return (
@@ -169,8 +177,31 @@ function NetworkHeroBadge() {
 export default function HomePage() {
   const [navOpen, setNavOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [copied, setCopied] = useState(false);
   const { theme, toggleTheme } = useTheme();
   const [, navigate] = useLocation();
+
+  const copyContractAddress = async () => {
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(TOKEN_CONTRACT_ADDRESS);
+      } else {
+        const textArea = document.createElement('textarea');
+        textArea.value = TOKEN_CONTRACT_ADDRESS;
+        textArea.style.position = 'fixed';
+        textArea.style.opacity = '0';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        document.execCommand('copy');
+        textArea.remove();
+      }
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 1800);
+    } catch {
+      setCopied(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -381,6 +412,75 @@ export default function HomePage() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* ── OFFICIAL TOKEN CONTRACT ── */}
+      <section className="py-20 px-4 sm:px-6 bg-card/50">
+        <div className="max-w-4xl mx-auto">
+          <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }}
+            className="glass outline-card rounded-3xl p-6 sm:p-8 border-[1.5px] border-primary/20 relative overflow-hidden">
+            <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-primary/70 to-transparent" />
+            <div className="flex flex-col gap-6 relative z-10">
+              <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3">
+                <div>
+                  <SectionTag>Token Information</SectionTag>
+                  <h2 className="text-2xl sm:text-3xl font-display font-bold tracking-tight">Official Token Contract</h2>
+                </div>
+                <div className="flex items-center gap-2 text-xs font-mono text-muted-foreground">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  Verified on-chain
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                {[
+                  { label: 'Token Name', value: TOKEN_NAME },
+                  { label: 'Token Symbol', value: TOKEN_SYMBOL },
+                  { label: 'Network', value: TOKEN_NETWORK },
+                ].map(({ label, value }) => (
+                  <div key={label} className="rounded-xl border border-border bg-foreground/[0.03] px-4 py-3">
+                    <div className="metric-label mb-1">{label}</div>
+                    <div className="font-display font-semibold text-sm">{value}</div>
+                  </div>
+                ))}
+              </div>
+
+              <div className="rounded-2xl border border-primary/20 bg-primary/[0.04] p-4 sm:p-5">
+                <div>
+                  <div className="min-w-0">
+                    <div className="metric-label mb-2">Contract Address (CA)</div>
+                    <div className="font-mono text-sm sm:text-base text-foreground break-all sm:break-normal sm:truncate" title={TOKEN_CONTRACT_ADDRESS}>
+                      <span className="sm:hidden">{`${TOKEN_CONTRACT_ADDRESS.slice(0, 6)}...${TOKEN_CONTRACT_ADDRESS.slice(-4)}`}</span>
+                      <span className="hidden sm:inline">{TOKEN_CONTRACT_ADDRESS}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  type="button"
+                  onClick={copyContractAddress}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-primary/25 bg-primary/10 px-4 py-2.5 text-xs font-mono font-semibold text-primary hover:bg-primary/20 transition-all duration-200 flex-1"
+                  aria-label="Copy contract address"
+                >
+                  {copied ? <Check className="w-3.5 h-3.5" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? 'Copied!' : 'Copy Contract'}
+                </button>
+                <a href={TOKEN_EXPLORER_URL} target="_blank" rel="noopener noreferrer" className="flex-1">
+                  <Button variant="outline" className="w-full rounded-xl text-xs font-mono font-semibold border-foreground/10 hover:border-primary/30 hover:text-primary transition-all duration-200">
+                    View on Explorer <ExternalLink className="w-3.5 h-3.5 ml-2" />
+                  </Button>
+                </a>
+                <a href={TOKEN_TRADE_URL} target="_blank" rel="noopener noreferrer" className="flex-1">
+                  <Button className="w-full rounded-xl text-xs font-mono font-semibold neon-glow transition-all duration-200">
+                    Trade Now <ArrowRight className="w-3.5 h-3.5 ml-2" />
+                  </Button>
+                </a>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
