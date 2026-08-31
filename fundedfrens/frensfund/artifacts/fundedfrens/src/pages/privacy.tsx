@@ -7,8 +7,8 @@ const sections = [
     num: '1',
     title: 'Introduction',
     content: [
-      'FundedFrens ("FundedFrens", "we", "our", or "us") values your privacy and is committed to protecting your personal information.',
-      'This Privacy Policy explains how we collect, use, store, disclose, and protect your information when you access or use the FundedFrens website, dashboard, Telegram trading bot, and any related services (collectively, the "Platform").',
+      'HOODFUND ("HOODFUND", "we", "our", or "us") values your privacy and is committed to protecting your personal information.',
+      'This Privacy Policy explains how we collect, use, store, disclose, and protect your information when you access or use the HOODFUND website, dashboard, Telegram trading bot, and any related services (collectively, the "Platform").',
       'By creating an account or using the Platform, you acknowledge that you have read and understood this Privacy Policy.',
     ],
   },
@@ -69,7 +69,7 @@ const sections = [
           'Payment amount and status',
           'Blockchain confirmation data',
         ],
-        footer: 'FundedFrens does not collect or store your wallet\'s private keys or recovery phrases.',
+        footer: 'HOODFUND does not collect or store your wallet\'s private keys or recovery phrases.',
       },
       {
         title: 'Telegram Information',
@@ -79,7 +79,7 @@ const sections = [
           'Link status and date',
           'Connection token',
         ],
-        footer: 'This information is used only to securely connect your Telegram account with your FundedFrens account.',
+        footer: 'This information is used only to securely connect your Telegram account with your HOODFUND account.',
       },
       {
         title: 'Device Information',
@@ -120,8 +120,8 @@ const sections = [
     title: 'Blockchain Data',
     content: [
       'Payments made using the Solana blockchain are publicly recorded.',
-      'FundedFrens may access publicly available blockchain information for purposes including payment verification, fraud prevention, order validation, and security monitoring.',
-      'Blockchain transactions are permanent and publicly accessible. FundedFrens cannot modify or remove blockchain records.',
+      'HOODFUND may access publicly available blockchain information for purposes including payment verification, fraud prevention, order validation, and security monitoring.',
+      'Blockchain transactions are permanent and publicly accessible. HOODFUND cannot modify or remove blockchain records.',
     ],
   },
   {
@@ -153,7 +153,7 @@ const sections = [
     num: '7',
     title: 'Third-Party Services',
     content: [
-      'FundedFrens may rely on trusted third-party providers to operate the Platform. These providers may include services for authentication, database hosting, cloud infrastructure, blockchain verification, Telegram integration, analytics, and email delivery.',
+      'HOODFUND may rely on trusted third-party providers to operate the Platform. These providers may include services for authentication, database hosting, cloud infrastructure, blockchain verification, Telegram integration, analytics, and email delivery.',
       'These providers only receive information necessary to perform their services and are expected to maintain appropriate security measures.',
     ],
   },
@@ -174,7 +174,7 @@ const sections = [
     num: '9',
     title: 'Data Security',
     content: [
-      'FundedFrens implements reasonable administrative, technical, and organizational measures designed to protect your information.',
+      'HOODFUND implements reasonable administrative, technical, and organizational measures designed to protect your information.',
       'Examples include secure authentication, encrypted communications, database access controls, role-based permissions, and security monitoring.',
       'While we strive to protect your information, no online system can guarantee absolute security.',
     ],
@@ -209,7 +209,7 @@ const sections = [
     num: '12',
     title: "Children's Privacy",
     content: [
-      'FundedFrens is intended only for individuals who are at least 18 years old.',
+      'HOODFUND is intended only for individuals who are at least 18 years old.',
       'We do not knowingly collect personal information from children.',
       'If we become aware that information has been collected from a person under the minimum required age, we will take reasonable steps to remove it.',
     ],
@@ -233,7 +233,7 @@ const sections = [
       'Secure your Telegram account.',
       'Protect your cryptocurrency wallets.',
     ],
-    footer: 'FundedFrens cannot recover funds lost due to compromised personal wallets or accounts outside of our control.',
+    footer: 'HOODFUND cannot recover funds lost due to compromised personal wallets or accounts outside of our control.',
   },
   {
     num: '15',
@@ -241,14 +241,14 @@ const sections = [
     content: [
       'We may update this Privacy Policy periodically to reflect changes in our services, technology, legal obligations, or business practices.',
       'When significant changes are made, we may provide notice through the Platform.',
-      'Your continued use of FundedFrens after any updates constitutes acceptance of the revised Privacy Policy.',
+      'Your continued use of HOODFUND after any updates constitutes acceptance of the revised Privacy Policy.',
     ],
   },
   {
     num: '16',
     title: 'Contact Us',
     content: [
-      'If you have any questions regarding this Privacy Policy or how your information is handled, please contact FundedFrens through the official support channels available on the Platform.',
+      'If you have any questions regarding this Privacy Policy or how your information is handled, please contact HOODFUND through the official support channels available on the Platform.',
     ],
   },
 ];
@@ -283,8 +283,8 @@ export default function PrivacyPage() {
         {/* Title block */}
         <div className="mb-10 pb-8 border-b border-border">
           <div className="flex items-center gap-3 mb-4">
-            <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-10 h-10 rounded-xl object-cover" />
-            <span className="font-display font-bold text-xl">FundedFrens</span>
+            <img src="/handshake-logo.jpeg" alt="HOODFUND" className="w-10 h-10 rounded-xl object-cover" />
+            <span className="font-display font-bold text-xl">HOODFUND</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-3">Privacy Policy</h1>
           <p className="text-sm text-muted-foreground font-mono">Effective Date: July 21, 2026</p>
@@ -340,16 +340,16 @@ export default function PrivacyPage() {
         <div className="mt-12 p-6 rounded-xl border border-primary/20 bg-primary/5">
           <h2 className="text-base font-display font-semibold mb-3">Final Acknowledgement</h2>
           <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-            By creating an account or using the FundedFrens Platform, you acknowledge that you have read, understood, and accepted this Privacy Policy.
+            By creating an account or using the HOODFUND Platform, you acknowledge that you have read, understood, and accepted this Privacy Policy.
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            You understand that FundedFrens collects and processes information necessary to operate the Platform, verify payments, generate trading analytics, provide account services, and maintain the security and integrity of the ecosystem. Your privacy is important to us, and we are committed to handling your information responsibly and in accordance with this Privacy Policy.
+            You understand that HOODFUND collects and processes information necessary to operate the Platform, verify payments, generate trading analytics, provide account services, and maintain the security and integrity of the ecosystem. Your privacy is important to us, and we are committed to handling your information responsibly and in accordance with this Privacy Policy.
           </p>
         </div>
 
         {/* Footer nav */}
         <div className="mt-10 pt-8 border-t border-border flex flex-wrap items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground font-mono">© 2026 FundedFrens. All rights reserved.</p>
+          <p className="text-xs text-muted-foreground font-mono">© 2026 HOODFUND. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="/terms">
               <span className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer">Terms &amp; Conditions</span>

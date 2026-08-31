@@ -12,7 +12,7 @@ interface AuthLayoutProps {
 const features = [
   { icon: TrendingUp, text: 'Real-time performance tracking & analytics' },
   { icon: ShieldCheck, text: 'Institutional-grade risk management rules' },
-  { icon: Zap, text: 'Instant payments — Solana & Robinhood Chain' },
+  { icon: Zap, text: 'Instant payments — Robinhood Chain' },
   { icon: Users, text: 'Active trader community & Telegram alerts' },
 ];
 
@@ -45,9 +45,9 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
               <Link href="/">
                 <div className="flex items-center gap-3 cursor-pointer group">
                   <div className="w-10 h-10 rounded-xl overflow-hidden border-2 border-primary/40 flex-shrink-0 group-hover:border-primary/70 transition-colors shadow-lg">
-                    <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
+                    <img src="/handshake-logo.jpeg" alt="HOODFUND" className="w-full h-full object-cover" />
                   </div>
-                  <span className="font-display font-bold text-xl text-foreground tracking-tight">FundedFrens</span>
+                  <span className="font-display font-bold text-xl text-foreground tracking-tight">HOODFUND</span>
                 </div>
               </Link>
               <span className="hidden lg:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-mono font-semibold uppercase tracking-widest bg-primary/10 text-primary border border-primary/20">
@@ -71,13 +71,8 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
               </p>
             </div>
 
-            {/* Network badges */}
+            {/* Network badge */}
             <div className="flex items-center gap-3 mb-8">
-              <div className="flex items-center gap-2 px-3 py-2 rounded-xl network-badge-solana">
-                <img src="/solana-logo.jpeg" alt="Solana" className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
-                <span className="text-xs font-mono font-semibold text-purple-300">Solana</span>
-              </div>
-              <div className="text-muted-foreground/30 text-xs">+</div>
               <div className="flex items-center gap-2 px-3 py-2 rounded-xl network-badge-robinhood">
                 <img src="/robinhood-logo.png" alt="Robinhood" className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
                 <span className="text-xs font-mono font-semibold text-primary">Robinhood Chain</span>
@@ -119,9 +114,9 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
           {/* Mobile logo */}
           <div className="md:hidden flex flex-col items-center mb-10 text-center">
             <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-primary/40 mb-4 shadow-xl">
-              <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
+              <img src="/handshake-logo.jpeg" alt="HOODFUND" className="w-full h-full object-cover" />
             </div>
-            <span className="font-display font-bold text-2xl text-foreground">FundedFrens</span>
+            <span className="font-display font-bold text-2xl text-foreground">HOODFUND</span>
             <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground mt-1">Crypto Prop Trading</span>
           </div>
 
@@ -139,9 +134,8 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
           </motion.div>
 
           <div className="md:hidden mt-10 flex items-center justify-center gap-3">
-            <img src="/solana-logo.jpeg" alt="Solana" className="w-5 h-5 rounded-full object-cover opacity-60" />
-            <span className="text-[10px] font-mono text-muted-foreground/50 uppercase tracking-widest">Secure · Encrypted · Non-custodial</span>
             <img src="/robinhood-logo.png" alt="Robinhood" className="w-5 h-5 rounded-full object-cover opacity-60" />
+            <span className="text-[10px] font-mono text-muted-foreground/50 uppercase tracking-widest">Secure · Encrypted · Non-custodial</span>
           </div>
         </div>
       </div>

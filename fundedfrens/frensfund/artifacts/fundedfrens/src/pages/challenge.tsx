@@ -20,7 +20,7 @@ export default function ChallengePage() {
   const [walletAddress, setWalletAddress] = useState('');
   const [creatingOrder, setCreatingOrder] = useState(false);
   const creatingOrderRef = useRef(false);
-  const [paymentNetwork, setPaymentNetwork] = useState<'solana' | 'robinhood'>('solana');
+  const [paymentNetwork, setPaymentNetwork] = useState<'solana' | 'robinhood'>('robinhood');
   const [ethPrice, setEthPrice] = useState<number | null>(null);
   const [loadingEthPrice, setLoadingEthPrice] = useState(true);
 
@@ -177,25 +177,8 @@ export default function ChallengePage() {
             </div>
           </div>
 
-          {/* Payment Network Selector */}
+          {/* Payment Network — Robinhood Chain only */}
           <div className="flex flex-col sm:flex-row gap-3 mt-6">
-            <button
-              onClick={() => setPaymentNetwork('solana')}
-              className={`flex-1 flex items-center gap-3 px-4 py-3.5 rounded-xl border font-mono text-sm transition-all duration-200 ${
-                paymentNetwork === 'solana'
-                  ? 'border-purple-500/40 bg-purple-500/8 text-foreground shadow-sm'
-                  : 'border-border bg-foreground/[0.02] text-muted-foreground hover:border-border/80 hover:bg-foreground/[0.04]'
-              }`}
-            >
-              <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-purple-500/20">
-                <img src="/solana-logo.jpeg" alt="Solana" className="w-full h-full object-cover" />
-              </div>
-              <div className="text-left">
-                <div className="font-semibold uppercase tracking-wider text-[11px]">Solana</div>
-                <div className="text-[10px] opacity-60">Pay in SOL</div>
-              </div>
-              {paymentNetwork === 'solana' && <div className="ml-auto w-1.5 h-1.5 rounded-full bg-purple-400 animate-pulse" />}
-            </button>
             <button
               onClick={() => setPaymentNetwork('robinhood')}
               className={`flex-1 flex items-center gap-3 px-4 py-3.5 rounded-xl border font-mono text-sm transition-all duration-200 ${

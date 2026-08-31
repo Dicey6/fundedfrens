@@ -81,7 +81,7 @@ export default function SignupPage() {
   return (
     <AuthLayout
       title="Start trading"
-      subtitle="Create your FundedFrens account. No KYC required."
+      subtitle="Create your HOODFUND account. No KYC required."
     >
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5" data-testid="form-signup">

@@ -17,14 +17,14 @@ const fadeUp = {
 };
 
 const stats = [
-  { value: 'Solana', label: 'Native Platform' },
-  { value: 'SOL', label: 'Secure Payments' },
+  { value: 'Robinhood', label: 'Native Platform' },
+  { value: 'ETH', label: 'Secure Payments' },
   { value: '24/7', label: 'Challenge Access' },
   { value: '$3,500', label: 'Max Capital' },
 ];
 
 const trustSignals = [
-  { icon: Zap, label: 'Built for Solana' },
+  { icon: Zap, label: 'Built for Robinhood Chain' },
   { icon: MessageCircle, label: 'Telegram Trading' },
   { icon: Activity, label: 'Instant Analytics' },
   { icon: RefreshCw, label: 'Auto Evaluation' },
@@ -42,7 +42,7 @@ const steps = [
 ];
 
 const whyFeatures = [
-  { icon: Target, title: 'Built for Solana', desc: 'Purpose-built for meme coin and Solana ecosystem traders from day one.' },
+  { icon: Target, title: 'Built for Robinhood Chain', desc: 'Purpose-built for meme coin and Robinhood Chain ecosystem traders from day one.' },
   { icon: Shield, title: 'Professional Evaluation', desc: 'Rigorous but fair criteria with clear, transparent rules.' },
   { icon: BarChart3, title: 'Advanced Analytics', desc: 'Full performance dashboard with PnL, win rate, drawdown, and more.' },
   { icon: MessageCircle, title: 'Telegram-First Trading', desc: 'Execute trades directly through your Telegram bot — fast and frictionless.' },
@@ -82,10 +82,10 @@ const paymentSteps = [
 ];
 
 const faqs = [
-  { q: 'What is FundedFrens?', a: 'FundedFrens is a prop trading platform for on-chain traders. Complete a Demo Challenge to prove your skills, then unlock real firm capital with an 80% profit split.' },
+  { q: 'What is HOODFUND?', a: 'HOODFUND is a prop trading platform for on-chain traders. Complete a Demo Challenge to prove your skills, then unlock real firm capital with an 80% profit split.' },
   { q: 'What is a Demo Challenge?', a: 'A Demo Challenge is an evaluation period where you trade a simulated account. Hit 70%+ win rate over 5+ trading days within 21 days, respecting all risk rules, and you pass.' },
   { q: 'How do funded accounts work?', a: "Once you pass and are approved, you receive access to a funded trading account with real firm capital. You keep 80% of all profits and the firm keeps 20%." },
-  { q: 'How are payments verified?', a: 'Payments are processed on-chain (Solana or Robinhood Chain). Our system monitors your unique treasury wallet address and automatically activates your challenge when funds are received.' },
+  { q: 'How are payments verified?', a: 'Payments are processed on-chain via Robinhood Chain. Our system monitors your unique treasury wallet address and automatically activates your challenge when funds are received.' },
   { q: 'How long is the evaluation?', a: 'The evaluation period is 21 days. You need to trade on at least 5 of those days and maintain a 70%+ win rate.' },
   { q: 'What happens if I fail?', a: 'If you breach the max drawdown (30%) or fail to meet targets within 21 days, your challenge is marked as failed. You can purchase a new challenge to try again.' },
   { q: 'Can I try again?', a: 'Yes — absolutely. There is no limit on how many challenges you can attempt. Each is a fresh evaluation period.' },
@@ -115,43 +115,9 @@ function SectionTag({ children }: { children: React.ReactNode }) {
 function NetworkHeroBadge() {
   return (
     <div className="inline-flex items-center gap-0 relative select-none">
-      {/* Solana chip */}
-      <motion.div
-        className="flex items-center gap-2.5 px-4 py-2.5 rounded-l-full border-2 border-r-0 z-10 relative"
-        style={{
-          background: 'linear-gradient(135deg, rgba(153,69,255,0.18) 0%, rgba(0,209,140,0.10) 100%)',
-          borderColor: 'rgba(153,69,255,0.45)',
-        }}
-        initial={{ opacity: 0, x: -20 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.2, duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
-        whileHover={{ y: -2, transition: { duration: 0.15 } }}
-      >
-        <div className="w-6 h-6 rounded-full overflow-hidden border border-purple-400/40 flex-shrink-0 shadow-lg float-anim">
-          <img src="/solana-logo.jpeg" alt="Solana" className="w-full h-full object-cover" />
-        </div>
-        <div>
-          <div className="text-[11px] font-mono font-bold uppercase tracking-widest text-purple-300 leading-none">Solana</div>
-          <div className="text-[9px] font-mono text-purple-300/50 uppercase tracking-wider mt-0.5">SOL</div>
-        </div>
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse flex-shrink-0" />
-      </motion.div>
-
-      {/* Centre divider */}
-      <motion.div
-        className="relative z-20 -mx-1"
-        initial={{ opacity: 0, scale: 0 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.35, duration: 0.3 }}
-      >
-        <div className="w-8 h-8 rounded-full bg-background border-2 border-primary/40 flex items-center justify-center shadow-md">
-          <span className="text-primary text-[10px] font-bold">+</span>
-        </div>
-      </motion.div>
-
       {/* Robinhood chip */}
       <motion.div
-        className="flex items-center gap-2.5 px-4 py-2.5 rounded-r-full border-2 border-l-0 z-10 relative"
+        className="flex items-center gap-2.5 px-4 py-2.5 rounded-full border-2 z-10 relative"
         style={{
           background: 'linear-gradient(135deg, rgba(var(--accent-rgb),0.15) 0%, rgba(0,0,0,0.08) 100%)',
           borderColor: 'rgba(var(--accent-rgb),0.45)',
@@ -211,9 +177,9 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3 flex-shrink-0 group">
             <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-primary/30 group-hover:border-primary/60 transition-all duration-200 shadow-md flex-shrink-0">
-              <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
+              <img src="/handshake-logo.jpeg" alt="HOODFUND" className="w-full h-full object-cover" />
             </div>
-            <span className="font-display font-bold text-lg text-foreground tracking-tight">FundedFrens</span>
+            <span className="font-display font-bold text-lg text-foreground tracking-tight">HOODFUND</span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
@@ -317,7 +283,7 @@ export default function HomePage() {
 
           <motion.p variants={fadeUp} initial="hidden" animate="show" custom={2}
             className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
-            FundedFrens is the premier on-chain prop trading platform. Complete a Demo Challenge, pass the evaluation, and unlock real firm capital — no KYC, pay in SOL or ETH.
+            HOODFUND is the premier on-chain prop trading platform. Complete a Demo Challenge, pass the evaluation, and unlock real firm capital — no KYC, pay in SOL or ETH.
           </motion.p>
 
           <motion.div variants={fadeUp} initial="hidden" animate="show" custom={3}
@@ -364,33 +330,12 @@ export default function HomePage() {
       <section className="py-20 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <SectionTag>Supported Networks</SectionTag>
-            <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-3">Two chains. One platform.</h2>
-            <p className="text-muted-foreground max-w-md mx-auto text-sm">Pay your evaluation fee using either network — both fully supported with instant verification.</p>
+            <SectionTag>Supported Network</SectionTag>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-3">Built on Robinhood Chain.</h2>
+            <p className="text-muted-foreground max-w-md mx-auto text-sm">Pay your evaluation fee on Robinhood Chain — fully supported with instant verification.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {/* Solana */}
-            <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={0}
-              className="glass glass-hover rounded-2xl p-8 flex flex-col gap-5 border-[1.5px] border-purple-500/20 hover:border-purple-500/40 transition-all duration-250">
-              <div className="flex items-center gap-4">
-                <div className="w-14 h-14 rounded-2xl overflow-hidden border-2 border-purple-500/30 flex-shrink-0 shadow-lg">
-                  <img src="/solana-logo.jpeg" alt="Solana" className="w-full h-full object-cover" />
-                </div>
-                <div>
-                  <h3 className="font-display font-bold text-xl">Solana</h3>
-                  <p className="text-xs font-mono text-muted-foreground uppercase tracking-wider">Pay in SOL</p>
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Pay your challenge fee in SOL on the Solana network. Our system auto-detects on-chain transactions and activates your evaluation instantly.
-              </p>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-xs font-mono text-muted-foreground">Active Network</span>
-              </div>
-            </motion.div>
-
+          <div className="grid grid-cols-1 gap-5 max-w-md mx-auto">
             {/* Robinhood Chain */}
             <motion.div variants={fadeUp} initial="hidden" whileInView="show" viewport={{ once: true }} custom={1}
               className="glass glass-hover rounded-2xl p-8 flex flex-col gap-5 border-[1.5px] border-primary/20 hover:border-primary/40 transition-all duration-250">
@@ -516,7 +461,7 @@ export default function HomePage() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <SectionTag>Advantages</SectionTag>
-            <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-4">Why FundedFrens</h2>
+            <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-4">Why HOODFUND</h2>
             <p className="text-muted-foreground max-w-xl mx-auto text-sm">Every feature built specifically for on-chain meme coin traders — purpose-built, not repurposed.</p>
           </div>
 
@@ -614,11 +559,6 @@ export default function HomePage() {
           </p>
           <div className="flex items-center justify-center gap-4 mt-2">
             <div className="flex items-center gap-1.5">
-              <img src="/solana-logo.jpeg" alt="Solana" className="w-3.5 h-3.5 rounded-full object-cover opacity-50" />
-              <span className="text-[10px] font-mono text-muted-foreground/40">SOL</span>
-            </div>
-            <span className="text-muted-foreground/20 text-xs">·</span>
-            <div className="flex items-center gap-1.5">
               <img src="/robinhood-logo.png" alt="Robinhood" className="w-3.5 h-3.5 rounded-full object-cover opacity-50" />
               <span className="text-[10px] font-mono text-muted-foreground/40">ETH</span>
             </div>
@@ -656,7 +596,7 @@ export default function HomePage() {
           <div className="text-center mb-14">
             <SectionTag>Architecture</SectionTag>
             <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-4">Trade via Telegram, Track via Web</h2>
-            <p className="text-muted-foreground max-w-xl mx-auto text-sm">FundedFrens separates trading execution from analytics — each optimized for its purpose.</p>
+            <p className="text-muted-foreground max-w-xl mx-auto text-sm">HOODFUND separates trading execution from analytics — each optimized for its purpose.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -666,7 +606,7 @@ export default function HomePage() {
                 <Globe className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-display font-bold text-xl mb-2">Web Platform</h3>
-              <p className="text-sm text-muted-foreground mb-5">The FundedFrens website handles everything non-trading.</p>
+              <p className="text-sm text-muted-foreground mb-5">The HOODFUND website handles everything non-trading.</p>
               <ul className="space-y-2.5">
                 {['Dashboard & Analytics', 'Challenge Management', 'Payment Processing', 'Referral Center', 'Profile & Settings'].map(f => (
                   <li key={f} className="flex items-center gap-3 text-sm text-muted-foreground">
@@ -709,13 +649,8 @@ export default function HomePage() {
             <p className="text-muted-foreground max-w-xl mx-auto text-sm">Blockchain-verified, fully automatic — from payment to activation without manual review.</p>
           </div>
 
-          {/* Network logos row */}
+          {/* Network logo row */}
           <div className="flex items-center justify-center gap-4 mb-10">
-            <div className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-purple-500/25 bg-purple-500/6">
-              <img src="/solana-logo.jpeg" alt="Solana" className="w-5 h-5 rounded-full object-cover" />
-              <span className="text-xs font-mono text-purple-300">Solana (SOL)</span>
-            </div>
-            <div className="text-muted-foreground/30 text-xs font-mono">+</div>
             <div className="flex items-center gap-2.5 px-4 py-2 rounded-full border border-primary/25 bg-primary/6">
               <img src="/robinhood-logo.png" alt="Robinhood Chain" className="w-5 h-5 rounded-full object-cover" />
               <span className="text-xs font-mono text-primary">Robinhood Chain (ETH)</span>
@@ -749,7 +684,7 @@ export default function HomePage() {
             <SectionTag>Referrals</SectionTag>
             <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-4">Earn While Your Network Trades</h2>
             <p className="text-muted-foreground max-w-lg mx-auto mb-8 text-sm leading-relaxed">
-              Invite friends to FundedFrens. When they complete their first successful challenge purchase, you automatically earn <strong className="text-foreground">10% of their fee</strong>. Automatic tracking. Automatic rewards. No hidden conditions.
+              Invite friends to HOODFUND. When they complete their first successful challenge purchase, you automatically earn <strong className="text-foreground">10% of their fee</strong>. Automatic tracking. Automatic rewards. No hidden conditions.
             </p>
             <Link href="/signup">
               <Button size="lg" className="font-semibold px-8 rounded-xl neon-glow">
@@ -832,13 +767,13 @@ export default function HomePage() {
             <div className="absolute inset-0 bg-gradient-to-b from-primary/4 to-transparent pointer-events-none" />
             <div className="relative z-10">
               <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-primary/40 flex items-center justify-center mx-auto mb-6 shadow-xl pulse-ring">
-                <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
+                <img src="/handshake-logo.jpeg" alt="HOODFUND" className="w-full h-full object-cover" />
               </div>
               <h2 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-4">
                 Ready to prove your trading skills?
               </h2>
               <p className="text-muted-foreground mb-8 max-w-md mx-auto text-sm leading-relaxed">
-                Join traders already on FundedFrens. Start your evaluation today — no KYC, pay in SOL or ETH, instant activation.
+                Join traders already on HOODFUND. Start your evaluation today — no KYC, pay in SOL or ETH, instant activation.
               </p>
               <Link href="/signup">
                 <Button size="lg" className="font-semibold px-10 rounded-xl neon-glow">
@@ -857,9 +792,9 @@ export default function HomePage() {
             <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-primary/25 flex-shrink-0 shadow-md">
-                  <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
+                  <img src="/handshake-logo.jpeg" alt="HOODFUND" className="w-full h-full object-cover" />
                 </div>
-                <span className="font-display font-semibold text-foreground">FundedFrens</span>
+                <span className="font-display font-semibold text-foreground">HOODFUND</span>
               </div>
               <p className="text-xs text-muted-foreground leading-relaxed max-w-[220px] mb-5">
                 The premier on-chain prop trading platform. Prove your edge, unlock real capital.
@@ -880,12 +815,8 @@ export default function HomePage() {
                   </svg>
                 </a>
               </div>
-              {/* Network indicators in footer */}
+              {/* Network indicator in footer */}
               <div className="flex items-center gap-2">
-                <div className="flex items-center gap-1.5 px-2 py-1 rounded-md border border-border bg-foreground/[0.02]">
-                  <img src="/solana-logo.jpeg" alt="Solana" className="w-3.5 h-3.5 rounded-full object-cover" />
-                  <span className="text-[9px] font-mono text-muted-foreground/60">SOL</span>
-                </div>
                 <div className="flex items-center gap-1.5 px-2 py-1 rounded-md border border-border bg-foreground/[0.02]">
                   <img src="/robinhood-logo.png" alt="Robinhood" className="w-3.5 h-3.5 rounded-full object-cover" />
                   <span className="text-[9px] font-mono text-muted-foreground/60">ETH</span>
@@ -929,7 +860,7 @@ export default function HomePage() {
 
           <div className="border-t border-border pt-6">
             <p className="text-xs text-muted-foreground/40 font-mono text-center">
-              © 2026 FundedFrens. All rights reserved. Not financial advice. Trading involves significant risk.
+              © 2026 HOODFUND. All rights reserved. Not financial advice. Trading involves significant risk.
             </p>
           </div>
         </div>

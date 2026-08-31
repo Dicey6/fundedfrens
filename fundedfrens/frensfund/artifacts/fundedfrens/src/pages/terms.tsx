@@ -9,16 +9,16 @@ const sections = [
     num: '1',
     title: 'Introduction',
     content: [
-      'Welcome to FundedFrens ("FundedFrens", "we", "our", or "us").',
-      'These Terms and Conditions ("Terms") govern your access to and use of the FundedFrens website, services, dashboard, Telegram trading bot, applications, and any related services (collectively, the "Platform").',
-      'By creating an account, accessing the Platform, purchasing a Demo Challenge, connecting your Telegram account, or using any FundedFrens service, you acknowledge that you have read, understood, and agree to be legally bound by these Terms.',
+      'Welcome to HOODFUND ("HOODFUND", "we", "our", or "us").',
+      'These Terms and Conditions ("Terms") govern your access to and use of the HOODFUND website, services, dashboard, Telegram trading bot, applications, and any related services (collectively, the "Platform").',
+      'By creating an account, accessing the Platform, purchasing a Demo Challenge, connecting your Telegram account, or using any HOODFUND service, you acknowledge that you have read, understood, and agree to be legally bound by these Terms.',
       'If you do not agree with these Terms, you must not use the Platform.',
     ],
   },
   {
     num: '2',
     title: 'Eligibility',
-    content: ['To use FundedFrens you must:'],
+    content: ['To use HOODFUND you must:'],
     bullets: [
       'Be at least eighteen (18) years old.',
       'Have the legal capacity to enter into binding agreements.',
@@ -29,9 +29,9 @@ const sections = [
   },
   {
     num: '3',
-    title: 'About FundedFrens',
+    title: 'About HOODFUND',
     content: [
-      'FundedFrens is a crypto proprietary trading evaluation platform designed specifically for Solana meme coin traders.',
+      'HOODFUND is a crypto proprietary trading evaluation platform designed specifically for Solana meme coin traders.',
       'The Platform allows users to:',
     ],
     bullets: [
@@ -65,7 +65,7 @@ const sections = [
     num: '5',
     title: 'Demo Challenge',
     content: [
-      'A Demo Challenge is a simulated evaluation intended to assess trading performance according to FundedFrens\' published rules.',
+      'A Demo Challenge is a simulated evaluation intended to assess trading performance according to HOODFUND\' published rules.',
       'Challenge rules may include:',
     ],
     bullets: [
@@ -78,13 +78,13 @@ const sections = [
       'Other risk management requirements.',
     ],
     footer:
-      'Violation of challenge rules may result in challenge failure. FundedFrens reserves the right to modify challenge rules for future participants without affecting challenges already in progress unless required for security or compliance.',
+      'Violation of challenge rules may result in challenge failure. HOODFUND reserves the right to modify challenge rules for future participants without affecting challenges already in progress unless required for security or compliance.',
   },
   {
     num: '6',
     title: 'Funded Accounts',
     content: [
-      'Successfully completing a Demo Challenge does not create a contractual obligation for FundedFrens to provide capital.',
+      'Successfully completing a Demo Challenge does not create a contractual obligation for HOODFUND to provide capital.',
       'Funded accounts may require:',
     ],
     bullets: [
@@ -95,7 +95,7 @@ const sections = [
       'Additional acceptance requirements.',
     ],
     footer:
-      'FundedFrens reserves the right to deny, suspend, or terminate funded accounts where fraud, abuse, manipulation, or policy violations are detected.',
+      'HOODFUND reserves the right to deny, suspend, or terminate funded accounts where fraud, abuse, manipulation, or policy violations are detected.',
   },
   {
     num: '7',
@@ -105,14 +105,14 @@ const sections = [
       'The amount of SOL required is calculated using the current SOL/USD market price at the time of purchase.',
       'Payments are considered complete only after successful blockchain verification.',
       'Users are solely responsible for sending payments to the correct treasury wallet displayed during checkout.',
-      'Sending funds to an incorrect address cannot be recovered by FundedFrens.',
+      'Sending funds to an incorrect address cannot be recovered by HOODFUND.',
     ],
   },
   {
     num: '8',
     title: 'Blockchain Payment Verification',
     content: [
-      'FundedFrens automatically verifies eligible payments using blockchain data.',
+      'HOODFUND automatically verifies eligible payments using blockchain data.',
       'Payment verification may use blockchain infrastructure providers.',
       'Users agree that blockchain confirmation times vary and activation may require sufficient network confirmations.',
       'Transactions that cannot be matched to an order may require additional review.',
@@ -135,20 +135,20 @@ const sections = [
   {
     num: '10',
     title: 'Referral Program',
-    content: ['FundedFrens may provide referral rewards. Referral rewards are subject to:'],
+    content: ['HOODFUND may provide referral rewards. Referral rewards are subject to:'],
     bullets: [
       'Valid purchases.',
       'Genuine users.',
       'Compliance with referral rules.',
     ],
     footer:
-      'Self-referrals, fraudulent referrals, fake accounts, automated registrations, or abuse of the referral system may result in removal of rewards, account suspension, or permanent disqualification. FundedFrens reserves the right to modify or discontinue the referral program at any time.',
+      'Self-referrals, fraudulent referrals, fake accounts, automated registrations, or abuse of the referral system may result in removal of rewards, account suspension, or permanent disqualification. HOODFUND reserves the right to modify or discontinue the referral program at any time.',
   },
   {
     num: '11',
     title: 'Telegram Trading Bot',
     content: [
-      'The FundedFrens Telegram Bot is provided as a trading interface.',
+      'The HOODFUND Telegram Bot is provided as a trading interface.',
       'The website remains the primary location for dashboard, analytics, referrals, challenge management, profile management, notifications, and payments.',
       'The Telegram Bot is intended for trading-related functionality only.',
       'Users remain responsible for protecting their Telegram account and ensuring it remains secure.',
@@ -179,7 +179,7 @@ const sections = [
     content: [
       'Trading digital assets involves substantial financial risk. Prices may change rapidly and users may experience significant losses.',
       'Past performance does not guarantee future results.',
-      'FundedFrens does not guarantee profits, successful evaluations, funded accounts, or future earnings.',
+      'HOODFUND does not guarantee profits, successful evaluations, funded accounts, or future earnings.',
       'Users participate entirely at their own risk.',
     ],
   },
@@ -194,7 +194,7 @@ const sections = [
     num: '15',
     title: 'Intellectual Property',
     content: [
-      'All software, branding, designs, graphics, code, logos, content, dashboards, interfaces, and materials provided through FundedFrens remain the exclusive property of FundedFrens unless otherwise stated.',
+      'All software, branding, designs, graphics, code, logos, content, dashboards, interfaces, and materials provided through HOODFUND remain the exclusive property of HOODFUND unless otherwise stated.',
       'You may not reproduce, distribute, modify, copy, sell, license, or exploit any portion of the Platform without prior written permission.',
     ],
   },
@@ -202,7 +202,7 @@ const sections = [
     num: '16',
     title: 'Limitation of Liability',
     content: [
-      'To the maximum extent permitted by law, FundedFrens shall not be liable for any indirect, incidental, consequential, special, exemplary, or punitive damages arising from your use of the Platform.',
+      'To the maximum extent permitted by law, HOODFUND shall not be liable for any indirect, incidental, consequential, special, exemplary, or punitive damages arising from your use of the Platform.',
       'This includes, but is not limited to: loss of profits, trading losses, data loss, service interruptions, blockchain delays, network congestion, wallet errors, or third-party service failures.',
       'Our total liability shall not exceed the amount paid by you for the specific Demo Challenge giving rise to the claim.',
     ],
@@ -210,7 +210,7 @@ const sections = [
   {
     num: '17',
     title: 'Suspension and Termination',
-    content: ['FundedFrens may suspend or terminate any account at its discretion where it reasonably believes a user has:'],
+    content: ['HOODFUND may suspend or terminate any account at its discretion where it reasonably believes a user has:'],
     bullets: [
       'Violated these Terms.',
       'Engaged in fraudulent activity.',
@@ -224,7 +224,7 @@ const sections = [
     num: '18',
     title: 'Changes to These Terms',
     content: [
-      'FundedFrens may update these Terms from time to time. Material changes will be communicated through the Platform where appropriate.',
+      'HOODFUND may update these Terms from time to time. Material changes will be communicated through the Platform where appropriate.',
       'Your continued use of the Platform after changes become effective constitutes acceptance of the revised Terms.',
     ],
   },
@@ -232,7 +232,7 @@ const sections = [
     num: '19',
     title: 'Governing Law',
     content: [
-      'These Terms shall be governed by and interpreted in accordance with the laws applicable to FundedFrens\' operating jurisdiction, without regard to conflict of law principles.',
+      'These Terms shall be governed by and interpreted in accordance with the laws applicable to HOODFUND\' operating jurisdiction, without regard to conflict of law principles.',
       'Any disputes shall be resolved through the appropriate courts or dispute resolution mechanisms available in that jurisdiction.',
     ],
   },
@@ -240,7 +240,7 @@ const sections = [
     num: '20',
     title: 'Contact',
     content: [
-      'If you have any questions regarding these Terms, please contact FundedFrens through the official support channels listed on the Platform.',
+      'If you have any questions regarding these Terms, please contact HOODFUND through the official support channels listed on the Platform.',
     ],
   },
 ];
@@ -275,8 +275,8 @@ export default function TermsPage() {
         {/* Title block */}
         <div className="mb-10 pb-8 border-b border-border">
           <div className="flex items-center gap-3 mb-4">
-            <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-10 h-10 rounded-xl object-cover" />
-            <span className="font-display font-bold text-xl">FundedFrens</span>
+            <img src="/handshake-logo.jpeg" alt="HOODFUND" className="w-10 h-10 rounded-xl object-cover" />
+            <span className="font-display font-bold text-xl">HOODFUND</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-display font-bold tracking-tight mb-3">Terms and Conditions</h1>
           <p className="text-sm text-muted-foreground font-mono">Effective Date: July 21, 2026</p>
@@ -316,7 +316,7 @@ export default function TermsPage() {
         <div className="mt-12 p-6 rounded-xl border border-primary/20 bg-primary/5">
           <h2 className="text-base font-display font-semibold mb-3">Final Acknowledgement</h2>
           <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-            By creating an account, purchasing a Demo Challenge, connecting the Telegram Bot, or otherwise using FundedFrens, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.
+            By creating an account, purchasing a Demo Challenge, connecting the Telegram Bot, or otherwise using HOODFUND, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.
           </p>
           <p className="text-sm text-muted-foreground leading-relaxed">
             You further acknowledge that cryptocurrency trading involves substantial risk, that participation in the Demo Challenge does not guarantee funding, and that you are solely responsible for your use of the Platform.
@@ -325,7 +325,7 @@ export default function TermsPage() {
 
         {/* Footer nav */}
         <div className="mt-10 pt-8 border-t border-border flex flex-wrap items-center justify-between gap-4">
-          <p className="text-xs text-muted-foreground font-mono">© 2026 FundedFrens. All rights reserved.</p>
+          <p className="text-xs text-muted-foreground font-mono">© 2026 HOODFUND. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href="/privacy">
               <span className="text-xs text-muted-foreground hover:text-foreground transition-colors cursor-pointer">Privacy Policy</span>

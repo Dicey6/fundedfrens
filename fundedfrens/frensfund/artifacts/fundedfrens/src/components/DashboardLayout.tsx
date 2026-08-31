@@ -128,9 +128,9 @@ function SidebarContent({
         <Link href="/">
           <div className="flex items-center gap-3 cursor-pointer group">
             <div className="w-9 h-9 rounded-xl overflow-hidden border-2 border-primary/30 flex-shrink-0 group-hover:border-primary/60 transition-all duration-200 shadow-md">
-              <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-full h-full object-cover" />
+              <img src="/handshake-logo.jpeg" alt="HOODFUND" className="w-full h-full object-cover" />
             </div>
-            <span className="font-display font-bold text-base text-foreground tracking-tight">FundedFrens</span>
+            <span className="font-display font-bold text-base text-foreground tracking-tight">HOODFUND</span>
           </div>
         </Link>
         <div className="mt-5 h-px bg-border" />
@@ -348,8 +348,8 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           <footer className="border-t border-border px-4 sm:px-6 py-3">
             <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-center gap-2">
-                <img src="/handshake-logo.jpeg" alt="FundedFrens" className="w-4 h-4 rounded object-cover opacity-40" />
-                <span className="text-[10px] font-mono text-muted-foreground/40 uppercase tracking-widest">© 2026 FundedFrens · v1.0</span>
+                <img src="/handshake-logo.jpeg" alt="HOODFUND" className="w-4 h-4 rounded object-cover opacity-40" />
+                <span className="text-[10px] font-mono text-muted-foreground/40 uppercase tracking-widest">© 2026 HOODFUND · v1.0</span>
               </div>
               <div className="flex items-center gap-4">
                 <a href="/terms" className="text-[10px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors">Terms</a>
