@@ -12,7 +12,7 @@ interface AuthLayoutProps {
 const features = [
   { icon: TrendingUp, text: 'Real-time performance tracking & analytics' },
   { icon: ShieldCheck, text: 'Institutional-grade risk management rules' },
-  { icon: Zap, text: 'Instant payments — Robinhood Chain' },
+  { icon: Zap, text: 'Instant payments — Solana & Robinhood Chain' },
   { icon: Users, text: 'Active trader community & Telegram alerts' },
 ];
 
@@ -71,8 +71,13 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
               </p>
             </div>
 
-            {/* Network badge */}
+            {/* Network badges */}
             <div className="flex items-center gap-3 mb-8">
+              <div className="flex items-center gap-2 px-3 py-2 rounded-xl network-badge-solana">
+                <img src="/solana-logo.jpeg" alt="Solana" className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
+                <span className="text-xs font-mono font-semibold text-purple-300">Solana</span>
+              </div>
+              <div className="text-muted-foreground/30 text-xs">+</div>
               <div className="flex items-center gap-2 px-3 py-2 rounded-xl network-badge-robinhood">
                 <img src="/robinhood-logo.png" alt="Robinhood" className="w-5 h-5 rounded-full object-cover flex-shrink-0" />
                 <span className="text-xs font-mono font-semibold text-primary">Robinhood Chain</span>
@@ -134,8 +139,9 @@ export function AuthLayout({ children, title, subtitle }: AuthLayoutProps) {
           </motion.div>
 
           <div className="md:hidden mt-10 flex items-center justify-center gap-3">
-            <img src="/robinhood-logo.png" alt="Robinhood" className="w-5 h-5 rounded-full object-cover opacity-60" />
+            <img src="/solana-logo.jpeg" alt="Solana" className="w-5 h-5 rounded-full object-cover opacity-60" />
             <span className="text-[10px] font-mono text-muted-foreground/50 uppercase tracking-widest">Secure · Encrypted · Non-custodial</span>
+            <img src="/robinhood-logo.png" alt="Robinhood" className="w-5 h-5 rounded-full object-cover opacity-60" />
           </div>
         </div>
       </div>

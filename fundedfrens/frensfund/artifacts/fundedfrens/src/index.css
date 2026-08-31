@@ -77,9 +77,9 @@
   --elevate-1: rgba(255, 255, 255, 0.03);
   --elevate-2: rgba(255, 255, 255, 0.06);
 
-  /* Brand Green: #8CDD02 = hsl(82, 98%, 44%) */
-  --neon: 140 221 2;
-  --accent-rgb: 140, 221, 2;
+  /* Robin Neon: #CCFF00 = hsl(72, 100%, 50%) */
+  --neon: 204 255 0;
+  --accent-rgb: 204, 255, 0;
 
   --background: 0 0% 4%;
   --foreground: 0 0% 95%;
@@ -93,18 +93,18 @@
   --sidebar: 0 0% 5%;
   --sidebar-foreground: 0 0% 92%;
   --sidebar-border: 0 0% 10%;
-  --sidebar-primary: 82 98% 44%;
+  --sidebar-primary: 72 100% 50%;
   --sidebar-primary-foreground: 0 0% 0%;
   --sidebar-accent: 0 0% 10%;
   --sidebar-accent-foreground: 0 0% 92%;
-  --sidebar-ring: 82 98% 44%;
+  --sidebar-ring: 72 100% 50%;
 
   --popover: 0 0% 8%;
   --popover-foreground: 0 0% 92%;
   --popover-border: 0 0% 12%;
 
-  /* Brand Green as primary */
-  --primary: 82 98% 44%;
+  /* Robin Neon as primary */
+  --primary: 72 100% 50%;
   --primary-foreground: 0 0% 0%;
 
   --secondary: 0 0% 10%;
@@ -113,16 +113,16 @@
   --muted: 0 0% 11%;
   --muted-foreground: 0 0% 48%;
 
-  --accent: 82 98% 44%;
+  --accent: 72 100% 50%;
   --accent-foreground: 0 0% 0%;
 
   --destructive: 0 72% 56%;
   --destructive-foreground: 0 0% 98%;
 
   --input: 0 0% 13%;
-  --ring: 82 98% 44%;
+  --ring: 72 100% 50%;
 
-  --chart-1: 82 98% 44%;
+  --chart-1: 72 100% 50%;
   --chart-2: 142 76% 36%;
   --chart-3: 38 92% 50%;
   --chart-4: 210 100% 56%;
@@ -224,7 +224,7 @@
 
 /* ── MONO THEME — BLACK / WHITE WITH BRAND ACCENTS ───────────────────────── */
 .mono {
-  --accent-rgb: 140, 221, 2;
+  --accent-rgb: 204, 255, 0;
   --button-outline: rgba(255, 255, 255, 0.16);
   --badge-outline: rgba(255, 255, 255, 0.1);
 
@@ -243,30 +243,30 @@
   --sidebar: 0 0% 2%;
   --sidebar-foreground: 0 0% 96%;
   --sidebar-border: 0 0% 16%;
-  --sidebar-primary: 82 98% 44%;
+  --sidebar-primary: 72 100% 50%;
   --sidebar-primary-foreground: 0 0% 0%;
   --sidebar-accent: 0 0% 10%;
   --sidebar-accent-foreground: 0 0% 96%;
-  --sidebar-ring: 82 98% 44%;
+  --sidebar-ring: 72 100% 50%;
 
   --popover: 0 0% 4%;
   --popover-foreground: 0 0% 100%;
   --popover-border: 0 0% 20%;
 
-  --primary: 82 98% 44%;
+  --primary: 72 100% 50%;
   --primary-foreground: 0 0% 0%;
   --secondary: 0 0% 12%;
   --secondary-foreground: 0 0% 100%;
   --muted: 0 0% 13%;
   --muted-foreground: 0 0% 66%;
-  --accent: 82 98% 44%;
+  --accent: 72 100% 50%;
   --accent-foreground: 0 0% 0%;
   --destructive: 0 80% 62%;
   --destructive-foreground: 0 0% 100%;
   --input: 0 0% 15%;
-  --ring: 82 98% 44%;
+  --ring: 72 100% 50%;
 
-  --chart-1: 82 98% 44%;
+  --chart-1: 72 100% 50%;
   --chart-2: 188 92% 52%;
   --chart-3: 272 92% 68%;
   --chart-4: 38 96% 58%;
@@ -398,6 +398,10 @@
   }
 
   /* ── Network badge utilities ── */
+  .network-badge-solana {
+    background: linear-gradient(135deg, rgba(153,69,255,0.12) 0%, rgba(0,209,140,0.08) 100%);
+    border: 1px solid rgba(153,69,255,0.25);
+  }
   .network-badge-robinhood {
     background: linear-gradient(135deg, rgba(var(--accent-rgb),0.12) 0%, rgba(0,0,0,0.08) 100%);
     border: 1px solid rgba(var(--accent-rgb),0.25);
