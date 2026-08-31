@@ -1,0 +1,246 @@
+UPDATE TASK — FINAL FUNCTIONALITY POLISH
+
+This is an update to the existing implementation.
+
+Do not rebuild anything.
+
+Do not redesign the UI.
+
+Do not change the architecture.
+
+Everything that already works must continue to work exactly as it does now.
+
+Only implement the following additions and fixes.
+
+⸻
+
+1. Fix Order Expiry
+
+Investigate the current order expiry flow.
+
+Verify that:
+
+* Orders expire correctly once the expiry time has passed.
+* Expired orders can no longer be paid.
+* Expired orders cannot accidentally become confirmed later.
+* Expired orders are clearly marked as Expired in the dashboard.
+* The payment verification system ignores expired orders.
+
+If anything is incorrect, fix it without changing the payment architecture.
+
+⸻
+
+2. Investigate Notifications
+
+The Notifications page still isn’t working correctly.
+
+Do not immediately rebuild it.
+
+First investigate:
+
+* Is it connected to the correct Supabase table?
+* Are notifications ever inserted?
+* Are inserts failing?
+* Are queries failing?
+* Is RLS blocking reads?
+* Is the frontend requesting the wrong data?
+* Are notification triggers missing?
+
+After investigating:
+
+* If the notification system is close to working, finish wiring it correctly.
+* If it provides little value for the MVP or requires significant work, explain why and recommend removing it entirely instead of leaving a broken feature.
+
+I want an informed decision, not a guess.
+
+⸻
+
+3. Improve the Footer
+
+The footer currently feels too minimal.
+
+Expand it while keeping the premium design.
+
+Homepage footer should include:
+
+* About
+* Features
+* Pricing
+* FAQ
+* Terms & Conditions
+* Privacy Policy
+* Contact
+* Telegram
+* X (Twitter)
+* Copyright
+* Short company description
+
+Dashboard footer should remain clean but include:
+
+* FundedFrens
+* Version
+* Terms
+* Privacy
+* Support
+* Copyright
+
+⸻
+
+4. Referral System Audit
+
+Perform a complete audit of the referral system.
+
+Verify that:
+
+* Referral codes generate automatically after signup.
+* Referral links work.
+* Referrals are tracked correctly.
+* The first-purchase rule is enforced.
+* Self-referrals cannot receive rewards.
+* Duplicate rewards cannot occur.
+* Dashboard referral statistics update correctly.
+* Referral earnings are calculated correctly.
+
+Fix any issues discovered.
+
+⸻
+
+5. Referral Withdrawals
+
+Add a new feature.
+
+Users who have earned referral commissions should be able to request a withdrawal.
+
+On the Referrals page:
+
+Show a new button:
+
+Request Withdrawal
+
+Only show the button when the user has available referral earnings.
+
+Before allowing submission:
+
+Check whether a payout wallet exists.
+
+Important:
+
+Users who purchased a challenge already paid using a wallet.
+
+That payment wallet should automatically become their default payout wallet unless they later change it manually.
+
+If no payout wallet exists:
+
+Prompt the user to add one first.
+
+If one exists:
+
+Allow the withdrawal request.
+
+Create a pending withdrawal request containing:
+
+* User ID
+* Wallet Address
+* Withdrawal Amount
+* Timestamp
+* Status = Pending
+
+Administrators will review and approve these manually.
+
+Do not automatically send funds.
+
+⸻
+
+6. Treasury Wallet Rotation
+
+The treasury wallet should no longer always be the same address.
+
+Support multiple treasury wallets.
+
+These wallets will be supplied through the environment variables.
+
+Example:
+
+TREASURY_WALLETS=wallet1,wallet2,wallet3,wallet4,…
+
+When a user creates an order:
+
+* Randomly select one treasury wallet.
+* Store that selected wallet on the order.
+* Display only that wallet to the user.
+
+Payment verification must verify against the wallet assigned to that specific order.
+
+Never randomly change the wallet after an order has been created.
+
+⸻
+
+7. Social Icons
+
+Replace any incorrect social icons.
+
+Use the official brand logos for:
+
+* Telegram
+* X (Twitter)
+
+Maintain the current design language.
+
+⸻
+
+8. Update Challenge Rules
+
+Update every location where challenge rules appear.
+
+The official rules are now:
+
+* Evaluation Period: 21 Days
+* Required Win Rate: 70%
+* Maximum Drawdown: 30%
+* Minimum Trading Days: 5
+* Maximum Position Size: 30%
+* Maximum Open Positions: 3
+
+Remove any old values that no longer match these rules.
+
+⸻
+
+9. Final QA Pass
+
+Perform one complete audit of the application.
+
+Check:
+
+* Orders
+* Dashboard
+* Profile
+* Referrals
+* Wallet saving
+* Telegram linking
+* Payment flow
+* Challenge activation
+* Notifications
+* Analytics
+* Console errors
+* Loading states
+* Broken buttons
+* Empty states
+
+Fix any issues directly related to these systems without introducing unrelated changes.
+
+⸻
+
+Final Report
+
+When finished, provide a report including:
+
+* Files modified.
+* Order expiry fixes.
+* Notification investigation results and recommendation.
+* Referral audit results.
+* Withdrawal request implementation.
+* Treasury wallet rotation implementation.
+* Updated challenge rules.
+* Footer improvements.
+* Social icon updates.
+* Confirmation that the existing architecture, backend logic, and working functionality were preserved.

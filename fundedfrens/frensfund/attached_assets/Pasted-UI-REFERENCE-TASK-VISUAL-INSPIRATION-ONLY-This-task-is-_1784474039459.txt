@@ -1,0 +1,171 @@
+UI REFERENCE TASK — VISUAL INSPIRATION ONLY
+
+This task is UI only.
+
+Do not modify backend logic.
+
+Do not modify authentication.
+
+Do not modify Supabase.
+
+Do not modify database structure.
+
+Do not modify business logic.
+
+Do not modify payment flow.
+
+Do not modify dashboard functionality.
+
+Do not modify routing.
+
+Do not modify application state.
+
+Do not modify existing functionality.
+
+The objective is to improve the visual design only.
+
+⸻
+
+Reference Repository
+
+Analyze my previous project as a visual reference only.
+
+Do not copy its architecture, backend, components, database, or logic.
+
+Only study:
+
+* Overall visual style
+* Layout ideas
+* Spacing
+* Typography
+* Landing page structure
+* Navigation
+* Hero section
+* Section ordering
+* Visual hierarchy
+* Card layouts
+* General user experience
+
+Treat it only as design inspiration.
+
+⸻
+
+Important Rules
+
+Do NOT clone the old application’s functionality.
+
+Do NOT recreate old bugs.
+
+Do NOT reuse old backend code.
+
+Do NOT reuse old database code.
+
+Do NOT reuse old API logic.
+
+Do NOT reuse old authentication logic.
+
+Do NOT reuse old routing logic.
+
+The old project is only a design reference.
+
+Everything in this project must continue using the new architecture.
+
+⸻
+
+Homepage
+
+Use the previous homepage only as inspiration.
+
+Create a cleaner, more premium version.
+
+The homepage should immediately communicate that FundedFrens is a professional crypto prop trading platform.
+
+Improve:
+
+* Hero section
+* Navigation
+* Feature sections
+* Challenge plan presentation
+* Statistics
+* Call-to-action sections
+* Footer
+* Overall spacing
+* Mobile responsiveness
+
+The design should feel modern, trustworthy, and premium.
+
+⸻
+
+Dashboard
+
+Do not redesign the functionality.
+
+Only improve the presentation.
+
+Organize information into clear sections.
+
+Improve:
+
+* Layout
+* Card hierarchy
+* Information grouping
+* Readability
+* Spacing
+* Typography
+* Icons
+* Status indicators
+* Visual consistency
+
+Every section should have a clear purpose and be easy to scan.
+
+⸻
+
+Design Language
+
+Aim for a premium fintech experience.
+
+Use subtle Liquid Glass-inspired styling where appropriate:
+
+* Soft translucent panels
+* Elegant blur
+* Gentle borders
+* Smooth shadows
+* Refined gradients
+* Consistent spacing
+* Rounded corners
+* High readability
+
+Keep the interface clean.
+
+Avoid excessive visual effects.
+
+Performance and usability are more important than decoration.
+
+⸻
+
+User Experience
+
+Every page should feel:
+
+* Professional
+* Modern
+* Clean
+* Easy to understand
+* Beginner-friendly
+* Fast to navigate
+
+Users should immediately understand where to find information without feeling overwhelmed.
+
+⸻
+
+Preserve Everything Else
+
+The current project’s functionality is the source of truth.
+
+Only improve how it looks.
+
+Do not alter how it works.
+
+If any visual change would require changing backend logic or existing functionality, do not make that change.
+
+The final result should look like an evolution of the previous design, not a copy of it, while preserving the new project’s architecture and functionality.

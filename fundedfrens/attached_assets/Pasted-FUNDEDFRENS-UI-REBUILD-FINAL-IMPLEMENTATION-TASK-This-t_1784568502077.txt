@@ -1,0 +1,343 @@
+FUNDEDFRENS — UI REBUILD (FINAL IMPLEMENTATION TASK)
+
+This task is ONLY for rebuilding and polishing the UI.
+
+The backend has already been implemented.
+
+The database is already connected.
+
+The business logic already exists.
+
+This task is NOT about functionality.
+
+This task is about creating a premium user experience.
+
+⸻
+
+STEP 1 — CLONE THE PROJECT
+
+Clone the latest FundedFrens repository:
+
+https://github.com/Dicey6/frensfund
+
+This is the only repository you should work on.
+
+Do not create another project.
+
+Do not create another frontend.
+
+Improve this project directly.
+
+⸻
+
+STEP 2 — UNDERSTAND BEFORE EDITING
+
+Before changing anything:
+
+Inspect the project.
+
+Understand:
+
+* Current routing
+* Current pages
+* Existing components
+* Existing layouts
+* Existing styling
+* Existing design system
+* Existing responsive behavior
+
+Your goal is to improve the interface—not rebuild the application.
+
+⸻
+
+VERY IMPORTANT
+
+The previous three design specification documents are the complete UI requirements.
+
+Treat those documents as the product specification.
+
+Implement every design decision described in them.
+
+Do not simplify them.
+
+Do not omit sections.
+
+Do not redesign them into something different.
+
+Use them as your blueprint.
+
+⸻
+
+STRICT RULES
+
+This is a UI-only rebuild.
+
+You must NOT modify:
+
+* Backend
+* Supabase
+* Database schema
+* Authentication
+* API routes
+* Business logic
+* Payment flow
+* Referral logic
+* Dashboard calculations
+* Telegram linking
+* Challenge logic
+* Environment variables
+* Configuration
+* Existing functionality
+
+Everything that works today must continue working exactly the same.
+
+Only improve the presentation.
+
+⸻
+
+DESIGN OBJECTIVE
+
+FundedFrens is a premium Solana prop trading platform.
+
+The UI should immediately communicate:
+
+Professionalism
+
+Trust
+
+Modern Web3
+
+Premium FinTech
+
+Clean Information Architecture
+
+Speed
+
+Confidence
+
+Do NOT make it look like:
+
+* A meme coin website
+* A gaming website
+* A crypto casino
+* A template dashboard
+
+It should look like software people trust with real money.
+
+⸻
+
+DESIGN LANGUAGE
+
+Implement a premium design system using:
+
+* Liquid Glass
+* Soft blur
+* Dark theme
+* Elegant spacing
+* Rounded corners
+* Smooth animations
+* Premium typography
+* Consistent iconography
+* Modern card layouts
+* Beautiful gradients
+* Excellent responsiveness
+
+Everything should feel intentional.
+
+Nothing should feel cluttered.
+
+⸻
+
+HOMEPAGE
+
+Completely rebuild the homepage according to the supplied homepage specification.
+
+Every section described in that specification should be implemented.
+
+Maintain a logical visual flow.
+
+Each section should naturally lead into the next.
+
+⸻
+
+DASHBOARD
+
+Rebuild the dashboard according to the supplied dashboard specification.
+
+Do NOT make one long scrolling page.
+
+The sidebar is the primary navigation.
+
+Each navigation item opens its own dedicated page.
+
+Examples:
+
+Dashboard
+
+Challenge
+
+Analytics
+
+Portfolio
+
+Orders
+
+Referrals
+
+Notifications
+
+Telegram
+
+Profile
+
+Settings
+
+Funded Account
+
+Each page should focus on a single purpose.
+
+Every page should have premium spacing and hierarchy.
+
+⸻
+
+RESPONSIVENESS
+
+The UI must work beautifully on:
+
+Desktop
+
+Laptop
+
+Tablet
+
+Mobile
+
+Do not allow:
+
+Horizontal scrolling
+
+Broken grids
+
+Overflowing cards
+
+Overlapping content
+
+⸻
+
+MICRO INTERACTIONS
+
+Improve the experience with subtle interactions.
+
+Examples:
+
+Hover animations
+
+Card elevation
+
+Smooth transitions
+
+Animated progress bars
+
+Loading skeletons
+
+Soft fades
+
+Button feedback
+
+Do not overuse animations.
+
+Keep everything elegant.
+
+⸻
+
+ACCESSIBILITY
+
+Maintain good contrast.
+
+Readable typography.
+
+Logical spacing.
+
+Clear navigation.
+
+Consistent buttons.
+
+Obvious active states.
+
+Professional empty states.
+
+Professional loading states.
+
+Professional error states.
+
+⸻
+
+DO NOT REMOVE FEATURES
+
+Do not remove any existing pages.
+
+Do not remove any buttons.
+
+Do not remove any functionality.
+
+If something already exists, redesign it visually instead of deleting it.
+
+⸻
+
+CODE QUALITY
+
+Reuse existing components whenever possible.
+
+Create reusable UI components where appropriate.
+
+Keep styling consistent across the application.
+
+Do not duplicate layouts unnecessarily.
+
+Maintain a clean project structure.
+
+⸻
+
+TEST BEFORE FINISHING
+
+Before considering the task complete, verify:
+
+* Every page still loads.
+* Every existing feature still functions.
+* No backend files were modified.
+* No API behavior changed.
+* No database changes were made.
+* No business logic changed.
+* The UI matches the three design specifications as closely as possible.
+* The application is fully responsive.
+
+⸻
+
+GIT WORKFLOW
+
+Work directly in this repository.
+
+Commit all UI changes with clear commit messages.
+
+Push all completed work back to the same GitHub repository.
+
+Do not create a new repository.
+
+Do not create a new branch unless required by the existing workflow.
+
+⸻
+
+FINAL REPORT
+
+When finished, provide a report containing:
+
+1. Every page redesigned.
+2. Every component redesigned.
+3. New reusable UI components created.
+4. Responsive improvements made.
+5. Accessibility improvements made.
+6. Animation improvements made.
+7. Confirmation that only the UI was modified.
+8. Confirmation that the backend, database, APIs, authentication, and business logic remain untouched.
+
+The final result should look like a premium SaaS product built specifically for professional Solana traders, while preserving every existing feature and workflow.

@@ -1,0 +1,185 @@
+STRICT IMPLEMENTATION RULES — UI REBUILD ONLY
+
+Read these instructions carefully before making any changes.
+
+This task is ONLY a visual UI/UX rebuild.
+
+The backend is already working correctly.
+
+Do NOT modify backend functionality.
+
+Everything that currently works must continue to work exactly the same after this task is completed.
+
+⸻
+
+DO NOT TOUCH THE BACKEND
+
+Do NOT modify:
+
+* Supabase database
+* Database schema
+* Tables
+* Columns
+* Relationships
+* Row Level Security (RLS)
+* SQL migrations
+* Edge Functions
+* Authentication
+* Session handling
+* API requests
+* Business logic
+* Payment verification
+* Referral logic
+* Challenge logic
+* Dashboard calculations
+* Analytics calculations
+* Telegram linking
+* Trading logic
+* Environment variables
+* Configuration files
+
+The backend is not part of this task.
+
+⸻
+
+DO NOT BREAK EXISTING FUNCTIONALITY
+
+Everything that currently works must continue working.
+
+Including:
+
+* Sign up
+* Login
+* Logout
+* Email verification
+* Password reset
+* Profile saving
+* Username updates
+* Payout wallet updates
+* Dashboard loading
+* Challenge purchase
+* Payment verification
+* Referral system
+* Notifications
+* Telegram linking
+* Data loading
+* Session persistence
+
+This task must never break existing functionality.
+
+⸻
+
+UI ONLY
+
+Only improve:
+
+* Layout
+* Typography
+* Colors
+* Spacing
+* Icons
+* Cards
+* Navigation
+* Visual hierarchy
+* Responsive design
+* Animations
+* Loading states
+* Empty states
+* User experience
+
+Do not change how the application behaves.
+
+Only change how it looks.
+
+⸻
+
+KEEP THE SAME FEATURES
+
+Do not remove features.
+
+Do not add new backend features.
+
+Do not change user flows.
+
+Do not move functionality to different systems.
+
+Every existing page should continue to perform the same actions it performs today.
+
+⸻
+
+COMPONENTS
+
+You may:
+
+* Reorganize sections
+* Improve spacing
+* Improve responsiveness
+* Improve card layouts
+* Improve navigation
+* Improve visual hierarchy
+
+You may NOT:
+
+* Remove important information
+* Hide existing functionality
+* Change business rules
+
+⸻
+
+NO ARCHITECTURE CHANGES
+
+Do not:
+
+* Introduce a new framework
+* Replace existing libraries without a clear UI reason
+* Create a new backend
+* Add another database
+* Replace Supabase
+* Change routing structure unnecessarily
+* Rewrite the application architecture
+
+⸻
+
+IF A UI CHANGE REQUIRES BACKEND CHANGES
+
+Do NOT implement it.
+
+Keep the existing backend untouched.
+
+Instead, report why the UI request cannot be achieved without backend changes.
+
+Do not make assumptions.
+
+⸻
+
+DESIGN GOAL
+
+Treat this as a professional redesign of the interface only.
+
+The functionality already exists.
+
+Your job is to make the platform:
+
+* More premium
+* More modern
+* Easier to understand
+* Better organized
+* More visually consistent
+* More user-friendly
+
+without changing how it works.
+
+⸻
+
+BEFORE COMPLETING
+
+Verify that:
+
+* Every existing feature still works.
+* No backend files were modified unless absolutely required for a UI-only dependency.
+* No database changes were made.
+* No business logic changed.
+* No API behavior changed.
+* No authentication behavior changed.
+
+The final result should feel like a visual upgrade of the existing platform—not a rewrite of the application.

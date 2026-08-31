@@ -1,0 +1,437 @@
+FUNDEDFRENS — PHASE 1: FOUNDATION (FRESH BUILD)
+
+This project is being rebuilt from scratch.
+
+Assume there is NO existing backend.
+
+Assume there is a completely fresh Supabase project.
+
+Assume there is a completely new GitHub repository.
+
+The objective is to build a clean, scalable backend while keeping the UI implementation simple and functional.
+
+⸻
+
+IMPORTANT
+
+Before writing code:
+
+Study this entire specification.
+
+Follow it exactly.
+
+Do NOT make assumptions.
+
+Do NOT invent features.
+
+Do NOT redesign the project.
+
+Do NOT change the architecture.
+
+If something is unclear,
+
+STOP
+
+and ask.
+
+⸻
+
+PROJECT STACK
+
+Frontend
+
+React + Vite
+
+Hosting
+
+Vercel
+
+Authentication
+
+Supabase Auth
+
+Database
+
+Supabase PostgreSQL
+
+Realtime
+
+Supabase
+
+Storage
+
+Supabase Storage
+
+Backend Logic
+
+Supabase Database
+
+Supabase RLS
+
+Supabase Edge Functions
+
+Version Control
+
+GitHub
+
+⸻
+
+ARCHITECTURE
+
+The website communicates directly with Supabase.
+
+Supabase is the only backend.
+
+Do NOT introduce:
+
+Express
+
+Node backend
+
+Custom API server
+
+SQLite
+
+Firebase
+
+MongoDB
+
+Local JSON databases
+
+Everything must be built around Supabase.
+
+⸻
+
+TELEGRAM BOT
+
+Do NOT build the Telegram bot.
+
+Only inspect this repository:
+
+https://github.com/Dicey6/frensbot
+
+Its purpose is ONLY to understand:
+
+* trade data
+* analytics data
+* database compatibility
+
+Do NOT copy its architecture.
+
+Do NOT modify it.
+
+Do NOT push to it.
+
+If future compatibility changes are needed,
+
+produce a report only.
+
+⸻
+
+DATABASE FIRST
+
+Before writing frontend logic,
+
+design the complete Phase 1 database.
+
+Create every required:
+
+table
+
+relationship
+
+foreign key
+
+constraint
+
+trigger
+
+index
+
+RLS policy
+
+Only after the database is correct
+
+should implementation begin.
+
+⸻
+
+AUTHENTICATION
+
+Implement:
+
+Signup
+
+Login
+
+Logout
+
+Email Verification
+
+Forgot Password
+
+Reset Password
+
+Session Persistence
+
+Auto Login
+
+Protected Routes
+
+⸻
+
+AFTER SIGNUP
+
+Immediately after signup
+
+automatically create a Profile.
+
+Automatically generate:
+
+Unique Referral Code
+
+Unique Telegram Link Code
+
+Default values:
+
+Reliability Rating = 100
+
+Challenge Status = None
+
+Telegram Linked = False
+
+Payout Wallet = NULL
+
+Active Challenge = NULL
+
+Created Date
+
+Updated Date
+
+No manual setup.
+
+⸻
+
+PROFILE
+
+Editable
+
+Username
+
+Payout Wallet
+
+Read Only
+
+Email
+
+Referral Code
+
+Telegram Link Code
+
+Telegram Status
+
+Challenge Status
+
+Created Date
+
+Everything must save directly into Supabase.
+
+Everything must persist after refresh.
+
+⸻
+
+DASHBOARD
+
+The dashboard is the user’s control center.
+
+Every card must read live data from Supabase.
+
+Implement:
+
+Profile Card
+
+Account Overview
+
+Challenge Overview
+
+Performance Summary
+
+Trading Analytics (empty until trading begins)
+
+Referral Dashboard
+
+Orders Summary
+
+Notification Center
+
+Telegram Status
+
+Profile Settings
+
+Do NOT redesign anything.
+
+Only connect the backend.
+
+⸻
+
+FUNDED ACCOUNT
+
+Create the funded account section.
+
+It must remain locked.
+
+Display:
+
+FUNDED ACCOUNT
+
+Locked
+
+Complete your Demo Challenge and receive approval to unlock your funded account.
+
+The dashboard must be designed so that it automatically transforms into the funded dashboard after a user successfully passes and is approved.
+
+Do NOT build funded functionality yet.
+
+Only prepare the architecture.
+
+⸻
+
+TELEGRAM LINKING
+
+Every user automatically receives a unique Telegram Link Code during signup.
+
+Store it in Supabase.
+
+Store:
+
+Telegram ID (nullable)
+
+Telegram Linked (boolean)
+
+Telegram Link Code
+
+The bot will use this later.
+
+Do NOT implement bot functionality.
+
+⸻
+
+REFERRALS
+
+Automatically generate a unique referral code during signup.
+
+Store it.
+
+Do NOT implement commissions yet.
+
+Only prepare the system.
+
+⸻
+
+NOTIFICATIONS
+
+Create the notifications system.
+
+Notifications should load from Supabase.
+
+Examples include:
+
+Profile Updated
+
+Telegram Linked
+
+Challenge Purchased
+
+Challenge Activated
+
+Referral Earned
+
+The generation logic can be expanded later.
+
+⸻
+
+SECURITY
+
+Implement proper Row Level Security.
+
+Users must only access their own records.
+
+Never expose privileged credentials.
+
+Follow Supabase best practices.
+
+⸻
+
+TESTING
+
+Verify:
+
+Signup
+
+Login
+
+Logout
+
+Email Verification
+
+Password Reset
+
+Protected Routes
+
+Session Persistence
+
+Automatic Profile Creation
+
+Referral Code Generation
+
+Telegram Link Code Generation
+
+Username Saving
+
+Payout Wallet Saving
+
+Dashboard Loading
+
+Notifications Loading
+
+No Console Errors
+
+No TypeScript Errors
+
+Production Build Success
+
+⸻
+
+GITHUB
+
+When Phase 1 is fully completed:
+
+Commit all changes.
+
+Push ONLY to the new GitHub repository.
+
+⸻
+
+FINAL REPORT
+
+After pushing,
+
+provide:
+
+Every file created
+
+Every file modified
+
+Database schema
+
+SQL migration
+
+RLS policies
+
+Environment variables required
+
+Implementation summary
+
+Known issues (if any)
+
+Do NOT begin Phase 2 until Phase 1 is fully complete, tested, and approved.

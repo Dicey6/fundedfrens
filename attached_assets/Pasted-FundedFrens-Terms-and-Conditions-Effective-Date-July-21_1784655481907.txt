@@ -1,0 +1,305 @@
+FundedFrens Terms and Conditions
+
+Effective Date: July 21, 2026
+
+1. Introduction
+
+Welcome to FundedFrens (“FundedFrens”, “we”, “our”, or “us”).
+
+These Terms and Conditions (“Terms”) govern your access to and use of the FundedFrens website, services, dashboard, Telegram trading bot, applications, and any related services (collectively, the “Platform”).
+
+By creating an account, accessing the Platform, purchasing a Demo Challenge, connecting your Telegram account, or using any FundedFrens service, you acknowledge that you have read, understood, and agree to be legally bound by these Terms.
+
+If you do not agree with these Terms, you must not use the Platform.
+
+⸻
+
+2. Eligibility
+
+To use FundedFrens you must:
+
+* Be at least eighteen (18) years old.
+* Have the legal capacity to enter into binding agreements.
+* Comply with the laws of your country or jurisdiction.
+* Not be prohibited from using our services under applicable law.
+
+We reserve the right to request identity verification where necessary.
+
+⸻
+
+3. About FundedFrens
+
+FundedFrens is a crypto proprietary trading evaluation platform designed specifically for Solana meme coin traders.
+
+The Platform allows users to:
+
+* Create an account.
+* Purchase a Demo Challenge.
+* Complete a trading evaluation.
+* View trading analytics.
+* Connect a Telegram trading bot.
+* Participate in referral programs.
+* Become eligible for a funded account after successfully completing the evaluation and any required review.
+
+Passing a Demo Challenge does not automatically guarantee a funded account.
+
+All funded accounts remain subject to review, compliance, and approval.
+
+⸻
+
+4. User Accounts
+
+You are responsible for maintaining the confidentiality of your account credentials.
+
+You agree to:
+
+* Provide accurate information.
+* Keep your information up to date.
+* Protect your login credentials.
+* Notify us immediately if you believe your account has been compromised.
+
+You are responsible for all activity occurring under your account.
+
+⸻
+
+5. Demo Challenge
+
+A Demo Challenge is a simulated evaluation intended to assess trading performance according to FundedFrens’ published rules.
+
+Challenge rules may include:
+
+* Minimum trading days.
+* Required win rate.
+* Maximum drawdown.
+* Maximum position size.
+* Maximum open positions.
+* Evaluation period.
+* Other risk management requirements.
+
+Violation of challenge rules may result in challenge failure.
+
+FundedFrens reserves the right to modify challenge rules for future participants without affecting challenges already in progress unless required for security or compliance.
+
+⸻
+
+6. Funded Accounts
+
+Successfully completing a Demo Challenge does not create a contractual obligation for FundedFrens to provide capital.
+
+Funded accounts may require:
+
+* Internal review.
+* Fraud checks.
+* Risk assessment.
+* Compliance verification.
+* Additional acceptance requirements.
+
+FundedFrens reserves the right to deny, suspend, or terminate funded accounts where fraud, abuse, manipulation, or policy violations are detected.
+
+⸻
+
+7. Payments
+
+Challenge purchases are made using Solana (SOL).
+
+Displayed USD prices are reference values only.
+
+The amount of SOL required is calculated using the current SOL/USD market price at the time of purchase.
+
+Payments are considered complete only after successful blockchain verification.
+
+Users are solely responsible for sending payments to the correct treasury wallet displayed during checkout.
+
+Sending funds to an incorrect address cannot be recovered by FundedFrens.
+
+⸻
+
+8. Blockchain Payment Verification
+
+FundedFrens automatically verifies eligible payments using blockchain data.
+
+Payment verification may use blockchain infrastructure providers.
+
+Users agree that blockchain confirmation times vary and activation may require sufficient network confirmations.
+
+Transactions that cannot be matched to an order may require additional review.
+
+Attempting to submit fraudulent transaction signatures or manipulated blockchain data may result in permanent account termination.
+
+⸻
+
+9. Refund Policy
+
+Except where required by law:
+
+* Demo Challenge purchases are non-refundable after successful payment verification.
+* Failed challenges are not refundable.
+* Inactive accounts are not refundable.
+* Network fees are non-refundable.
+
+Refund requests may be considered only in exceptional circumstances at our sole discretion.
+
+⸻
+
+10. Referral Program
+
+FundedFrens may provide referral rewards.
+
+Referral rewards are subject to:
+
+* Valid purchases.
+* Genuine users.
+* Compliance with referral rules.
+
+Self-referrals, fraudulent referrals, fake accounts, automated registrations, or abuse of the referral system may result in:
+
+* Removal of rewards.
+* Account suspension.
+* Permanent disqualification.
+
+FundedFrens reserves the right to modify or discontinue the referral program at any time.
+
+⸻
+
+11. Telegram Trading Bot
+
+The FundedFrens Telegram Bot is provided as a trading interface.
+
+The website remains the primary location for:
+
+* Dashboard
+* Analytics
+* Referrals
+* Challenge management
+* Profile management
+* Notifications
+* Payments
+
+The Telegram Bot is intended for trading-related functionality only.
+
+Users remain responsible for protecting their Telegram account and ensuring it remains secure.
+
+⸻
+
+12. User Responsibilities
+
+You agree that you will not:
+
+* Commit fraud.
+* Abuse the platform.
+* Attempt unauthorized access.
+* Reverse engineer the Platform.
+* Circumvent security measures.
+* Manipulate evaluations.
+* Exploit software bugs.
+* Use automated tools to interfere with Platform operations.
+* Impersonate another person.
+* Upload malicious software.
+* Interfere with other users.
+
+Violation of these Terms may result in immediate suspension or permanent termination.
+
+⸻
+
+13. Risk Disclosure
+
+Trading digital assets involves substantial financial risk.
+
+Prices may change rapidly.
+
+Users may experience significant losses.
+
+Past performance does not guarantee future results.
+
+FundedFrens does not guarantee profits, successful evaluations, funded accounts, or future earnings.
+
+Users participate entirely at their own risk.
+
+⸻
+
+14. No Financial Advice
+
+Nothing on the Platform constitutes:
+
+* Financial advice
+* Investment advice
+* Tax advice
+* Accounting advice
+* Legal advice
+
+All information is provided for informational purposes only.
+
+Users should consult qualified professionals before making financial decisions.
+
+⸻
+
+15. Intellectual Property
+
+All software, branding, designs, graphics, code, logos, content, dashboards, interfaces, and materials provided through FundedFrens remain the exclusive property of FundedFrens unless otherwise stated.
+
+You may not reproduce, distribute, modify, copy, sell, license, or exploit any portion of the Platform without prior written permission.
+
+⸻
+
+16. Limitation of Liability
+
+To the maximum extent permitted by law, FundedFrens shall not be liable for any indirect, incidental, consequential, special, exemplary, or punitive damages arising from your use of the Platform.
+
+This includes, but is not limited to:
+
+* Loss of profits
+* Trading losses
+* Data loss
+* Service interruptions
+* Blockchain delays
+* Network congestion
+* Wallet errors
+* Third-party service failures
+
+Our total liability shall not exceed the amount paid by you for the specific Demo Challenge giving rise to the claim.
+
+⸻
+
+17. Suspension and Termination
+
+FundedFrens may suspend or terminate any account at its discretion where it reasonably believes a user has:
+
+* Violated these Terms.
+* Engaged in fraudulent activity.
+* Attempted to manipulate challenge results.
+* Used unauthorized software.
+* Threatened the security or integrity of the Platform.
+
+Termination may result in loss of access to Platform services.
+
+⸻
+
+18. Changes to These Terms
+
+FundedFrens may update these Terms from time to time.
+
+Material changes will be communicated through the Platform where appropriate.
+
+Your continued use of the Platform after changes become effective constitutes acceptance of the revised Terms.
+
+⸻
+
+19. Governing Law
+
+These Terms shall be governed by and interpreted in accordance with the laws applicable to FundedFrens’ operating jurisdiction, without regard to conflict of law principles.
+
+Any disputes shall be resolved through the appropriate courts or dispute resolution mechanisms available in that jurisdiction.
+
+⸻
+
+20. Contact
+
+If you have any questions regarding these Terms, please contact FundedFrens through the official support channels listed on the Platform.
+
+⸻
+
+Final Acknowledgement
+
+By creating an account, purchasing a Demo Challenge, connecting the Telegram Bot, or otherwise using FundedFrens, you acknowledge that you have read, understood, and agreed to these Terms and Conditions.
+
+You further acknowledge that cryptocurrency trading involves substantial risk, that participation in the Demo Challenge does not guarantee funding, and that you are solely responsible for your use of the Platform.

@@ -1,0 +1,666 @@
+FUNDEDFRENS — PREMIUM DASHBOARD SPECIFICATION
+
+The dashboard is the heart of FundedFrens.
+
+This is where users spend almost all of their time.
+
+The dashboard should feel comparable to a premium fintech platform or professional trading terminal—not because it is crowded, but because information is organized clearly and intelligently.
+
+Every section should have a clear purpose.
+
+Every statistic should have a home.
+
+The user should never wonder where to find something.
+
+The UI should be clean, premium, responsive, and easy to understand.
+
+⸻
+
+DASHBOARD LAYOUT
+
+The dashboard should be divided into independent sections.
+
+Do NOT place everything inside one large page.
+
+Create clear groups with headings and spacing.
+
+Suggested order:
+
+1. Welcome Header
+2. Challenge Snapshot
+3. Account Overview
+4. Challenge Progress
+5. Performance Analytics
+6. Trading Analytics
+7. Risk Management
+8. Portfolio
+9. Open Positions
+10. Orders
+11. Referral Center
+12. Telegram Connection
+13. Notifications
+14. Profile
+15. Locked Funded Account
+
+Every section should feel like its own module.
+
+⸻
+
+1. WELCOME HEADER
+
+Display:
+
+Welcome back,
+
+Username
+
+Current Challenge
+
+Challenge Status
+
+Current Plan
+
+Current Date
+
+Quick Actions:
+
+• Buy Challenge
+• Dashboard
+• Telegram
+• Profile
+
+Include a subtle greeting.
+
+⸻
+
+2. CHALLENGE SNAPSHOT
+
+This should always remain visible near the top.
+
+Display:
+
+Challenge Status
+
+Active
+
+Passed
+
+Failed
+
+Expired
+
+Current Plan
+
+Starter
+
+Advanced
+
+Professional
+
+Challenge Day
+
+Example:
+
+Day 6 of 21
+
+Trading Days
+
+Example:
+
+3 / 5 Completed
+
+Current Win Rate
+
+Example:
+
+78%
+
+Required Win Rate
+
+75%
+
+Current Drawdown
+
+Maximum Drawdown
+
+Current Open Positions
+
+Maximum Positions
+
+Challenge Progress
+
+Large progress bar.
+
+Users should understand their evaluation in less than five seconds.
+
+⸻
+
+3. ACCOUNT OVERVIEW
+
+Large statistic cards.
+
+Display:
+
+Demo Balance
+
+Current Equity
+
+Available Buying Power
+
+Today’s PnL
+
+Total PnL
+
+Realized PnL
+
+Unrealized PnL
+
+Total Return %
+
+Current Portfolio Value
+
+Last Updated
+
+Large typography.
+
+Clear color indicators.
+
+⸻
+
+4. CHALLENGE PROGRESS
+
+Dedicated section.
+
+Display:
+
+Evaluation Progress
+
+Days Remaining
+
+Trading Days Remaining
+
+Current Win Rate
+
+Required Win Rate
+
+Largest Position
+
+Current Drawdown
+
+Maximum Drawdown
+
+Current Open Positions
+
+Maximum Open Positions
+
+Challenge Timeline
+
+Visual progress indicators.
+
+⸻
+
+5. PERFORMANCE ANALYTICS
+
+Display:
+
+Total Trades
+
+Winning Trades
+
+Losing Trades
+
+Win Rate
+
+Average Winner
+
+Average Loser
+
+Largest Win
+
+Largest Loss
+
+Profit Factor
+
+Average Risk/Reward
+
+Average Hold Time
+
+Longest Hold
+
+Shortest Hold
+
+Consistency Score
+
+Everything should use premium metric cards.
+
+⸻
+
+6. TRADING ANALYTICS
+
+Display:
+
+Average Entry Market Cap
+
+Average Exit Market Cap
+
+Average Position Size
+
+Average Invested SOL
+
+Average Returned SOL
+
+Average Profit %
+
+Average Profit SOL
+
+Peak Unrealized Profit
+
+Maximum Adverse Excursion
+
+Manual Close %
+
+Stop Loss %
+
+Take Profit %
+
+Trailing Stop %
+
+Auto Sell %
+
+Trading Frequency
+
+These values come from the Telegram bot.
+
+⸻
+
+7. RISK MANAGEMENT
+
+Display:
+
+Current Drawdown
+
+Maximum Drawdown
+
+Largest Position
+
+Average Position Size
+
+Current Exposure
+
+Open Positions
+
+Risk Compliance
+
+Rule Warnings
+
+Reliability Rating (Internal)
+
+Start at:
+
+100
+
+This should appear as a clean score.
+
+Do not overcomplicate it.
+
+⸻
+
+8. PORTFOLIO
+
+Display:
+
+Portfolio Value
+
+Holdings
+
+Open Positions
+
+Average Position Value
+
+Largest Holding
+
+Current Exposure
+
+Unrealized Profit
+
+Realized Profit
+
+Simple and clean.
+
+⸻
+
+9. OPEN POSITIONS
+
+Table:
+
+Token
+
+Entry Market Cap
+
+Current Market Cap
+
+Invested SOL
+
+Current Value
+
+PnL %
+
+PnL SOL
+
+Hold Time
+
+Status
+
+Quick View
+
+The website displays data.
+
+Trading actions remain inside the Telegram bot.
+
+⸻
+
+10. ORDERS
+
+Display:
+
+Pending Orders
+
+Confirmed Orders
+
+Expired Orders
+
+Payment History
+
+Order Status
+
+Transaction Signature
+
+Purchase Date
+
+Challenge Purchased
+
+Everything clearly grouped.
+
+⸻
+
+11. REFERRAL CENTER
+
+Display:
+
+Referral Code
+
+Referral Link
+
+Successful Referrals
+
+Pending Rewards
+
+Paid Rewards
+
+Total Earnings
+
+Referral Progress
+
+Quick Copy Button
+
+⸻
+
+12. TELEGRAM
+
+Display:
+
+Connection Status
+
+Telegram Username
+
+Linked Date
+
+Bot Status
+
+Reconnect Button
+
+If not linked:
+
+Large Connect Telegram button.
+
+⸻
+
+13. NOTIFICATIONS
+
+Grouped notifications.
+
+Examples:
+
+Challenge Purchased
+
+Challenge Activated
+
+Challenge Passed
+
+Challenge Failed
+
+Referral Reward
+
+Telegram Linked
+
+Payment Confirmed
+
+Profile Updated
+
+Newest first.
+
+Unread indicator.
+
+⸻
+
+14. PROFILE
+
+Display:
+
+Username
+
+Email
+
+Payout Wallet
+
+Account Created
+
+Current Plan
+
+Telegram Status
+
+Referral Code
+
+Edit Profile Button
+
+⸻
+
+15. FUNDED ACCOUNT
+
+This section should feel premium.
+
+Display a large locked card.
+
+Title:
+
+FUNDED ACCOUNT
+
+Status:
+
+🔒 Locked
+
+Description:
+
+Complete your Demo Challenge and receive approval to unlock your funded trading account.
+
+Below it display:
+
+Future Benefits
+
+Higher Capital
+
+Profit Split
+
+Priority Withdrawals
+
+Exclusive Features
+
+Do NOT enable anything.
+
+This is aspirational.
+
+⸻
+
+SIDEBAR
+
+Professional sidebar.
+
+Dashboard
+
+Challenge
+
+Portfolio
+
+Analytics
+
+Orders
+
+Referrals
+
+Notifications
+
+Telegram
+
+Profile
+
+Settings
+
+Clear active page indicator.
+
+Collapsible on mobile.
+
+⸻
+
+TOP BAR
+
+Search (future ready)
+
+Notifications
+
+Telegram Status
+
+Challenge Status
+
+User Avatar
+
+⸻
+
+CHARTS
+
+Professional charts.
+
+Equity Curve
+
+PnL History
+
+Win Rate History
+
+Challenge Progress
+
+Portfolio Allocation
+
+Risk Trend
+
+Use premium chart styling.
+
+No clutter.
+
+⸻
+
+EMPTY STATES
+
+When no data exists:
+
+Display elegant empty-state cards.
+
+Examples:
+
+“No trades yet.”
+
+“Connect your Telegram bot to begin trading.”
+
+“Purchase a Demo Challenge to start your evaluation.”
+
+Never leave blank sections.
+
+⸻
+
+RESPONSIVENESS
+
+Desktop
+
+Tablet
+
+Mobile
+
+Everything should rearrange naturally.
+
+No overflowing cards.
+
+No horizontal scrolling.
+
+⸻
+
+MICRO INTERACTIONS
+
+Subtle hover animations.
+
+Smooth card elevation.
+
+Animated progress bars.
+
+Soft number transitions.
+
+Elegant loading skeletons.
+
+Gentle page transitions.
+
+No flashy effects.
+
+⸻
+
+DESIGN LANGUAGE
+
+Premium dark theme.
+
+Liquid Glass cards.
+
+Soft blur.
+
+Rounded corners.
+
+Elegant spacing.
+
+Professional typography.
+
+Consistent iconography.
+
+Every section should feel intentional.
+
+⸻
+
+FINAL GOAL
+
+The dashboard should immediately make users feel they are using a premium crypto prop trading platform.
+
+It should present complex trading information in a way that feels organized, approachable, and professional.
+
+The user should always know:
+
+* Where they are in the challenge.
+* How they’re performing.
+* Whether they’re respecting the rules.
+* What they need to do next.
+* How close they are to unlocking a funded account.
+
+The experience should inspire confidence, clarity, and trust while remaining visually refined and easy to navigate.
