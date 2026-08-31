@@ -94,10 +94,10 @@ const faqs = [
 ];
 
 // Update these values in one place when the token details or destinations change.
-const TOKEN_NAME = '';
-const TOKEN_SYMBOL = '';
+const TOKEN_NAME = 'Hoodfunded';
+const TOKEN_SYMBOL = '$HF';
 const TOKEN_NETWORK = 'Robinhood Chain';
-const TOKEN_CONTRACT_ADDRESS = '9qMLFMYMMXVUsgnDwm9FYuEYhENPiuYB8SnjofhDpump';
+const TOKEN_CONTRACT_ADDRESS = '0xec866c60da9f8acf33952c98b27516f85c145019';
 const TOKEN_EXPLORER_URL = `https://solscan.io/token/${TOKEN_CONTRACT_ADDRESS}`;
 const TOKEN_TRADE_URL = '#';
 
