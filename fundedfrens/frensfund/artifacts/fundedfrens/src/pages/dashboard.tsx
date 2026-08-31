@@ -773,7 +773,7 @@ function TelegramSection() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
               {[
                 { step: '1', title: 'Copy Your Code', desc: 'Copy your personal link code below. Keep it private.' },
-                { step: '2', title: 'Open @fundedfrensbot', desc: 'Open Telegram and start a chat with @fundedfrensbot.' },
+                { step: '2', title: 'Open @hoodfundbot', desc: 'Open Telegram and start a chat with @hoodfundbot.' },
                 { step: '3', title: 'Send Link Command', desc: 'Send the command: /link YOUR_CODE to the bot.' },
               ].map(({ step, title, desc }) => (
                 <div key={step} className="bg-foreground/[0.025] rounded-xl p-5 border border-border">
@@ -796,9 +796,9 @@ function TelegramSection() {
               </div>
             </div>
 
-            <a href="https://t.me/fundedfrensbot" target="_blank" rel="noopener noreferrer">
+            <a href="https://t.me/hoodfundbot" target="_blank" rel="noopener noreferrer">
               <Button className="font-mono uppercase tracking-wider rounded-xl">
-                <MessageCircle className="w-4 h-4 mr-2" /> Open @fundedfrensbot <ExternalLink className="w-3 h-3 ml-2" />
+                <MessageCircle className="w-4 h-4 mr-2" /> Open @hoodfundbot <ExternalLink className="w-3 h-3 ml-2" />
               </Button>
             </a>
           </div>

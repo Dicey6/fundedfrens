@@ -89,14 +89,14 @@ const faqs = [
   { q: 'How long is the evaluation?', a: 'The evaluation period is 21 days. You need to trade on at least 5 of those days and maintain a 70%+ win rate.' },
   { q: 'What happens if I fail?', a: 'If you breach the max drawdown (30%) or fail to meet targets within 21 days, your challenge is marked as failed. You can purchase a new challenge to try again.' },
   { q: 'Can I try again?', a: 'Yes — absolutely. There is no limit on how many challenges you can attempt. Each is a fresh evaluation period.' },
-  { q: 'How does the Telegram bot work?', a: 'All trading (buying, selling, position management) happens via @fundedfrensbot on Telegram. The website handles everything else: dashboard, analytics, payments, and referrals.' },
+  { q: 'How does the Telegram bot work?', a: 'All trading (buying, selling, position management) happens via @hoodfundbot on Telegram. The website handles everything else: dashboard, analytics, payments, and referrals.' },
   { q: 'How do referrals work?', a: 'Share your unique referral code or link. When someone signs up with your code and purchases any challenge, you automatically earn 10% of their fee.' },
 ];
 
 // Update these values in one place when the token details or destinations change.
-const TOKEN_NAME = 'FundedFrens';
-const TOKEN_SYMBOL = 'FFRENS';
-const TOKEN_NETWORK = 'Solana';
+const TOKEN_NAME = '';
+const TOKEN_SYMBOL = '';
+const TOKEN_NETWORK = 'Robinhood Chain';
 const TOKEN_CONTRACT_ADDRESS = '9qMLFMYMMXVUsgnDwm9FYuEYhENPiuYB8SnjofhDpump';
 const TOKEN_EXPLORER_URL = `https://solscan.io/token/${TOKEN_CONTRACT_ADDRESS}`;
 const TOKEN_TRADE_URL = '#';
@@ -386,7 +386,7 @@ export default function HomePage() {
                 ].map(({ label, value }) => (
                   <div key={label} className="rounded-xl border border-border bg-foreground/[0.03] px-4 py-3">
                     <div className="metric-label mb-1">{label}</div>
-                    <div className="font-display font-semibold text-sm">{value}</div>
+                    <div className={`font-display font-semibold text-sm ${value ? '' : 'text-muted-foreground/50 font-normal'}`}>{value || 'Coming soon'}</div>
                   </div>
                 ))}
               </div>
@@ -619,7 +619,7 @@ export default function HomePage() {
                 <Bot className="w-6 h-6 text-primary" />
               </div>
               <h3 className="font-display font-bold text-xl mb-2">Telegram Bot</h3>
-              <p className="text-sm text-muted-foreground mb-5">@fundedfrensbot handles all your trading actions in real time.</p>
+              <p className="text-sm text-muted-foreground mb-5">@hoodfundbot handles all your trading actions in real time.</p>
               <ul className="space-y-2.5">
                 {['Buying & Selling Tokens', 'Portfolio Management', 'Open Positions View', 'Trading Controls', 'PnL Cards', 'Stop Loss / Take Profit'].map(f => (
                   <li key={f} className="flex items-center gap-3 text-sm text-muted-foreground">
@@ -627,7 +627,7 @@ export default function HomePage() {
                   </li>
                 ))}
               </ul>
-              <a href="https://t.me/fundedfrensbot" target="_blank" rel="noopener noreferrer" className="mt-6 inline-block">
+              <a href="https://t.me/hoodfundbot" target="_blank" rel="noopener noreferrer" className="mt-6 inline-block">
                 <Button className="font-mono uppercase tracking-wider text-xs rounded-xl neon-glow">
                   Open Bot <ExternalLink className="w-3 h-3 ml-2" />
                 </Button>
@@ -797,14 +797,14 @@ export default function HomePage() {
                 The premier on-chain prop trading platform. Prove your edge, unlock real capital.
               </p>
               <div className="flex items-center gap-2.5 mb-4">
-                <a href="https://t.me/FundedFrens" target="_blank" rel="noopener noreferrer"
+                <a href="https://t.me/hoodfundbot" target="_blank" rel="noopener noreferrer"
                   className="w-8 h-8 rounded-lg glass flex items-center justify-center text-muted-foreground hover:text-[#2AABEE] transition-colors"
                   aria-label="Telegram">
                   <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
                     <path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/>
                   </svg>
                 </a>
-                <a href="https://x.com/FundedFrens" target="_blank" rel="noopener noreferrer"
+                <a href="https://x.com/hoodfundedrh?s=11" target="_blank" rel="noopener noreferrer"
                   className="w-8 h-8 rounded-lg glass flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
                   aria-label="X (Twitter)">
                   <svg viewBox="0 0 24 24" className="w-3.5 h-3.5" fill="currentColor">
@@ -850,7 +850,7 @@ export default function HomePage() {
               <div className="space-y-2.5">
                 <Link href="/terms" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Terms of Service</Link>
                 <Link href="/privacy" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Privacy Policy</Link>
-                <a href="https://t.me/FundedFrens" target="_blank" rel="noopener noreferrer" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Contact &amp; Support</a>
+                <a href="https://t.me/hoodfundbot" target="_blank" rel="noopener noreferrer" className="block text-xs text-muted-foreground hover:text-foreground transition-colors">Contact &amp; Support</a>
               </div>
             </div>
           </div>

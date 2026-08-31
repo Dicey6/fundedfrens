@@ -354,7 +354,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
               <div className="flex items-center gap-4">
                 <a href="/terms" className="text-[10px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors">Terms</a>
                 <a href="/privacy" className="text-[10px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors">Privacy</a>
-                <a href="https://t.me/FundedFrens" target="_blank" rel="noopener noreferrer" className="text-[10px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors">Support</a>
+                <a href="https://t.me/hoodfundbot" target="_blank" rel="noopener noreferrer" className="text-[10px] font-mono text-muted-foreground/40 hover:text-muted-foreground transition-colors">Support</a>
               </div>
             </div>
           </footer>
