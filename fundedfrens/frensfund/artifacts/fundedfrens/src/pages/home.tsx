@@ -395,8 +395,8 @@ export default function HomePage() {
                 <div>
                   <div className="min-w-0">
                     <div className="metric-label mb-2">Contract Address (CA)</div>
-                    <div className="font-mono text-sm sm:text-base text-muted-foreground">
-                      Coming soon
+                    <div className="font-mono text-sm sm:text-base text-foreground break-all">
+                      {TOKEN_CONTRACT_ADDRESS}
                     </div>
                   </div>
                 </div>
@@ -405,16 +405,18 @@ export default function HomePage() {
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
                   type="button"
-                  disabled
-                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-foreground/[0.03] px-4 py-2.5 text-xs font-mono font-semibold text-muted-foreground/50 cursor-not-allowed flex-1"
-                  aria-label="Contract address not yet available"
+                  onClick={copyContractAddress}
+                  className="inline-flex items-center justify-center gap-2 rounded-xl border border-border bg-foreground/[0.03] px-4 py-2.5 text-xs font-mono font-semibold text-foreground hover:bg-foreground/[0.06] transition-colors flex-1"
+                  aria-label="Copy contract address"
                 >
                   <Copy className="w-3.5 h-3.5" />
-                  Coming Soon
+                  {copied ? 'Copied!' : 'Copy CA'}
                 </button>
-                <Button variant="outline" disabled className="flex-1 rounded-xl text-xs font-mono font-semibold border-foreground/10 text-muted-foreground/50 cursor-not-allowed">
-                  View on Explorer <ExternalLink className="w-3.5 h-3.5 ml-2" />
-                </Button>
+                <a href={TOKEN_EXPLORER_URL} target="_blank" rel="noopener noreferrer" className="flex-1">
+                  <Button variant="outline" className="w-full rounded-xl text-xs font-mono font-semibold border-foreground/10 text-foreground hover:bg-foreground/[0.06]">
+                    View on Explorer <ExternalLink className="w-3.5 h-3.5 ml-2" />
+                  </Button>
+                </a>
                 <a href={TOKEN_TRADE_URL} target="_blank" rel="noopener noreferrer" className="flex-1">
                   <Button className="w-full rounded-xl text-xs font-mono font-semibold neon-glow transition-all duration-200">
                     Trade Now <ArrowRight className="w-3.5 h-3.5 ml-2" />
